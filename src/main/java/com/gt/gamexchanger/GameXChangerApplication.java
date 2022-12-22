@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class GameXChangerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(GameXChangerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(GameXChangerApplication.class, args);
+    }
 
 }
