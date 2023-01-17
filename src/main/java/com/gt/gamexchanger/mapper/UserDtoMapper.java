@@ -12,7 +12,12 @@ public class UserDtoMapper implements DtoMapper<UserDto, User> {
         if (user == null) {
             return null;
         }
-        return new UserDto(user.getName(), user.getLastName(), user.getEmail(), user.getPassword());
+        UserDto userDto =  new UserDto(user.getName(), user.getLastName(), user.getEmail(), user.getPassword());
+        userDto.setId(user.getId());
+        userDto.setGamesShelf(user.getGamesShelf());
+        userDto.setRequestGameList(user.getRequestGameList());
+
+        return userDto;
     }
 
     @Override
@@ -21,6 +26,7 @@ public class UserDtoMapper implements DtoMapper<UserDto, User> {
         user.setId(userDto.getId());
         user.setName(userDto.getName());
         user.setLastName(userDto.getLastName());
+        user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
         user.setGamesShelf(userDto.getGamesShelf());
         return user;
