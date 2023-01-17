@@ -7,4 +7,7 @@ import java.util.List;
 public interface UserRepository {
     public void addUser(User user);
     List<User> getAllUsers();
+
+    User getUserById(Long id);
+
 }

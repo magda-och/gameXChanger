@@ -21,4 +21,9 @@ public class UserRepositoryImp implements UserRepository {
     public List<User> getAllUsers(){
         return new ArrayList<>(inMemoryUsers.values());
     }
+
+    @Override
+    public User getUserById(Long id) {
+        return inMemoryUsers.get(id);
+    }
 }
