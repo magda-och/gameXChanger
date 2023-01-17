@@ -3,15 +3,15 @@ package com.gt.gamexchanger.controller;
 import com.gt.gamexchanger.model.UserDto;
 import com.gt.gamexchanger.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
+
+    //todo find user by id and find user by name
     private final UserService userService;
 
     @Autowired
@@ -20,8 +20,14 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public List<UserDto> getUsers() {
+    public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @PostMapping("/add")
+    public String addNewUser(@RequestBody UserDto userDto){
+        userService.addUser(userDto);
+        return "User's account successful created";
     }
 
 
