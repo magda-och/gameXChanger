@@ -1,3 +1,4 @@
 package com.gt.gamexchanger.model;
-public class UserDto {
+
+public class ShelfDto {
 }

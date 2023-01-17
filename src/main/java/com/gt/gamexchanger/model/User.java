@@ -8,5 +8,4 @@ public class User {
     private String email;
     private String password;
     private Shelf gamesShelf;
-    private List<RequestGame> requestGameList;
 }
