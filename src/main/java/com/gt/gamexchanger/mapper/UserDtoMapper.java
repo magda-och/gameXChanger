@@ -29,6 +29,7 @@ public class UserDtoMapper implements DtoMapper<UserDto, User> {
         user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
         user.setGamesShelf(userDto.getGamesShelf());
+        user.setRequestGameList(userDto.getRequestGameList());
         return user;
     }
 }
