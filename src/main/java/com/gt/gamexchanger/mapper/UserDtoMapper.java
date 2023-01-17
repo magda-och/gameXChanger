@@ -18,7 +18,7 @@ public class UserDtoMapper implements DtoMapper<UserDto, User> {
     @Override
     public User toDomainObject(UserDto userDto) {
         User user = new User();
-        user.setId(userDto.getUserId());
+        user.setId(userDto.getId());
         user.setName(userDto.getName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
