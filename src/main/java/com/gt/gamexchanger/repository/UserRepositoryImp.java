@@ -14,6 +14,7 @@ public class UserRepositoryImp implements UserRepository {
 
     @Override
     public void addUser(User user){
+        user.setId(inMemoryUsers.values().size() + 1);
         inMemoryUsers.put(user.getId(), user);
     }
 
