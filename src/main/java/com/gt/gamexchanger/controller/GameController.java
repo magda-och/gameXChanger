@@ -26,4 +26,9 @@ public class GameController {
     public List<GameDto> getAllGames(){
         return gameService.getAllGames();
     }
+
+    @PostMapping("/gamesByName")
+    public List<GameDto> getGamesByName(@RequestBody String name){
+        return gameService.getGamesByName(name);
+    }
 }
