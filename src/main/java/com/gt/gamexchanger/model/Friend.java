@@ -9,9 +9,8 @@ import java.util.Date;
 @Data
 public class Friend {
 
-    private Long id;
-    private Date createdDate;
-    private User firstUser;
-    private User secondUser;
+    //private Date createdDate;
+    private Long firstUserId;
+    private Long secondUserId;
 
 }
