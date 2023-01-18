@@ -1,4 +1,4 @@
-package com.gt.gamexchanger.model;
+package com.gt.gamexchanger.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -15,7 +15,7 @@ public class UserRepositoryImp implements UserRepository {
 
     @Override
     public void addUser(User user){
-        user.setId(inMemoryUsers.values().size() + 1);
+        user.setId((long) (inMemoryUsers.values().size() + 1));
         inMemoryUsers.put(user.getId(), user);
     }
 
@@ -36,7 +36,15 @@ public class UserRepositoryImp implements UserRepository {
         return inMemoryUsers.values().stream()
                 .filter(user -> user.getLastName().equals(lastName))
                 .collect(Collectors.toList());
+    }
 
+    @Override
+    public void deleteUser(User user) {
 
     }
+
+//    @Override
+//    public deleteUser(Long id){
+//
+//    }
 }
