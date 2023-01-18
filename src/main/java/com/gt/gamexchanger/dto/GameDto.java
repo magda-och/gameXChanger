@@ -1,11 +1,15 @@
 package com.gt.gamexchanger.dto;
 
 import com.gt.gamexchanger.enums.GameStatus;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.File;
 
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class GameDto {
 
     private Long id;
