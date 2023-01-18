@@ -9,4 +9,5 @@ public interface UserRepository {
     void addUser(User user);
     List<User> findUserByName(String name, String lastName);
     List<User> findUserByName(String lastName);
+    void deleteUser(User user);
 }
