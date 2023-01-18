@@ -4,7 +4,9 @@ import com.gt.gamexchanger.model.RequestGame;
 import com.gt.gamexchanger.model.RequestGameDto;
 import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.model.UserDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RequestGameDtoMapper implements DtoMapper<RequestGameDto, RequestGame>{
     @Override
     public RequestGameDto toDto(RequestGame requestGame) {
