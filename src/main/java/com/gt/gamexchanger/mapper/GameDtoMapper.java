@@ -8,10 +8,13 @@ import org.springframework.stereotype.Component;
 public class GameDtoMapper implements DtoMapper<GameDto, Game> {
     @Override
     public GameDto toDto(Game game) {
+
         if (game == null) {
             return null;
         }
-        return new GameDto(game.getId(), game.getName(), game.getDescription(), game.getGameStatus(), game.getGamePhoto());
+        Long id = game.getId();
+        return new GameDto(id,  game.getName(), game.getDescription(), game.getGameStatus() /*,
+               game.getOwnerId(), game.getActualUserId() */);
     }
 
     @Override
@@ -22,8 +25,10 @@ public class GameDtoMapper implements DtoMapper<GameDto, Game> {
         }
         game.setName(gameDto.getName());
         game.setDescription(gameDto.getDescription());
-        game.setGameStatus(gameDto.getGameStatus());
-        game.setGamePhoto(gameDto.getGamePhoto());
+     game.setGameStatus(gameDto.getGameStatus());
+    //    game.setGamePhoto(gameDto.getGamePhoto());
+      //  game.setOwnerId(gameDto.getOwnerId());
+     //   game.setActualUserId(gameDto.getActualUserId());
         return game;
     }
 }

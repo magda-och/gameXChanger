@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+
 public interface GameRepository {
 
     public void addGame(Game game);
@@ -22,8 +22,9 @@ public interface GameRepository {
 
     public List<Game> getMyBorrowedGames();
 
-    public Game getGameByName(String name);
+    public List<Game> getGamesByName(String name);
 
     public Game getGameById(Long id);
+
 
 }
