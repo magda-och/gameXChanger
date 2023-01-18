@@ -2,48 +2,44 @@ package com.gt.gamexchanger.repository;
 
 import com.gt.gamexchanger.model.Friend;
 import com.gt.gamexchanger.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+@Component
 public class FriendRepositoryImp implements FriendRepository {
 
-    private final Map<Long, Friend> inMemoryFriends = new HashMap<>();
-    @Override
-    public boolean existByFirstUserAndSecondUser(User first, User second) {
-        return inMemoryFriends.values().stream()
-                .allMatch(friend -> friend.getFirstUser().equals(first)
-                        && friend.getSecondUser().equals(second));
-    }
-
-    @Override
-    public List<Friend> findByFirstUser(User user) {
-        return inMemoryFriends.values().stream()
-                .filter(friend -> friend.getFirstUser().equals(user))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Friend> findBySecondUser(User user) {
-        return inMemoryFriends.values().stream()
-                .filter(friend -> friend.getSecondUser().equals(user))
-                .collect(Collectors.toList());
-    }
+    private final Map<Long, Set<Long>> inMemoryFriends = new HashMap<>();
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public void saveFriend(Friend friend) {
-        friend.setId((long) (inMemoryFriends.size()+1));
-        inMemoryFriends.put(friend.getId(), friend);
+        Long userId = friend.getFirstUserId();
+        Long friendId = friend.getSecondUserId();
+
+        if(userRepository.getUserById(userId).isEmpty()){
+            throw new RuntimeException();
+        }
+        inMemoryFriends.computeIfAbsent(userId, uId -> new HashSet<>()).add(friendId);
+        inMemoryFriends.computeIfAbsent(friendId, fId -> new HashSet<>()).add(userId);
     }
 
     @Override
-    public List<Friend> getFriends() {
-        return new ArrayList<>(inMemoryFriends.values());
+    public List<User> getFriends(Long id) {
+        Set<Long> myFriends = inMemoryFriends.get(id);
+
+        return myFriends.stream()
+                .map(e -> userRepository.getUserById(e))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Friend getFriendById(Long id) {
-        return inMemoryFriends.get(id);
+        return null;
     }
 
     @Override
