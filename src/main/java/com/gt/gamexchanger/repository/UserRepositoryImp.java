@@ -25,18 +25,26 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public List<User> findUserByName(String name, String lastName){
+    public List<User> findUserByFullName(String name, String lastName){
         return inMemoryUsers.values().stream()
                 .filter(user -> user.getName().equals(name) && user.getLastName().equals(lastName))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<User> findUserByName(String lastName){
+    public List<User> findUserByLastName(String lastName){
         return inMemoryUsers.values().stream()
                 .filter(user -> user.getLastName().equals(lastName))
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<User> findUserByFirstName(String firstName){
+        return inMemoryUsers.values().stream()
+                .filter(user -> user.getName().equals(firstName))
+                .collect(Collectors.toList());
+    }
+
+
 
     @Override
     public void deleteUser(User user) {
