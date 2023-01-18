@@ -50,6 +50,10 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public void deleteUser(Long id){
+        userRepository.deleteUser(id);
+    }
+
 
 
 

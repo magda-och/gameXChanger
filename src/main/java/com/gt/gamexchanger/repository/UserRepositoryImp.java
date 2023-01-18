@@ -27,28 +27,28 @@ public class UserRepositoryImp implements UserRepository {
     @Override
     public List<User> findUserByFullName(String name, String lastName){
         return inMemoryUsers.values().stream()
-                .filter(user -> user.getName().equals(name) && user.getLastName().equals(lastName))
+                .filter(user -> user.getName().equalsIgnoreCase(name) && user.getLastName().equalsIgnoreCase(lastName))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<User> findUserByLastName(String lastName){
         return inMemoryUsers.values().stream()
-                .filter(user -> user.getLastName().equals(lastName))
+                .filter(user -> user.getLastName().equalsIgnoreCase(lastName))
                 .collect(Collectors.toList());
     }
     @Override
     public List<User> findUserByFirstName(String firstName){
         return inMemoryUsers.values().stream()
-                .filter(user -> user.getName().equals(firstName))
+                .filter(user -> user.getName().equalsIgnoreCase(firstName))
                 .collect(Collectors.toList());
     }
 
 
 
     @Override
-    public void deleteUser(User user) {
-
+    public void deleteUser(Long id) {
+        inMemoryUsers.remove(id);
     }
 
 //    @Override
