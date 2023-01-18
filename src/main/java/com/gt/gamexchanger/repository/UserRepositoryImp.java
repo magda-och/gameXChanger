@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class UserRepositoryImp implements UserRepository {
@@ -21,5 +22,21 @@ public class UserRepositoryImp implements UserRepository {
     @Override
     public List<User> getAllUsers(){
         return new ArrayList<>(inMemoryUsers.values());
+    }
+
+    @Override
+    public List<User> findUserByName(String name, String lastName){
+        return inMemoryUsers.values().stream()
+                .filter(user -> user.getName().equals(name) && user.getLastName().equals(lastName))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> findUserByName(String lastName){
+        return inMemoryUsers.values().stream()
+                .filter(user -> user.getLastName().equals(lastName))
+                .collect(Collectors.toList());
+
+
     }
 }
