@@ -2,13 +2,11 @@ package com.gt.gamexchanger.service;
 
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.User;
-import com.gt.gamexchanger.model.UserDto;
+import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.repository.UserRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
