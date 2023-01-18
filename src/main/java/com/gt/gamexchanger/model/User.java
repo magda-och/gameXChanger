@@ -17,8 +17,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private Shelf gamesShelf;
-    private List<RequestGame> requestGameList;
+//    private Shelf gamesShelf = new Shelf();
 
     public User(String name, String lastName, String email, String password) {
         this.name = name;

@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface UserRepository {
     List<User> getAllUsers();
-    public void addUser(User user);
+    void addUser(User user);
+    List<User> findUserByName(String name, String lastName);
+    List<User> findUserByName(String lastName);
 }
