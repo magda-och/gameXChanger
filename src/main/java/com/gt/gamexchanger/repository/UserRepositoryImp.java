@@ -3,10 +3,7 @@ package com.gt.gamexchanger.repository;
 import com.gt.gamexchanger.model.User;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -52,8 +49,8 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public User getUserById(Long id) {
-        return inMemoryUsers.get(id);
+    public Optional<User> getUserById(Long id) {
+        return Optional.ofNullable(inMemoryUsers.get(id));
     }
 
 //    @Override
