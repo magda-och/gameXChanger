@@ -1,43 +1,41 @@
 package com.gt.gamexchanger.service;
 
+import com.gt.gamexchanger.dto.FriendDto;
+import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.Friend;
 import com.gt.gamexchanger.model.User;
-import com.gt.gamexchanger.model.UserDto;
 import com.gt.gamexchanger.repository.FriendRepository;
-import com.gt.gamexchanger.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
-
+@Service
 public class FriendService {
 
-    private FriendRepository friendRepository;
-    private UserRepository userRepository;
-    private DtoMapper<UserDto, User> dtoMapper;
+    private final FriendRepository friendRepository;
+    private final DtoMapper<FriendDto, Friend> friendDtoMapper;
+    private final DtoMapper<UserDto, User> userDtoMapper;
 
-    public void saveFriend(UserDto userDto1, long id) throws NullPointerException{
+    public FriendService(FriendRepository friendRepository, DtoMapper<FriendDto, Friend> friendDtoMapper, DtoMapper<UserDto, User> userDtoMapper) {
+        this.friendRepository = friendRepository;
+        this.friendDtoMapper = friendDtoMapper;
+        this.userDtoMapper = userDtoMapper;
+    }
 
-        User user = userRepository.getUserById(id);
-        var userDto2 = dtoMapper.toDto(user);
+    public void saveFriend(FriendDto friendDto) {
 
-        Friend friend = new Friend();
-        User user1 = userRepository.getUserById(userDto1.getId());
-        User user2 = userRepository.getUserById(userDto2.getId());
+        var friend = friendDtoMapper.toDomainObject(friendDto);
+        friendRepository.saveFriend(friend);
+        friendDtoMapper.toDto(friend);
 
-        User firstUser = user1;
-        User secondUser = user2;
-        if(user1.getId() > user2.getId()){
-            firstUser = user2;
-            secondUser = user1;
-        }
-        if(!friendRepository.existByFirstUserAndSecondUser(firstUser, secondUser)){
-            friend.setCreatedDate(new Date());
-            friend.setFirstUser(firstUser);
-            friend.setSecondUser(secondUser);
-            friendRepository.saveFriend(friend);
-        }
+    }
 
+    public List<UserDto> getFriends(Long id){
+        return friendRepository.getFriends(id).stream().
+                map(userDtoMapper::toDto).
+                collect(Collectors.toList());
     }
 
 }
