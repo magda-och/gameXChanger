@@ -25,16 +25,16 @@ public class FriendService {
         User user1 = userRepository.getUserById(userDto1.getId());
         User user2 = userRepository.getUserById(userDto2.getId());
 
-        User firstuser = user1;
-        User seconduser = user2;
+        User firstUser = user1;
+        User secondUser = user2;
         if(user1.getId() > user2.getId()){
-            firstuser = user2;
-            seconduser = user1;
+            firstUser = user2;
+            secondUser = user1;
         }
-        if(!friendRepository.existByFirstUserAndSecondUser(firstuser, seconduser)){
+        if(!friendRepository.existByFirstUserAndSecondUser(firstUser, secondUser)){
             friend.setCreatedDate(new Date());
-            friend.setFirstUser(firstuser);
-            friend.setSecondUser(seconduser);
+            friend.setFirstUser(firstUser);
+            friend.setSecondUser(secondUser);
             friendRepository.saveFriend(friend);
         }
 
