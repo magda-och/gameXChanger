@@ -7,7 +7,8 @@ import java.util.List;
 public interface UserRepository {
     List<User> getAllUsers();
     void addUser(User user);
-    List<User> findUserByName(String name, String lastName);
-    List<User> findUserByName(String lastName);
+    List<User> findUserByFullName(String name, String lastName);
+    List<User> findUserByFirstName(String firstName);
+    List<User> findUserByLastName(String lastName);
     void deleteUser(User user);
 }

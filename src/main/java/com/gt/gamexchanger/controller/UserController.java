@@ -14,6 +14,7 @@ public class UserController {
 
     //todo usuwanie by id 
     // to do add user- only with unique email
+    // todo update user
     private final UserService  userService;
 
     @Autowired
@@ -32,19 +33,17 @@ public class UserController {
         return "User's account successful created";
     }
 
-    @PostMapping("/find/fullname")
+    @PostMapping("/find")
     public List<UserDto> findUserByFullName(@RequestBody UserDto userDto){
-        return userService.findUserByName(userDto.getName(), userDto.getLastName());
+        return userService.findUserByFullName(userDto.getName(), userDto.getLastName());
 
     }
 
-    @PostMapping("/find/lastname")
-    public List<UserDto> findUserByLastName(@RequestBody UserDto userDto){
-        return userService.findUserByName(userDto.getLastName());
+    @PostMapping("/find/part")
+    public List<UserDto> findUserByFirstOrLastName(@RequestBody String firstOrLastName){
+        List<UserDto> userResults = userService.findUserByLastName(firstOrLastName);
+        userResults.addAll(userService.findUserByFirstName(firstOrLastName));
+
+        return userResults;
     }
-
-
-
-
-
 }
