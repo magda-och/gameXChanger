@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,4 +33,19 @@ public class UserService {
                 .map(dtoMapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    public List<UserDto> findUserByName(String name, String lastName){
+        return userRepository.findUserByName(name,lastName).stream()
+                .map(dtoMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<UserDto> findUserByName(String lastName){
+        return userRepository.findUserByName(lastName).stream()
+                .map(dtoMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+
+
 }
