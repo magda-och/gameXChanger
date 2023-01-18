@@ -4,7 +4,6 @@ import com.gt.gamexchanger.model.Friend;
 import com.gt.gamexchanger.model.User;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface FriendRepository {
     boolean existByFirstUserAndSecondUser(User first, User second);

@@ -11,7 +11,7 @@ public class Friend {
 
     private Long id;
     private Date createdDate;
-    User firstUser;
-    User secondUser;
+    private User firstUser;
+    private User secondUser;
 
 }
