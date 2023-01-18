@@ -16,5 +16,6 @@ public class GameRequestController {
 
         this.gameRequestService = gameRequestService;
     }
+
     //funkcje mappujące
 }
