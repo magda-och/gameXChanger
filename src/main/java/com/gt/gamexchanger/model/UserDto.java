@@ -15,8 +15,7 @@ public class UserDto {
     private String email;
     private String password;
 
-    private Shelf gamesShelf;
-    private List<RequestGame> requestGameList;
+//    private Shelf gamesShelf = new Shelf();
 
     public UserDto(String name, String lastName, String email, String password) {
         this.name = name;
