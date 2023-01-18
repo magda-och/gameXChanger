@@ -2,11 +2,11 @@ package com.gt.gamexchanger.controller;
 
 import com.gt.gamexchanger.dto.GameDto;
 import com.gt.gamexchanger.service.GameService;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class GameController {
@@ -21,5 +21,9 @@ public class GameController {
     @PostMapping("/addGame")
     public GameDto addGame(@RequestBody GameDto gameDto) {
         return gameService.addGame(gameDto);
+    }
+    @GetMapping("/games")
+    public List<GameDto> getAllGames(){
+        return gameService.getAllGames();
     }
 }
