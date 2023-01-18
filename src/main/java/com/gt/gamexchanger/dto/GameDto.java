@@ -4,6 +4,7 @@ import com.gt.gamexchanger.enums.GameStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 
@@ -16,6 +17,10 @@ public class GameDto {
     private String name;
     private String description;
     private GameStatus gameStatus;
-    private File gamePhoto;
+  //  private File gamePhoto;
+ //   private Long ownerId;
+ //   private Long actualUserId;
+
+
 
 }
