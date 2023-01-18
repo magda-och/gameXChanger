@@ -15,8 +15,5 @@ public class ShelfController {
     public ShelfController(ShelfService shelfService) {
         this.shelfService = shelfService;
     }
-    @GetMapping("/shelf")
-    public ShelfDto getShelf() {
-        return shelfService.getShelf();
-    }
+
 }

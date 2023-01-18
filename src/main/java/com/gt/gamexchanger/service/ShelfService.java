@@ -4,7 +4,6 @@ import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.Shelf;
 import com.gt.gamexchanger.model.ShelfDto;
 import com.gt.gamexchanger.repository.GameRepository;
-import com.gt.gamexchanger.repository.ShelfRepository;
 import org.springframework.stereotype.Service;
 
 @Service
