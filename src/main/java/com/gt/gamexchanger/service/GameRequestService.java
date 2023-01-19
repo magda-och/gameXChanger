@@ -2,14 +2,12 @@ package com.gt.gamexchanger.service;
 
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.RequestGame;
-import com.gt.gamexchanger.model.RequestGameDto;
+import com.gt.gamexchanger.dto.RequestGameDto;
 import com.gt.gamexchanger.repository.GameRequestRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class GameRequestService {
@@ -32,14 +30,12 @@ public class GameRequestService {
     }
 
     public List<RequestGameDto> getMySendGameRequest(Long userId) {
-        return gameRequestRepository.getAllRequest().stream()
-                .filter((RequestGame p) -> p.getFromUserId()==userId)
+        return gameRequestRepository.getMySendGameRequest(userId).stream()
                 .map(dtoMapper::toDto)
                 .toList();
     }
     public List<RequestGameDto> getReceivedGameRequest(Long userId) {
-        return gameRequestRepository.getAllRequest().stream()
-                .filter((RequestGame p) -> p.getToUserId()==userId)
+        return gameRequestRepository.getReceivedGameRequest(userId).stream()
                 .map(dtoMapper::toDto)
                 .toList();
     }
