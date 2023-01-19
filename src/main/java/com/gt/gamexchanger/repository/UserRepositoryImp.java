@@ -22,9 +22,17 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     public List<User> findUserByFullName(String[] fullName) {
-        return inMemoryUsers.values().stream()
+        List<User> userResults1 = inMemoryUsers.values().stream()
                 .filter(user -> user.getName().equalsIgnoreCase(fullName[0]) && user.getLastName().equalsIgnoreCase(fullName[1]))
                 .collect(Collectors.toList());
+
+        userResults1.addAll(inMemoryUsers.values().stream()
+                .filter(user -> user.getName().equalsIgnoreCase(fullName[1]) && user.getLastName().equalsIgnoreCase(fullName[0]))
+                .collect(Collectors.toList()));
+
+        return userResults1;
+
+
     }
 
     public List<User> findUserByLastName(String lastName) {
@@ -43,10 +51,12 @@ public class UserRepositoryImp implements UserRepository {
     public List<User> findUserByName(String name) {
         if (name.contains(" ")) {
             String[] fullName = name.split(" ");
-            return findUserByFullName(fullName);
+            if (fullName.length > 1) {
+                return findUserByFullName(fullName);
+            }
         }
-        List<User> results = findUserByLastName(name);
-        results.addAll(findUserByFirstName(name));
+        List<User> results = findUserByLastName(name.replaceAll(" ", ""));
+        results.addAll(findUserByFirstName(name.replaceAll(" ", "")));
         return results;
     }
 

@@ -61,20 +61,24 @@ public class UserService {
         return user;
     }
 
-    public void updateUser(Long userId, UserDto userDto) {
+    public boolean updateUser(Long userId, UserDto userDto) {
         var userOptional = getUserById(userId);
         if (userOptional.isPresent()) {
             var user = userOptional.get();
             updateUserFields(userDto, user);
+            return true;
         }
+        return false;
     }
 
-    public void changePassword(Long userId, String newPassword) {
+    public boolean changePassword(Long userId, String newPassword) {
         var userOptional = getUserById(userId);
         if (userOptional.isPresent()) {
             var user = userOptional.get();
             user.setPassword(newPassword);
+            return true;
         }
+        return false;
     }
 }
 
