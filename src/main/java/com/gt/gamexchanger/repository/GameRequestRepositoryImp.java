@@ -12,39 +12,36 @@ public class GameRequestRepositoryImp implements GameRequestRepository {
 
     @Override
     public void addAndSendNewGameRequest(RequestGame requestGame) {
-
+        requestGame.setRequestGameId(inMemoryRequestGames.values().size()+1);
+        inMemoryRequestGames.put(requestGame.getRequestGameId(), requestGame);
     }
 
     @Override
-    public List<RequestGame> getMySendGameRequest() {
-        return null;
+    public List<RequestGame> getMySendGameRequest(Long userId) {
+       return inMemoryRequestGames.values().stream()
+                .filter((RequestGame p) -> p.getFromUserId()==userId)
+                .toList();
     }
 
     @Override
-    public List<RequestGame> getReceivedGameRequest() {
-        return null;
+    public List<RequestGame> getReceivedGameRequest(Long userId) {
+        return inMemoryRequestGames.values().stream()
+                .filter((RequestGame p) -> p.getFromUserId()==userId)
+                .toList();
     }
 
     @Override
-    public void removeGameRequestById(UUID gameRequestId) {
-
+    public void removeGameRequestById(Long gameRequestId) {
+        inMemoryRequestGames.remove(gameRequestId);
     }
 
     @Override
-    public RequestGame getRequestById(UUID requestId) {
-        return null;
+    public RequestGame getRequestById(Long requestId) {
+        return inMemoryRequestGames.get(requestId);
     }
 
     @Override
     public List<RequestGame> getAllRequest() {
-        return null;
+        return new ArrayList<>(inMemoryRequestGames.values());
     }
-
-
-    //metody tu i w interface
-    //addRequest
-    //deleteRequest
-    //getAllSendRequest
-    //getAllReceiveRequest
-    //
 }
