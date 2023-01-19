@@ -7,6 +7,7 @@ import com.gt.gamexchanger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,22 +33,18 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public List<UserDto> findUserByFullName(String name, String lastName){
-        return userRepository.findUserByFullName(name,lastName).stream()
+    public List<UserDto> findUserByName(String name){
+        return userRepository.findUserByName(name).stream()
                 .map(dtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public List<UserDto> findUserByFirstName(String firstName){
-        return userRepository.findUserByFirstName(firstName).stream()
-                .map(dtoMapper::toDto)
-                .collect(Collectors.toList());
+    public Optional<User> getUserById(Long id) {
+        return userRepository.getUserById(id);
     }
 
-    public List<UserDto> findUserByLastName(String lastName){
-        return userRepository.findUserByLastName(lastName).stream()
-                .map(dtoMapper::toDto)
-                .collect(Collectors.toList());
+    public void deleteUser(Long id){
+        userRepository.deleteUser(id);
     }
 
 
