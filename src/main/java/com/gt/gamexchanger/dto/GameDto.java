@@ -18,8 +18,8 @@ public class GameDto {
     private String description;
     private GameStatus gameStatus;
   //  private File gamePhoto;
- //   private Long ownerId;
- //   private Long actualUserId;
+   private Long ownerId;
+   private Long actualUserId;
 
 
 

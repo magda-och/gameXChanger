@@ -3,10 +3,7 @@ package com.gt.gamexchanger.repository;
 import com.gt.gamexchanger.model.Game;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 @Component
 public class GameRepositoryImp implements GameRepository {
@@ -22,7 +19,8 @@ public class GameRepositoryImp implements GameRepository {
 
     @Override
     public List<Game> getGamesByName(String name) {
-        return games.values().stream().filter(game -> game.getName().equals(name)).collect(Collectors.toList());
+        return games.values().stream().filter(game -> game.getName()
+                .contains(name)).collect(Collectors.toList());
     }
 
     @Override
@@ -41,22 +39,21 @@ public class GameRepositoryImp implements GameRepository {
     }
 
     @Override
-    public void deleteGame(Game game) {
-        Game removedGame = games.remove(game.getId());
+    public Game deleteGame(Game game) {
+        return games.remove(game.getId());
     }
 
     @Override
-    public void getGameDetails(Game game) {
-
+    public List<Game> getMyGames(Long id) {
+      return games.values().stream()
+                .filter(game -> Objects.equals(game.getOwnerId(), id))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Game> getMyGames() {
-        return null;
-    }
-
-    @Override
-    public List<Game> getMyBorrowedGames() {
-        return null;
+    public List<Game> getMyBorrowedGames(Long idActualUser) {
+        return games.values().stream()
+                .filter(game -> Objects.equals(game.getActualUserId(), idActualUser))
+                .collect(Collectors.toList());
     }
 }

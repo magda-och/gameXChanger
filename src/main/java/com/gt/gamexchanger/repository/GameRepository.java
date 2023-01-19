@@ -12,15 +12,13 @@ public interface GameRepository {
 
     public void updateGame(Game game);
 
-    public void deleteGame(Game game);
-
-    public void getGameDetails(Game game);
+    public Game deleteGame(Game game);
 
     public List<Game> getAllGames();
 
-    public List<Game> getMyGames();
+    public List<Game> getMyGames(Long id);
 
-    public List<Game> getMyBorrowedGames();
+    public List<Game> getMyBorrowedGames(Long idActualUser);
 
     public List<Game> getGamesByName(String name);
 
