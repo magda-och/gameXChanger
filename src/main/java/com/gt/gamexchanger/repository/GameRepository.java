@@ -12,7 +12,7 @@ public interface GameRepository {
 
     public void updateGame(Game game);
 
-    public Game deleteGame(Game game);
+    public Game deleteGame(Long id);
 
     public List<Game> getAllGames();
 
@@ -23,6 +23,5 @@ public interface GameRepository {
     public List<Game> getGamesByName(String name);
 
     public Game getGameById(Long id);
-
 
 }

@@ -39,8 +39,8 @@ public class GameRepositoryImp implements GameRepository {
     }
 
     @Override
-    public Game deleteGame(Game game) {
-        return games.remove(game.getId());
+    public Game deleteGame(Long id) {
+        return games.remove(id);
     }
 
     @Override
@@ -49,11 +49,10 @@ public class GameRepositoryImp implements GameRepository {
                 .filter(game -> Objects.equals(game.getOwnerId(), id))
                 .collect(Collectors.toList());
     }
-
     @Override
     public List<Game> getMyBorrowedGames(Long idActualUser) {
         return games.values().stream()
-                .filter(game -> Objects.equals(game.getActualUserId(), idActualUser))
+                .filter(g -> g.getActualUserId().equals(idActualUser) && !( g.getId().equals(idActualUser)))
                 .collect(Collectors.toList());
     }
 }
