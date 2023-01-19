@@ -58,7 +58,6 @@ public class GameRequestController {
 //dodac pole message
     //zmienic statusy - add i post(update)
     //shelf service i controller
-    //enumy
     //usunac toUserId i zaczytac z game
 
 }

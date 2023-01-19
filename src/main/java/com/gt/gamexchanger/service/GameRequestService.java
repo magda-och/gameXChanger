@@ -32,14 +32,12 @@ public class GameRequestService {
     }
 
     public List<RequestGameDto> getMySendGameRequest(Long userId) {
-        return gameRequestRepository.getAllRequest().stream()
-                .filter((RequestGame p) -> p.getFromUserId()==userId)
+        return gameRequestRepository.getMySendGameRequest(userId).stream()
                 .map(dtoMapper::toDto)
                 .toList();
     }
     public List<RequestGameDto> getReceivedGameRequest(Long userId) {
-        return gameRequestRepository.getAllRequest().stream()
-                .filter((RequestGame p) -> p.getToUserId()==userId)
+        return gameRequestRepository.getReceivedGameRequest(userId).stream()
                 .map(dtoMapper::toDto)
                 .toList();
     }
