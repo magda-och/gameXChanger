@@ -6,8 +6,10 @@ import com.gt.gamexchanger.model.User;
 import java.util.List;
 
 public interface FriendRepository {
-    boolean existByFirstUserAndSecondUser(User first, User second);
 
-    List<Friend> findByFirstUser(User user);
-    List<Friend> findBySecondUser(User user);
+    void saveFriend(Friend friend);
+    List<User> getFriends(Long id);
+    Friend getFriendById(Long id);
+    void removeFriendById(Long id);
+
 }
