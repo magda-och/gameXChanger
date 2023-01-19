@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,7 +42,15 @@ public class GameService {
                 .collect(Collectors.toList());
     }
 
-    public GameDto getGameById(Long id) {
-        return gameDtoMapper.toDto(gameRepository.getGameById(id));
+    public Optional<Game> getGameById(Long id) {
+        return Optional.ofNullable(gameRepository.getGameById(id));
     }
+    public boolean deleteGame(Long id){
+        if(getGameById(id).isPresent()){
+          gameRepository.deleteGame(id);
+          return true;
+        }
+        return false;
+    }
+
 }
