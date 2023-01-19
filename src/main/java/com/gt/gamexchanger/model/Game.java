@@ -1,6 +1,7 @@
 package com.gt.gamexchanger.model;
 
 import com.gt.gamexchanger.enums.GameStatus;
+import com.gt.gamexchanger.enums.Visibility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class Game {
  //   private File gamePhoto;
     private Long ownerId;
     private Long actualUserId;
+    private Visibility visibility;
 //
 
 
