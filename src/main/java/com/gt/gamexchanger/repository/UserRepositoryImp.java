@@ -59,11 +59,4 @@ public class UserRepositoryImp implements UserRepository {
     public Optional<User> getUserById(Long id) {
         return Optional.ofNullable(inMemoryUsers.get(id));
     }
-
-
-
-//    @Override
-//    public deleteUser(Long id){
-//
-//    }
 }

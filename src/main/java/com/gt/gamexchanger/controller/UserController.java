@@ -58,4 +58,16 @@ public class UserController {
         }
         return "User doesn't exist";
     }
+
+    @PatchMapping("/update/{userId}")
+    public String updateUser(@PathVariable Long userId, @RequestBody UserDto userDto){
+        userService.updateUser(userId, userDto);
+        return "User updated!";
+    }
+
+    @PostMapping("/update/password/{userId}")
+    public String updatePassword(@PathVariable Long userId, @RequestBody String newPassword){
+        userService.changePassword(userId, newPassword);
+        return "Password changed!";
+    }
 }
