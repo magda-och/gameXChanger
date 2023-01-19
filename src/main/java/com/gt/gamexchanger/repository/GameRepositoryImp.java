@@ -10,6 +10,10 @@ public class GameRepositoryImp implements GameRepository {
 
     private final Map<Long, Game> games = new HashMap<>();
 
+    protected Map<Long, Game> getGames() {
+        return games;
+    }
+
 
     @Override
     public void addGame(Game game) {
