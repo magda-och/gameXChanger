@@ -16,13 +16,15 @@ public class ShelfController {
 
     @Autowired
     public ShelfController(ShelfService shelfService) {
-
         this.shelfService = shelfService;
     }
+
     @GetMapping("/getMyGames/{userId}")
     public List<GameDto> getMyGames(@PathVariable("userId") Long userId) {
+
         return  shelfService.getAllMyGames(userId);
     }
+
     @GetMapping("/getBorrowedGames/{userId}")
     public List<GameDto> getBorrowedGames(@PathVariable("userId") Long userId) {
         return  shelfService.getAllBorowedGame(userId);
