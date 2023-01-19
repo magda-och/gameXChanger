@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @NoArgsConstructor
 @Data
 public class User {
-    private long id;
+    private Long id;
     private String name;
     private String lastName;
     private String email;

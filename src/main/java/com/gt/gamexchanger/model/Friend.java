@@ -1,47 +1,16 @@
 package com.gt.gamexchanger.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
+@NoArgsConstructor
+@Data
 public class Friend {
 
-    private Long id;
-    private Date createdDate;
-    User firstUser;
-    User secondUser;
+    //private Date createdDate;
+    private Long firstUserId;
+    private Long secondUserId;
 
-    public Friend(){
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public User getFirstUser() {
-        return firstUser;
-    }
-
-    public void setFirstUser(User firstUser) {
-        this.firstUser = firstUser;
-    }
-
-    public User getSecondUser() {
-        return secondUser;
-    }
-
-    public void setSecondUser(User secondUser) {
-        this.secondUser = secondUser;
-    }
 }
