@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 public class FriendRepositoryImp implements FriendRepository {
 
     private final Map<Long, Set<Long>> inMemoryFriends = new HashMap<>();
-    @Autowired
-    UserRepository userRepository;
+    final UserRepository userRepository;
+    public FriendRepositoryImp(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void saveFriend(Friend friend) {
