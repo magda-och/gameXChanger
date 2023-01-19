@@ -7,6 +7,7 @@ import com.gt.gamexchanger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +37,10 @@ public class UserService {
         return userRepository.findUserByName(name).stream()
                 .map(dtoMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public Optional<User> getUserById(Long id) {
+        return userRepository.getUserById(id);
     }
 
     public void deleteUser(Long id){
