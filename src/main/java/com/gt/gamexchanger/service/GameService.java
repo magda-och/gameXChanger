@@ -23,7 +23,7 @@ public class GameService {
     }
 
     public GameDto addGame(GameDto gameDto) {
-        var game = gameDtoMapper.toDomainObject(gameDto);
+        Game game = gameDtoMapper.toDomainObject(gameDto);
         gameRepository.addGame(game);
         return gameDtoMapper.toDto(game);
     }

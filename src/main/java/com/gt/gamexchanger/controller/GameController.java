@@ -39,7 +39,7 @@ public class GameController {
     @DeleteMapping("/{gameId}")
     public String deleteGame(@PathVariable Long gameId){
         gameService.deleteGame(gameId);
-        return "Geme has already deleted";
+        return "Game has already deleted";
     }
 
      //       update game
