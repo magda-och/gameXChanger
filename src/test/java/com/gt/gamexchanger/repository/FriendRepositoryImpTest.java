@@ -5,7 +5,6 @@ import com.gt.gamexchanger.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +15,6 @@ import static org.mockito.Mockito.when;
 
 
 class FriendRepositoryImpTest {
-    public static List<User> users;
 
     UserRepository userRepository = mock(UserRepository.class);
     private User user100;
@@ -39,35 +37,6 @@ class FriendRepositoryImpTest {
         user200.setEmail("pj200@com");
         user200.setPassword("JK200");
 
-
-        users = new ArrayList<>();
-        User user1 = new User();
-        long i = 1;
-        user1.setId(i);
-        user1.setName("Jane");
-        user1.setLastName("Plain");
-        user1.setEmail("pj@com");
-        user1.setPassword("pj123");
-
-        User user2 = new User();
-        long j = 2;
-        user2.setId(j);
-        user2.setName("Bill");
-        user2.setLastName("Kill");
-        user2.setEmail("killbill@com");
-        user2.setPassword("kb123");
-
-        User user3 = new User();
-        long k = 1;
-        user3.setId(k);
-        user3.setName("John");
-        user3.setLastName("Bean");
-        user3.setEmail("mrbean@com");
-        user3.setPassword("SpringBean2");
-
-        users.add(user1);
-        users.add(user2);
-        users.add(user3);
     }
 
     @Test
