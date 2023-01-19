@@ -19,7 +19,7 @@ public class UserController {
 
     // to do add user- only with unique email
     // todo update user
-    private final UserService  userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -32,11 +32,11 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String addNewUser(@RequestBody UserDto userDto){
+    public String addNewUser(@RequestBody UserDto userDto) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             String json = mapper.writeValueAsString(userDto);
-            if (json.contains("null")){
+            if (json.contains("null")) {
                 return "You didn't fill all fields correctly";
             }
             userService.addUser(userDto);
@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @PostMapping("/find")
-    public List<UserDto> findUserByName(@RequestBody String name){
+    public List<UserDto> findUserByName(@RequestBody String name) {
         return userService.findUserByName(name);
     }
 
@@ -55,6 +55,22 @@ public class UserController {
     public String deleteUser(@PathVariable Long userId) {
         if (userService.deleteUser(userId)) {
             return "User successfully removed!";
+        }
+        return "User doesn't exist";
+    }
+
+    @PatchMapping("/update/{userId}")
+    public String updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
+        if (userService.updateUser(userId, userDto)) {
+            return "User updated!";
+        }
+        return "User doesn't exist";
+    }
+
+    @PostMapping("/update/password/{userId}")
+    public String updatePassword(@PathVariable Long userId, @RequestBody String newPassword) {
+        if (userService.changePassword(userId, newPassword)) {
+            return "Password changed!";
         }
         return "User doesn't exist";
     }

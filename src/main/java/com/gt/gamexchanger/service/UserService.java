@@ -20,8 +20,8 @@ public class UserService {
         this.dtoMapper = dtoMapper;
     }
 
-    public UserDto addUser(UserDto userDto){
-        var user =  dtoMapper.toDomainObject(userDto);
+    public UserDto addUser(UserDto userDto) {
+        var user = dtoMapper.toDomainObject(userDto);
         userRepository.addUser(user);
         return dtoMapper.toDto(user);
 
@@ -33,7 +33,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public List<UserDto> findUserByName(String name){
+    public List<UserDto> findUserByName(String name) {
         return userRepository.findUserByName(name).stream()
                 .map(dtoMapper::toDto)
                 .collect(Collectors.toList());
@@ -43,7 +43,7 @@ public class UserService {
         return userRepository.getUserById(id);
     }
 
-    public boolean deleteUser(Long id){
+    public boolean deleteUser(Long id) {
         if (getUserById(id).isPresent()) {
             userRepository.deleteUser(id);
             return true;
@@ -51,7 +51,38 @@ public class UserService {
         return false;
     }
 
+    public User updateUserFields(UserDto userDto, User user) {
+        if (userDto.getName() != null) {
+            user.setName(userDto.getName());
+        }
+        if (userDto.getLastName() != null) {
+            user.setLastName(userDto.getLastName());
+        }
+        return user;
+    }
 
+    public boolean updateUser(Long userId, UserDto userDto) {
+        var userOptional = getUserById(userId);
+        if (userOptional.isPresent()) {
+            var user = userOptional.get();
+            updateUserFields(userDto, user);
+            return true;
+        }
+        return false;
+    }
 
-
+    public boolean changePassword(Long userId, String newPassword) {
+        var userOptional = getUserById(userId);
+        if (userOptional.isPresent()) {
+            var user = userOptional.get();
+            user.setPassword(newPassword);
+            return true;
+        }
+        return false;
+    }
 }
+
+
+
+
+
