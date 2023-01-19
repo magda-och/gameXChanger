@@ -16,9 +16,10 @@ public class Game {
     private Long id;
     private String name;
     private String description;
-   private GameStatus gameStatus;
+    private GameStatus gameStatus;
  //   private File gamePhoto;
- //   private Long ownerId;
+    private Long ownerId;
+    private Long actualUserId;
 //
 
 

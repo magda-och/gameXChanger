@@ -8,9 +8,9 @@ import java.util.UUID;
 
 public interface GameRequestRepository {
     void addAndSendNewGameRequest(RequestGame requestGame);
-    List<RequestGame> getMySendGameRequest();
-    List<RequestGame> getReceivedGameRequest();
-    void removeGameRequestById(UUID gameRequestId);
-    RequestGame getRequestById(UUID requestId);
+    List<RequestGame> getMySendGameRequest(Long fromUserId);
+    List<RequestGame> getReceivedGameRequest(Long toUserId);
+    void removeGameRequestById(Long gameRequestId);
+    RequestGame getRequestById(Long requestId);
     List<RequestGame> getAllRequest();
 }
