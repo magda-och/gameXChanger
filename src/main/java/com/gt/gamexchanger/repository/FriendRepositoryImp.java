@@ -2,7 +2,6 @@ package com.gt.gamexchanger.repository;
 
 import com.gt.gamexchanger.model.Friend;
 import com.gt.gamexchanger.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -17,35 +16,46 @@ public class FriendRepositoryImp implements FriendRepository {
     }
 
     @Override
-    public void saveFriend(Friend friend) {
+    public void saveFriend(Friend friend) throws RuntimeException {
         Long userId = friend.getFirstUserId();
         Long friendId = friend.getSecondUserId();
 
         if(userRepository.getUserById(userId).isEmpty()){
-            throw new RuntimeException();
+            throw new RuntimeException("There is no user with this id.");
         }
+        //TODO: info when same friend
         inMemoryFriends.computeIfAbsent(userId, uId -> new HashSet<>()).add(friendId);
         inMemoryFriends.computeIfAbsent(friendId, fId -> new HashSet<>()).add(userId);
     }
 
     @Override
-    public List<User> getFriends(Long id) {
+    public List<User> getFriends(Long id) throws RuntimeException {
+
         Set<Long> myFriends = inMemoryFriends.get(id);
 
+        if(myFriends == null || myFriends.isEmpty() || userRepository.getUserById(id).isEmpty()){
+            throw new RuntimeException("There is no user with this id.");
+        }
+
         return myFriends.stream()
-                .map(e -> userRepository.getUserById(e))
+                .map(userRepository::getUserById)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public Friend getFriendById(Long id) {
-        return null;
-    }
 
     @Override
-    public void removeFriendById(Long id) {
-        inMemoryFriends.remove(id);
+    public boolean removeFriend(Friend friend) {
+
+        Long userId = friend.getFirstUserId();
+        Long friendId = friend.getSecondUserId();
+
+        Set<Long> myFriends = inMemoryFriends.get(userId);
+
+        if(myFriends.isEmpty()) {
+            throw new RuntimeException("There is no user with this id.");
+        }
+        return myFriends.remove(friendId);
     }
 }
