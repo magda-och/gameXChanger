@@ -18,7 +18,8 @@ public class Game {
     private String description;
     private GameStatus gameStatus;
  //   private File gamePhoto;
- //   private Long ownerId;
+    private Long ownerId;
+    private Long actualUserId;
 //
 
 
