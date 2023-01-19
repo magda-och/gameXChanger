@@ -32,20 +32,8 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public List<UserDto> findUserByFullName(String name, String lastName){
-        return userRepository.findUserByFullName(name,lastName).stream()
-                .map(dtoMapper::toDto)
-                .collect(Collectors.toList());
-    }
-
-    public List<UserDto> findUserByFirstName(String firstName){
-        return userRepository.findUserByFirstName(firstName).stream()
-                .map(dtoMapper::toDto)
-                .collect(Collectors.toList());
-    }
-
-    public List<UserDto> findUserByLastName(String lastName){
-        return userRepository.findUserByLastName(lastName).stream()
+    public List<UserDto> findUserByName(String name){
+        return userRepository.findUserByName(name).stream()
                 .map(dtoMapper::toDto)
                 .collect(Collectors.toList());
     }

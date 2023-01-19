@@ -9,8 +9,6 @@ public interface UserRepository {
     List<User> getAllUsers();
     Optional<User> getUserById(Long id);
     void addUser(User user);
-    List<User> findUserByFullName(String name, String lastName);
-    List<User> findUserByFirstName(String firstName);
-    List<User> findUserByLastName(String lastName);
-    void deleteUser(Long id);
+    void deleteUser(Long id); //sprawdzic czy nie wysypuje
+    List<User> findUserByName(String name);
 }

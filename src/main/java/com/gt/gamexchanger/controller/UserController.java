@@ -33,18 +33,23 @@ public class UserController {
         return "User's account successful created";
     }
 
+//    @PostMapping("/find")
+//    public List<UserDto> findUserByFullName(@RequestBody UserDto userDto){
+//        return userService.findUserByFullName(userDto.getName(), userDto.getLastName());
+//
+//    }
+//
+//    @PostMapping("/find/part")
+//    public List<UserDto> findUserByFirstOrLastName(@RequestBody String firstOrLastName){
+//        List<UserDto> userResults = userService.findUserByLastName(firstOrLastName);
+//        userResults.addAll(userService.findUserByFirstName(firstOrLastName));
+//
+//        return userResults;
+//    }
+
     @PostMapping("/find")
-    public List<UserDto> findUserByFullName(@RequestBody UserDto userDto){
-        return userService.findUserByFullName(userDto.getName(), userDto.getLastName());
-
-    }
-
-    @PostMapping("/find/part")
-    public List<UserDto> findUserByFirstOrLastName(@RequestBody String firstOrLastName){
-        List<UserDto> userResults = userService.findUserByLastName(firstOrLastName);
-        userResults.addAll(userService.findUserByFirstName(firstOrLastName));
-
-        return userResults;
+    public List<UserDto> findUserByName(@RequestBody String name){
+        return userService.findUserByName(name);
     }
 
     @DeleteMapping("/{userId}")
