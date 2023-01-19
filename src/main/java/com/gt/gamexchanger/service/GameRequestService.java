@@ -31,20 +31,20 @@ public class GameRequestService {
                 .toList();
     }
 
-    public List<RequestGameDto> getSendGameRequest(long userId) {
+    public List<RequestGameDto> getMySendGameRequest(Long userId) {
         return gameRequestRepository.getAllRequest().stream()
                 .filter((RequestGame p) -> p.getFromUserId()==userId)
                 .map(dtoMapper::toDto)
                 .toList();
     }
-    public List<RequestGameDto> getReceivedGameRequest(long userId) {
+    public List<RequestGameDto> getReceivedGameRequest(Long userId) {
         return gameRequestRepository.getAllRequest().stream()
                 .filter((RequestGame p) -> p.getToUserId()==userId)
                 .map(dtoMapper::toDto)
                 .toList();
     }
 
-    public void updateGame(UUID requestId, RequestGameDto requestGameDto) {
+    public void updateRequest(long requestId, RequestGameDto requestGameDto) {
         var requestGameOptional = getRequestById(requestId);
         if (requestGameOptional.isPresent()) {
             var requestGame = requestGameOptional.get();
@@ -58,15 +58,16 @@ public class GameRequestService {
         return requestGame;
     }
 
-    public boolean removeGameRequestById(UUID gameRequestId) {
+    public boolean removeGameRequestById(long gameRequestId) {
         if (getRequestById(gameRequestId).isPresent()) {
             gameRequestRepository.removeGameRequestById(gameRequestId);
             return true;
         }
         return false;
     }
-    private Optional<RequestGame> getRequestById(UUID requestId) {
+    private Optional<RequestGame> getRequestById(long requestId) {
         return Optional.ofNullable(gameRequestRepository.getRequestById(requestId));
     }
+
 
 }

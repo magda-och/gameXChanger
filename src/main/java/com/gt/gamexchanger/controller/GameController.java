@@ -22,4 +22,5 @@ public class GameController {
     public GameDto addGame(@RequestBody GameDto gameDto) {
         return gameService.addGame(gameDto);
     }
+
 }
