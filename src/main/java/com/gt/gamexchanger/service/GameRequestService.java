@@ -2,14 +2,12 @@ package com.gt.gamexchanger.service;
 
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.RequestGame;
-import com.gt.gamexchanger.model.RequestGameDto;
+import com.gt.gamexchanger.dto.RequestGameDto;
 import com.gt.gamexchanger.repository.GameRequestRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class GameRequestService {

@@ -1,7 +1,5 @@
 package com.gt.gamexchanger.mapper;
 
-import com.gt.gamexchanger.model.RequestGame;
-import com.gt.gamexchanger.model.RequestGameDto;
 import com.gt.gamexchanger.model.Shelf;
 import com.gt.gamexchanger.model.ShelfDto;
 import org.springframework.stereotype.Component;

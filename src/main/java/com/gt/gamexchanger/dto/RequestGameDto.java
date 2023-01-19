@@ -1,4 +1,4 @@
-package com.gt.gamexchanger.model;
+package com.gt.gamexchanger.dto;
 
 import com.gt.gamexchanger.enums.RequestStatus;
 import lombok.AllArgsConstructor;
@@ -15,11 +15,13 @@ public class RequestGameDto {
     private long fromUserId;
     private long toUserId;
     private long gameId;
+    private String message;
 
-    public RequestGameDto(RequestStatus requestStatus, long fromUserId, long toUserId, long gameId) {
+    public RequestGameDto(RequestStatus requestStatus, long fromUserId, long toUserId, long gameId, String message) {
         this.requestStatus = requestStatus;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
         this.gameId = gameId;
+        this.message=message;
     }
 }

@@ -1,16 +1,12 @@
 package com.gt.gamexchanger.controller;
 
-import com.gt.gamexchanger.enums.RequestStatus;
-import com.gt.gamexchanger.model.RequestGameDto;
+import com.gt.gamexchanger.dto.RequestGameDto;
 import com.gt.gamexchanger.service.GameRequestService;
-import com.gt.gamexchanger.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/requestgame")
