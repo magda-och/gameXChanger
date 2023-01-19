@@ -2,10 +2,6 @@ package com.gt.gamexchanger.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
 @NoArgsConstructor
 @Data
 public class UserDto {
