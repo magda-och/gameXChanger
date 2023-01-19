@@ -1,8 +1,6 @@
 package com.gt.gamexchanger.controller;
 
 import com.gt.gamexchanger.dto.GameDto;
-import com.gt.gamexchanger.model.RequestGameDto;
-import com.gt.gamexchanger.model.ShelfDto;
 import com.gt.gamexchanger.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

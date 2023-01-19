@@ -16,11 +16,13 @@ public class RequestGame {
     private long fromUserId;
     private long toUserId;
     private long gameId;
+    private String message;
 
-    public RequestGame(RequestStatus requestStatus, long fromUserId, long toUserId, long gameId) {
+    public RequestGame(RequestStatus requestStatus, long fromUserId, long toUserId, long gameId, String message) {
         this.requestStatus = requestStatus;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
         this.gameId = gameId;
+        this.message=message;
     }
 }
