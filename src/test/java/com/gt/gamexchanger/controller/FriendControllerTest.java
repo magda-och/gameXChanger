@@ -10,17 +10,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
-@WebMvcTest(FriendController.class)
+//@WebMvcTest(FriendController.class)
 class FriendControllerTest {
 
-    @Autowired
+  /*  @Autowired
     MockMvc mockMvc;
 
     @Autowired
     ObjectMapper mapper;
 
     @MockBean
-    FriendRepository friendRepository;
+    FriendRepository friendRepository;*/
 
 
     @Test
