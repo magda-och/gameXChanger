@@ -42,7 +42,8 @@ class GameControllerTest {
 
     @Test
     void getGamesByName() {
-
+        underTest.getGamesByName("spendor");
+        verify(gameService, times(1)).getGamesByName("spendor");
     }
 
     @Test

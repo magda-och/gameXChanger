@@ -49,7 +49,7 @@ class GameRepositoryImpTest {
 
 
     @Test
-    void getAllGames() {
+    void getAllGamesSuccessful() {
         gameRepositoryImp.addGame(createGame());
         gameRepositoryImp.addGame(createGame());
         gameRepositoryImp.addGame(createGame());
@@ -58,7 +58,13 @@ class GameRepositoryImpTest {
     }
 
     @Test
-    void getGameById() {
+    void getGameByIdSuccessful(){
+        gameRepositoryImp.addGame(createGame());
+        gameRepositoryImp.addGame(createGame());
+        Long idToTest = 1L;
+        Game game = gameRepositoryImp.getGameById(idToTest);
+        assertEquals(1, game.getId());
+
     }
 
     @Test
@@ -67,22 +73,58 @@ class GameRepositoryImpTest {
 
     @Test
     void deleteGame() {
+        gameRepositoryImp.addGame(createGame());
+        Game game =gameRepositoryImp.getGames().get(1L);
+        gameRepositoryImp.deleteGame(game.getId());
+        assertEquals(0, gameRepositoryImp.getGames().size());
     }
 
     @Test
-    void getMyGames() {
+    void getMyGamesSuccessful() {
+        gameRepositoryImp.addGame(createGame());
+        gameRepositoryImp.addGame(createGame());
+        gameRepositoryImp.addGame(createGame());
+        List<Game> games = gameRepositoryImp.getMyGames(1L);
+        assertEquals(3, games.size());
     }
 
     @Test
     void getMyBorrowedGames() {
+        gameRepositoryImp.addGame(createGame());
+        gameRepositoryImp.addGame(createGame2());
+        gameRepositoryImp.addGame(createGame3());
+        List<Game> games = gameRepositoryImp.getMyGames(1L);
+        assertEquals(2, games.size());
     }
 
     private static Game createGame() {
+        Game game2 = new Game();
+        game2.setId(1L);
+        game2.setName("Gra o tron");
+        game2.setDescription("graaaa aaaaaaa");
+        game2.setOwnerId(1L);
+        game2.setActualUserId(2L);
+        game2.setGameStatus(GameStatus.AVAILABLE);
+        game2.setVisibility(Visibility.PUBLIC);
+        return game2;
+    }
+    private static Game createGame2() {
         Game game2 = new Game();
         game2.setId(2L);
         game2.setName("Gra o tron");
         game2.setDescription("graaaa aaaaaaa");
         game2.setOwnerId(2L);
+        game2.setActualUserId(2L);
+        game2.setGameStatus(GameStatus.AVAILABLE);
+        game2.setVisibility(Visibility.PUBLIC);
+        return game2;
+    }
+    private static Game createGame3() {
+        Game game2 = new Game();
+        game2.setId(2L);
+        game2.setName("Gra o tron");
+        game2.setDescription("graaaa aaaaaaa");
+        game2.setOwnerId(1L);
         game2.setActualUserId(2L);
         game2.setGameStatus(GameStatus.AVAILABLE);
         game2.setVisibility(Visibility.PUBLIC);
