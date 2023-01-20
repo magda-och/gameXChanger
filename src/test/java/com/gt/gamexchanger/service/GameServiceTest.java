@@ -9,11 +9,12 @@ import com.gt.gamexchanger.repository.GameRepository;
 import com.gt.gamexchanger.repository.GameRepositoryImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import java.util.Optional;
 
 class GameServiceTest {
     GameRepository gameRepository;
@@ -36,19 +37,27 @@ class GameServiceTest {
 
     @Test
     void getGamesByName() {
+        createGames();
+        List<GameDto> list =serviceUnderTest.getGamesByName("Gra o");
+        assertEquals(1, list.size());
     }
 
     @Test
     void getGameById() {
+        createGames();
+        Optional<Game> actualGame =serviceUnderTest.getGameById(1L);
+        assertEquals("Gra o tron", actualGame.get().getName());
     }
 
     @Test
     void deleteGame() {
+        createGames();
+        assertTrue(serviceUnderTest.deleteGame(1L));
     }
 
     private void createGames() {
         Game game1 = new Game();
-        game1.setId(2L);
+        game1.setId(1L);
         game1.setName("Gra o tron");
         game1.setDescription("graaaa aaaaaaa");
         game1.setOwnerId(2L);
@@ -59,7 +68,7 @@ class GameServiceTest {
 
         Game game2 = new Game();
         game2.setId(2L);
-        game2.setName("Gra o tron");
+        game2.setName("splendor");
         game2.setDescription("graaaa aaaaaaa");
         game2.setOwnerId(2L);
         game2.setActualUserId(2L);
