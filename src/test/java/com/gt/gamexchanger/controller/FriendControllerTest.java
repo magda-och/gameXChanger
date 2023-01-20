@@ -1,33 +1,17 @@
 package com.gt.gamexchanger.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gt.gamexchanger.dto.FriendDto;
-import com.gt.gamexchanger.dto.GameDto;
-import com.gt.gamexchanger.model.Friend;
-import com.gt.gamexchanger.repository.FriendRepository;
+
 import com.gt.gamexchanger.service.FriendService;
-import com.gt.gamexchanger.service.GameService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.internal.verification.api.VerificationData;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-//@WebMvcTest(FriendController.class)
 class FriendControllerTest {
 
-  /*  @Autowired
-    MockMvc mockMvc;
-
-    @Autowired
-    ObjectMapper mapper;
-
-    @MockBean
-    FriendRepository friendRepository;*/
     FriendService friendService;
     FriendControllerTest.UnderTest underTest;
     FriendDto friendDto;
@@ -47,7 +31,7 @@ class FriendControllerTest {
     @Test
     void getAllFriends() {
         underTest.getAllFriends(friendDto.getFirstUserId());
-        verify(friendService, verificationData -> verificationData.getAllInvocations());
+        verify(friendService, VerificationData::getAllInvocations);
     }
 
     public class UnderTest extends FriendController {
