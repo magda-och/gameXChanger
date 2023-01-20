@@ -2,47 +2,27 @@ package com.gt.gamexchanger.controller;
 
 
 import com.gt.gamexchanger.dto.UserDto;
-import com.gt.gamexchanger.dto.GameDto;
-import com.gt.gamexchanger.mapper.UserDtoMapper;
-import com.gt.gamexchanger.model.User;
-import com.gt.gamexchanger.repository.UserRepository;
 import com.gt.gamexchanger.service.UserService;
-import org.json.JSONString;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.Mockito.*;
 
-import  com.gt.gamexchanger.dto.UserDto.*;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import java.util.List;
 
-import static org.springframework.http.RequestEntity.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-//        classes = UserController.class)
 @AutoConfigureMockMvc
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
