@@ -38,4 +38,8 @@ public class FriendService {
                 collect(Collectors.toList());
     }
 
+    public boolean removeFriend(Friend friend){
+        return friendRepository.removeFriend(friend);
+    }
+
 }

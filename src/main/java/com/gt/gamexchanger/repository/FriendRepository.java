@@ -9,7 +9,6 @@ public interface FriendRepository {
 
     void saveFriend(Friend friend);
     List<User> getFriends(Long id);
-    Friend getFriendById(Long id);
-    void removeFriendById(Long id);
+    boolean removeFriend(Friend friend);
 
 }
