@@ -36,10 +36,13 @@ class GameControllerTest {
 
     @Test
     void getAllGames() {
+        underTest.getAllGames();
+        verify(gameService, times(1)).getAllGames();
     }
 
     @Test
     void getGamesByName() {
+
     }
 
     @Test
