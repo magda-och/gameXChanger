@@ -31,7 +31,7 @@ class FriendControllerTest {
     @Test
     void getAllFriends() {
         underTest.getAllFriends(friendDto.getFirstUserId());
-        verify(friendService, VerificationData::getAllInvocations);
+        verify(friendService, VerificationData::getAllInvocations).getFriends(friendDto.getFirstUserId());
     }
 
     public class UnderTest extends FriendController {
