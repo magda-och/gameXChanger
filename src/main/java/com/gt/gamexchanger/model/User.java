@@ -1,17 +1,15 @@
 package com.gt.gamexchanger.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.List;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 @NoArgsConstructor
 @Data
+@Entity
 public class User {
+    @Id
     private Long id;
     private String name;
     private String lastName;
