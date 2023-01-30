@@ -51,7 +51,7 @@ public class UserService {
         return false;
     }
 
-    public User updateUserFields(UserDto userDto, User user) {
+    private User updateUserFields(UserDto userDto, User user) {
         if (userDto.getName() != null) {
             user.setName(userDto.getName());
         }

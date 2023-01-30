@@ -45,7 +45,8 @@ public class UserController {
             return "Error";
         }
     }
-
+// tez requestParam ta metoda bedxzie get
+    //wywalic find
     @PostMapping("/find")
     public List<UserDto> findUserByName(@RequestBody String name) {
         return userService.findUserByName(name);

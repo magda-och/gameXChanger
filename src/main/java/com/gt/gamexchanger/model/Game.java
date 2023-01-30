@@ -17,13 +17,17 @@ public class Game {
     private Long id;
     private String name;
     private String description;
+    // @Enumerated(value = EnumType.String)
     private GameStatus gameStatus;
- //   private File gamePhoto;
+ //   @Lob
+//    private Byte[] image;
     private Long ownerId;
     private Long actualUserId;
+    // @Enumerated(value = EnumType.String)
     private Visibility visibility;
+    // @ManyToOne
+    // private Shelf shelf;
 //
-
 
 
 }

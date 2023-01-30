@@ -21,10 +21,11 @@ public class ShelfController {
 
     @GetMapping("/getMyGames/{userId}")
     public List<GameDto> getMyGames(@PathVariable("userId") Long userId) {
-
         return  shelfService.getAllMyGames(userId);
     }
-
+// zmień nazewnictwo enpointów
+    //get shelf i shelf będzie miał userId
+    // połaczyć te dta enpointy i zrobić półkę z dwiema listami
     @GetMapping("/getBorrowedGames/{userId}")
     public List<GameDto> getBorrowedGames(@PathVariable("userId") Long userId) {
         return  shelfService.getAllBorowedGame(userId);

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.List;
 
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @NoArgsConstructor
@@ -18,7 +19,9 @@ public class User {
     private String email;
     private String password;
 //    private Shelf gamesShelf = new Shelf();
-
+    //@ManyToMany     ??????????????????????????????
+  //  @JoinTable(name="friends", joinColumns = @JoinColumn("user_id"), mappedBy = "friends")
+  //  private Set<User> friends;
     public User(String name, String lastName, String email, String password) {
         this.name = name;
         this.lastName = lastName;

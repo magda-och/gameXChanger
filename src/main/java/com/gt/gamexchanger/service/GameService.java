@@ -45,12 +45,39 @@ public class GameService {
     public Optional<Game> getGameById(Long id) {
         return Optional.ofNullable(gameRepository.getGameById(id));
     }
-    public boolean deleteGame(Long id){
-        if(getGameById(id).isPresent()){
-          gameRepository.deleteGame(id);
-          return true;
+
+    public boolean deleteGame(Long id) {
+        if (getGameById(id).isPresent()) {
+            gameRepository.deleteGame(id);
+            return true;
         }
         return false;
     }
 
+    public void updateGame(Long gameId, GameDto gameDto) {
+        var gameOptional = getGameById(gameId);
+        if (gameOptional.isPresent()) {
+            var game = gameOptional.get();
+            updateGameFields(game, gameDto);
+        }
+    }
+
+    private Game updateGameFields(Game game, GameDto gameDto) {
+        if (gameDto.getName() != null) {
+            game.setName(gameDto.getName());
+        }
+        if (gameDto.getDescription() != null) {
+            game.setDescription(gameDto.getDescription());
+        }
+        if (gameDto.getGameStatus() != null) {
+            game.setGameStatus(gameDto.getGameStatus());
+        }
+        if (gameDto.getActualUserId() != null) {
+            game.setActualUserId(gameDto.getActualUserId());
+        }
+        if (gameDto.getVisibility() != null) {
+            game.setVisibility(gameDto.getVisibility());
+        }
+        return game;
+    }
 }
