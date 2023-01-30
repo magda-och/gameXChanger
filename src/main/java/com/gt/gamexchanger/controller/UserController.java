@@ -48,7 +48,7 @@ public class UserController {
 
     @PostMapping("/find")
     public List<UserDto> findUserByName(@RequestBody String name) {
-        return userService.findUserByName(name);
+        return userService.findUsersByName(name);
     }
 
     @DeleteMapping("/{userId}")
