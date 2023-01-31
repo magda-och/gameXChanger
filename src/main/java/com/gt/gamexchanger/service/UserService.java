@@ -22,13 +22,13 @@ public class UserService {
         this.dtoMapper = dtoMapper;
     }
 
-    public UserDto addUser(UserDto userDto) {
+    public void addUser(UserDto userDto) {
         if (areFieldsInRegistrationFilledCorrectly(userDto)) {
             User user = dtoMapper.toDomainObject(userDto);
             userRepository.save(user);
-            return dtoMapper.toDto(user);
+        } else {
+            throw new NoDataFoundException();
         }
-        throw new NoDataFoundException();
     }
 
     public boolean areFieldsInRegistrationFilledCorrectly(UserDto userDto) {
@@ -44,6 +44,7 @@ public class UserService {
                 .map(dtoMapper::toDto)
                 .collect(Collectors.toList());
     }
+
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
@@ -56,38 +57,46 @@ public class UserService {
         }
     }
 
+    public List<UserDto> searchUsers(String firstName, String lastName) {
+        List<User> userResults = userRepository.searchUsersByFirstNameAndLastName(firstName, lastName);
+        userResults.addAll(userRepository.searchUsersByLastName(lastName));
+        userResults.addAll(userRepository.searchUsersByFirstName(firstName));
 
-//    public User updateUserFields(UserDto userDto, User user) {
-//        if (userDto.getFirstName() != null) {
-//            user.setFirstName(userDto.getFirstName());
-//        }
-//        if (userDto.getLastName() != null) {
-//            user.setLastName(userDto.getLastName());
-//        }
-//        return user;
-//    }
-//
-//    public boolean updateUser(Long userId, UserDto userDto) {
-//        var userOptional = getUserById(userId);
-//        if (userOptional.isPresent()) {
-//            var user = userOptional.get();
-//            updateUserFields(userDto, user);
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public boolean changePassword(Long userId, String newPassword) {
-//        var userOptional = getUserById(userId);
-//        if (userOptional.isPresent()) {
-//            var user = userOptional.get();
-//            user.setPassword(newPassword);
-//            return true;
-//        }
-//        return false;
-//    }
-//}
+        return userResults.stream()
+                .map(dtoMapper::toDto)
+                .collect(Collectors.toList());
+    }
 
+    public void changeUserFields(UserDto userDto, User user) {
+        if (userDto.getFirstName() != null) {
+            user.setFirstName(userDto.getFirstName());
+        }
+        if (userDto.getLastName() != null) {
+            user.setLastName(userDto.getLastName());
+        }
+    }
+
+    public void updateUser(Long userId, UserDto userDto) {
+        var userOptional = getUserById(userId);
+        if (userOptional.isPresent()) {
+            var user = userOptional.get();
+            changeUserFields(userDto, user);
+            userRepository.save(user);
+        } else {
+            throw new NoExistingUser();
+        }
+    }
+
+    public void changePassword(Long userId, String newPassword) {
+        var userOptional = getUserById(userId);
+        if (userOptional.isPresent()) {
+            var user = userOptional.get();
+            user.setPassword(newPassword);
+            userRepository.save(user);
+        } else {
+            throw new NoExistingUser();
+        }
+    }
 }
 
 
