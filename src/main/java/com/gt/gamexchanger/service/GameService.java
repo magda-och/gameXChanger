@@ -1,6 +1,7 @@
 package com.gt.gamexchanger.service;
 
 import com.gt.gamexchanger.dto.GameDto;
+import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.mapper.GameDtoMapper;
 import com.gt.gamexchanger.model.Game;
 import com.gt.gamexchanger.repository.GameRepository;
@@ -14,7 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class GameService {
     private final GameRepository gameRepository;
-    private final GameDtoMapper gameDtoMapper;
+    private final DtoMapper<GameDto, Game> gameDtoMapper;
+
 
 
     public GameService(GameRepository gameRepository, GameDtoMapper gameDtoMapper) {
@@ -23,16 +25,17 @@ public class GameService {
     }
 
     public GameDto addGame(GameDto gameDto) {
-        Game game = gameDtoMapper.toDomainObject(gameDto);
+        Game game = (Game) gameDtoMapper.toDomainObject(gameDto);
         gameRepository.addGame(game);
-        return gameDtoMapper.toDto(game);
+        return (GameDto) gameDtoMapper.toDto(game);
     }
 
     public List<GameDto> getAllGames() {
-        return gameRepository.getAllGames().stream()
-                .sorted(Comparator.comparing(Game::getName))
-                .map(gameDtoMapper::toDto)
-                .collect(Collectors.toList());
+
+   List<Game> games = gameRepository.getAllGames().stream()
+           .sorted(Comparator.comparing(Game::getName)).toList();
+
+   return games.stream().map(gameDtoMapper::toDto).collect(Collectors.toList());
     }
 
     public List<GameDto> getGamesByName(String name) {
@@ -55,9 +58,9 @@ public class GameService {
     }
 
     public void updateGame(Long gameId, GameDto gameDto) {
-        var gameOptional = getGameById(gameId);
-        if (gameOptional.isPresent()) {
-            var game = gameOptional.get();
+       Optional<Game> gameToUpdate = gameRepository.findById(gameId);
+        if (gameToUpdate.isPresent()) {
+            var game = gameToUpdate.get();
             updateGameFields(game, gameDto);
         }
     }
@@ -72,12 +75,24 @@ public class GameService {
         if (gameDto.getGameStatus() != null) {
             game.setGameStatus(gameDto.getGameStatus());
         }
-        if (gameDto.getActualUserId() != null) {
-            game.setActualUserId(gameDto.getActualUserId());
+        if (gameDto.getActualUserDto() != null) {
+            game.setActualUser(game.getActualUser());
         }
         if (gameDto.getVisibility() != null) {
             game.setVisibility(gameDto.getVisibility());
         }
         return game;
+    }
+
+    public List<GameDto> getAllMyGames(Long userId) {
+      return    gameRepository.findAllByOwnerId(userId).stream()
+                .map(gameDtoMapper::toDto)
+                .toList();
+
+    }
+    public List<GameDto> getAllBorowedGame(Long userId) {
+        return gameRepository.getMyBorrowedGames(userId).stream()
+                .map(gameDtoMapper::toDto)
+                .toList();
     }
 }

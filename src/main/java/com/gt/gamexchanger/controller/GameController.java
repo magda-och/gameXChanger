@@ -23,13 +23,15 @@ public class GameController {
     public GameDto addGame(@RequestBody GameDto gameDto) {
         return gameService.addGame(gameDto);
     }
+
     @GetMapping("/{id}")
-    public Optional<Game> getGameById(@PathVariable Long id){
+    public Optional<Game> getGameById(@PathVariable Long id) {
         return gameService.getGameById(id);
     }
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @GetMapping()
-    public List<GameDto> getAllGames(){
+    public List<GameDto> getAllGames() {
         return gameService.getAllGames();
     }
 
@@ -40,22 +42,36 @@ public class GameController {
     // lub nowu model, który zawiera kryteria wyszukiwania SearchCriteriaRequest
     // search kontroller zrobić i tam wyszukiwania userów i gameów
     @PostMapping("/searchGame")
-    public List<GameDto> getGamesByName(@RequestParam String name){
+    public List<GameDto> getGamesByName(@RequestParam String name) {
         return gameService.getGamesByName(name);
     }
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{gameId}")
-    public String deleteGame(@PathVariable Long gameId){
+    public String deleteGame(@PathVariable Long gameId) {
         gameService.deleteGame(gameId);
         return "Game has already deleted";
     }
 
-     //       update game
+    //       update game
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/{gameId}")
-public void updateGame(@PathVariable(
-        "gameId") Long gameId,
-                       @RequestBody GameDto gameDto){
+    public void updateGame(@PathVariable(
+            "gameId") Long gameId,
+                           @RequestBody GameDto gameDto) {
         gameService.updateGame(gameId, gameDto);
-}
+    }
+    @GetMapping("/getMyGames/{userId}")
+    public List<GameDto> getMyGames(@PathVariable("userId") Long userId) {
+        return  gameService.getAllMyGames(userId);
+    }
+    // zmień nazewnictwo enpointów
+    //get shelf i shelf będzie miał userId
+    // połaczyć te dta enpointy i zrobić półkę z dwiema listami
+    @GetMapping("/getBorrowedGames/{userId}")
+    public List<GameDto> getBorrowedGames(@PathVariable("userId") Long userId) {
+
+        return  gameService.getAllBorowedGame(userId);
+    }
+
 }

@@ -1,12 +1,14 @@
 package com.gt.gamexchanger.repository;
 
 import com.gt.gamexchanger.model.Game;
+import com.gt.gamexchanger.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
-public interface GameRepository {
+@Repository
+public interface GameRepository extends JpaRepository<Game, Long> {
 
     public void addGame(Game game);
 
@@ -16,7 +18,7 @@ public interface GameRepository {
 
     public List<Game> getAllGames();
 
-    public List<Game> getMyGames(Long id);
+    public List<Game> findAllByOwnerId(Long id);
 
     public List<Game> getMyBorrowedGames(Long idActualUser);
 

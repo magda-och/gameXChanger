@@ -1,12 +1,8 @@
 package com.gt.gamexchanger.controller;
 
-import com.gt.gamexchanger.dto.GameDto;
 import com.gt.gamexchanger.dto.RequestGameDto;
-import com.gt.gamexchanger.enums.GameStatus;
 import com.gt.gamexchanger.enums.RequestStatus;
-import com.gt.gamexchanger.enums.Visibility;
 import com.gt.gamexchanger.service.GameRequestService;
-import com.gt.gamexchanger.service.ShelfService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
