@@ -32,11 +32,11 @@ public class UserController {
     }
 
 
-//        @PostMapping("/find")
-//    public  @ResponseBody List<UserDto> findUserByName(@RequestParam(value = "firstName", required = false) String firstName,
-//                                        @RequestParam(value = "lastName", required = false) String lastName) {
-//        return userService.findUser(firstName, lastName);
-//    }
+    @GetMapping("/find")
+    public @ResponseBody List<UserDto> findUserByName(@RequestParam(value = "firstName", required = false) String firstName,
+                                                      @RequestParam(value = "lastName", required = false) String lastName) {
+        return userService.searchUsers(firstName, lastName);
+    }
 
     @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable Long userId) {

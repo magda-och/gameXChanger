@@ -56,6 +56,16 @@ public class UserService {
         }
     }
 
+    public List<UserDto> searchUsers(String firstName, String lastName){
+        List<User> userResults = userRepository.searchUsersByFirstNameAndLastName(firstName,lastName);
+        userResults.addAll(userRepository.searchUsersByLastName(lastName));
+        userResults.addAll(userRepository.searchUsersByFirstName(firstName));
+
+        return userResults.stream()
+                .map(dtoMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
 
 //    public User updateUserFields(UserDto userDto, User user) {
 //        if (userDto.getFirstName() != null) {
