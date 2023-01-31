@@ -22,30 +22,30 @@ public class UserService {
 
     public UserDto addUser(UserDto userDto) {
         var user = dtoMapper.toDomainObject(userDto);
-        userRepository.addUser(user);
+        userRepository.save(user);
         return dtoMapper.toDto(user);
 
     }
 
     public List<UserDto> getAllUsers() {
-        return userRepository.getAllUsers().stream()
+        return userRepository.findAll().stream()
                 .map(dtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public List<UserDto> findUserByName(String name) {
-        return userRepository.findUserByName(name).stream()
+    public List<UserDto> findUsersByName(String name) {
+        return userRepository.findUsersByName(name).stream()
                 .map(dtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     public Optional<User> getUserById(Long id) {
-        return userRepository.getUserById(id);
+        return userRepository.findById(id);
     }
 
     public boolean deleteUser(Long id) {
         if (getUserById(id).isPresent()) {
-            userRepository.deleteUser(id);
+            userRepository.deleteById(id);
             return true;
         }
         return false;
