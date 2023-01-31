@@ -1,22 +1,21 @@
 package com.gt.gamexchanger.dto;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-@NoArgsConstructor
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
+
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
-    private long id;
-    private String name;
+
+    private Long id;
+    private String firstName;
     private String lastName;
     private String email;
     private String password;
 
-//    private Shelf gamesShelf = new Shelf();
-
-    public UserDto(String name, String lastName, String email, String password) {
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
 }
