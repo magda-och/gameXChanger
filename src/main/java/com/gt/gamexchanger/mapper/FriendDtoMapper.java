@@ -11,14 +11,15 @@ public class FriendDtoMapper implements DtoMapper<FriendDto, Friend> {
         if (friend == null) {
             return null;
         }
-        return new FriendDto(friend.getFirstUserId(), friend.getSecondUserId());
+        return new FriendDto(friend.getCreatedDate(), friend.getFirstUser(), friend.getSecondUser());
     }
 
     @Override
     public Friend toDomainObject(FriendDto dtoObject) {
         Friend friend = new Friend();
-        friend.setFirstUserId(dtoObject.getFirstUserId());
-        friend.setSecondUserId(dtoObject.getSecondUserId());
+        friend.setCreatedDate(dtoObject.getCreatedDate());
+        friend.setFirstUser(dtoObject.getFirstUserId());
+        friend.setSecondUser(dtoObject.getSecondUserId());
         return friend;
     }
 }

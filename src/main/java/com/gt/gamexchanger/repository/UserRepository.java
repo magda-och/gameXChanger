@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -15,4 +14,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //    void deleteUser(Long id); //sprawdzic czy nie wysypuje
 //    List<User> findUserByName(String name);
     List<User> findUsersByName(String name);
+
+    User findUserByEmail(String email);
+
+    User findUserById(Long id);
 }
