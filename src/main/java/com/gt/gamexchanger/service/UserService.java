@@ -1,5 +1,7 @@
 package com.gt.gamexchanger.service;
 
+import com.gt.gamexchanger.exception.NoDataFoundException;
+import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.dto.UserDto;
@@ -21,10 +23,20 @@ public class UserService {
     }
 
     public UserDto addUser(UserDto userDto) {
-        var user = dtoMapper.toDomainObject(userDto);
-        userRepository.save(user);
-        return dtoMapper.toDto(user);
+        if (areFieldsInRegistrationFilledCorrectly(userDto)) {
+            User user = dtoMapper.toDomainObject(userDto);
+            userRepository.save(user);
+            return dtoMapper.toDto(user);
+        }
+        throw new NoDataFoundException();
+    }
 
+    public boolean areFieldsInRegistrationFilledCorrectly(UserDto userDto) {
+        if ((userDto.getFirstName() == null) || (userDto.getLastName() == null)
+                || (userDto.getEmail() == null) || (userDto.getPassword() == null)) {
+            return false;
+        }
+        return true;
     }
 
     public List<UserDto> getAllUsers() {
@@ -32,54 +44,50 @@ public class UserService {
                 .map(dtoMapper::toDto)
                 .collect(Collectors.toList());
     }
-
-    public List<UserDto> findUsersByName(String name) {
-        return userRepository.findUsersByName(name).stream()
-                .map(dtoMapper::toDto)
-                .collect(Collectors.toList());
-    }
-
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
 
-    public boolean deleteUser(Long id) {
+    public void deleteUser(Long id) {
         if (getUserById(id).isPresent()) {
             userRepository.deleteById(id);
-            return true;
+        } else {
+            throw new NoExistingUser();
         }
-        return false;
     }
 
-    private User updateUserFields(UserDto userDto, User user) {
-        if (userDto.getName() != null) {
-            user.setName(userDto.getName());
-        }
-        if (userDto.getLastName() != null) {
-            user.setLastName(userDto.getLastName());
-        }
-        return user;
-    }
 
-    public boolean updateUser(Long userId, UserDto userDto) {
-        var userOptional = getUserById(userId);
-        if (userOptional.isPresent()) {
-            var user = userOptional.get();
-            updateUserFields(userDto, user);
-            return true;
-        }
-        return false;
-    }
+//    public User updateUserFields(UserDto userDto, User user) {
+//        if (userDto.getFirstName() != null) {
+//            user.setFirstName(userDto.getFirstName());
+//        }
+//        if (userDto.getLastName() != null) {
+//            user.setLastName(userDto.getLastName());
+//        }
+//        return user;
+//    }
+//
+//    public boolean updateUser(Long userId, UserDto userDto) {
+//        var userOptional = getUserById(userId);
+//        if (userOptional.isPresent()) {
+//            var user = userOptional.get();
+//            updateUserFields(userDto, user);
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public boolean changePassword(Long userId, String newPassword) {
+//        var userOptional = getUserById(userId);
+//        if (userOptional.isPresent()) {
+//            var user = userOptional.get();
+//            user.setPassword(newPassword);
+//            return true;
+//        }
+//        return false;
+//    }
+//}
 
-    public boolean changePassword(Long userId, String newPassword) {
-        var userOptional = getUserById(userId);
-        if (userOptional.isPresent()) {
-            var user = userOptional.get();
-            user.setPassword(newPassword);
-            return true;
-        }
-        return false;
-    }
 }
 
 

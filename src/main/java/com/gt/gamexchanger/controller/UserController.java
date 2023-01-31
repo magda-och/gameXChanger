@@ -1,17 +1,12 @@
 package com.gt.gamexchanger.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/user")
@@ -26,25 +21,22 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @PostMapping("/add")
-    public String addNewUser(@RequestBody UserDto userDto) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            String json = mapper.writeValueAsString(userDto);
-            if (json.contains("null")) {
-                return "You didn't fill all fields correctly";
-            }
-            userService.addUser(userDto);
-            return "User's account successful created";
-        } catch (JsonProcessingException e) {
-            return "Error";
-        }
+    @PostMapping
+    public UserDto addUser(@RequestBody UserDto userDto) {
+        return userService.addUser(userDto);
     }
+
+
+//        @PostMapping("/find")
+//    public  @ResponseBody List<UserDto> findUserByName(@RequestParam(value = "firstName", required = false) String firstName,
+//                                        @RequestParam(value = "lastName", required = false) String lastName) {
+//        return userService.findUser(firstName, lastName);
+//    }
 // tez requestParam ta metoda bedxzie get
     //wywalic find
     @PostMapping("/find")
@@ -53,26 +45,23 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public String deleteUser(@PathVariable Long userId) {
-        if (userService.deleteUser(userId)) {
-            return "User successfully removed!";
-        }
-        return "User doesn't exist";
-    }
-
-    @PatchMapping("/update/{userId}")
-    public String updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
-        if (userService.updateUser(userId, userDto)) {
-            return "User updated!";
-        }
-        return "User doesn't exist";
-    }
-
-    @PostMapping("/update/password/{userId}")
-    public String updatePassword(@PathVariable Long userId, @RequestBody String newPassword) {
-        if (userService.changePassword(userId, newPassword)) {
-            return "Password changed!";
-        }
-        return "User doesn't exist";
+    public void deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
     }
 }
+//    @PatchMapping("/update/{userId}")
+//    public String updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
+//        if (userService.updateUser(userId, userDto)) {
+//            return "User updated!";
+//        }
+//        return "User doesn't exist";
+//    }
+//
+//    @PostMapping("/update/password/{userId}")
+//    public String updatePassword(@PathVariable Long userId, @RequestBody String newPassword) {
+//        if (userService.changePassword(userId, newPassword)) {
+//            return "Password changed!";
+//        }
+//        return "User doesn't exist";
+//    }
+//}

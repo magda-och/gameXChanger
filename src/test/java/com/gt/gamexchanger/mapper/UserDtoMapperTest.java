@@ -16,7 +16,7 @@ class UserDtoMapperTest {
     void toDto() {
         User user = new User();
         user.setId(1L);
-        user.setName("Iwona");
+        user.setFirstName("Iwona");
         user.setLastName("Kula");
         user.setPassword("iwona1");
         user.setEmail("iwona@com");
@@ -25,7 +25,7 @@ class UserDtoMapperTest {
         UserDto userDto = userDtoMapper.toDto(user);
 
         assertThat(userDto.getId()).isEqualTo(1L);
-        assertThat(userDto.getName()).isEqualTo("Iwona");
+        assertThat(userDto.getFirstName()).isEqualTo("Iwona");
         assertThat(userDto.getLastName()).isEqualTo("Kula");
         assertThat(userDto.getPassword()).isEqualTo("iwona1");
         assertThat(userDto.getEmail()).isEqualTo("iwona@com");
@@ -45,7 +45,7 @@ class UserDtoMapperTest {
         userDtoMapper = new UserDtoMapper();
         UserDto userDto = new UserDto();
         userDto.setId(1L);
-        userDto.setName("Iwona");
+        userDto.setFirstName("Iwona");
         userDto.setLastName("Kula");
         userDto.setPassword("iwona1");
         userDto.setEmail("iwona@com");
@@ -54,7 +54,7 @@ class UserDtoMapperTest {
         User user = userDtoMapper.toDomainObject(userDto);
 
         assertThat(user.getId()).isEqualTo(1);
-        assertThat(user.getName()).isEqualTo("Iwona");
+        assertThat(user.getFirstName()).isEqualTo("Iwona");
         assertThat(user.getLastName()).isEqualTo("Kula");
         assertThat(user.getPassword()).isEqualTo("iwona1");
         assertThat(user.getEmail()).isEqualTo("iwona@com");
