@@ -11,10 +11,16 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-//
-//    @Query("SELECT user from User user WHERE(:firstName is null or LOWER(user.firstName) = LOWER(:firstName))"
-//            +" and (:lastName is null or user.lastName = :lastName)")
-//    List<User> searchByFirstAndOrLastName(@Param("firstName") String firstName,
-//                                          @Param ("lastName") String lastName);
-//}
+
+    @Query("SELECT user FROM User user WHERE LOWER(user.firstName) = LOWER(:firstName)")
+    List<User> searchUsersByFirstName(@Param("firstName") String firstName);
+
+    @Query("SELECT user FROM User user WHERE LOWER(user.lastName) = LOWER(:lastName)")
+    List<User> searchUsersByLastName(@Param("lastName") String lastName);
+
+    @Query("SELECT user FROM User user WHERE LOWER(user.firstName) = LOWER(:firstName)"
+            +" AND LOWER(user.lastName) = LOWER(:lastName)")
+    List<User> searchUsersByFirstNameAndLastName(@Param("firstName") String firstName,
+                                          @Param ("lastName") String lastName);
+
 }

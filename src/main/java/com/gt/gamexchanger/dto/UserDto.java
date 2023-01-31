@@ -6,8 +6,6 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
