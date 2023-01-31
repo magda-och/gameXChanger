@@ -20,13 +20,14 @@ public class FriendRequestService {
         this.dtoMapper = dtoMapper;
     }
 
-   /* public RequestFriendDto addFriendRequest(RequestFriendDto requestFriendDto) {
+   public RequestFriendDto addFriendRequest(RequestFriendDto requestFriendDto) {
         var requestFreind = dtoMapper.toDomainObject(requestFriendDto);
         friendRequestRepository.save(requestFreind);
         return dtoMapper.toDto(requestFreind);
-    }*/
-    public List<RequestFriend> getAllRequest() {
-        return friendRequestRepository.getAllRequest();
+    }
+    public List<RequestFriendDto> getAllRequest() {
+
+        return friendRequestRepository.getAllRequest().stream().map(dtoMapper::toDto).collect(Collectors.toList());
     }
 
    /* public List<RequestFriendDto> getMySendFriendRequest(Long userId) {

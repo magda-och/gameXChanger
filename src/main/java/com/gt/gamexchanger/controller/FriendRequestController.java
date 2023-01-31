@@ -20,16 +20,16 @@ public class FriendRequestController {
         this.friendRequestService = friendRequestService;
     }
     @GetMapping
-    public List<RequestFriend> getAllRequests() {
-        return  new ArrayList<>();//friendRequestService.getAllRequest();
+    public List<RequestFriendDto> getAllRequests() {
+        return  friendRequestService.getAllRequest();
     }
 
-   /* @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("/")
     public RequestFriendDto addReqest(@RequestBody RequestFriendDto requestGameDto) {
         //requestGameDto.setRequestStatus(RequestStatus.WAITING);
         return friendRequestService.addFriendRequest(requestGameDto);
-    }*/
+    }
    /* @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete/{requestId}")
     public boolean deleteRequest(@PathVariable("requestId") Long requestId) {
