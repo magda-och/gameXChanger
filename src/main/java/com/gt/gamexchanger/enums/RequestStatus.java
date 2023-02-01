@@ -1,5 +1,6 @@
 package com.gt.gamexchanger.enums;
 
+
 public enum RequestStatus {
 
     WAITING,

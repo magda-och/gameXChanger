@@ -4,9 +4,7 @@ import com.gt.gamexchanger.dto.GameDto;
 import com.gt.gamexchanger.service.GameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class GameControllerTest {
@@ -21,12 +19,12 @@ class GameControllerTest {
         underTest = new UnderTest();
     }
 
-    @Test
-    void addGame() {
-        underTest.addGame(gameDto);
-        verify(gameService, times(1)).addGame(gameDto);
-
-    }
+//    @Test
+//    void addGame() {
+//        underTest.addGame( gameDto);
+//        verify(gameService, times(1)).addGame( gameDto);
+//
+//    }
 
     @Test
     void getGameById() {

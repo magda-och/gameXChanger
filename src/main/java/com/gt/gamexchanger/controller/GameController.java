@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController("/games")
+@RestController
+@RequestMapping("/games")
 public class GameController {
 
     private final GameService gameService;
@@ -18,10 +19,11 @@ public class GameController {
         this.gameService = gameService;
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping()
-    public GameDto addGame(@RequestBody GameDto gameDto) {
-        return gameService.addGame(gameDto);
+   @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/{ownerId}")
+    public GameDto addGame(@PathVariable("ownerId") Long ownerId,
+                           @RequestBody GameDto gameDto) {
+        return gameService.addGame(ownerId, gameDto);
     }
 
     @GetMapping("/{id}")
@@ -29,24 +31,28 @@ public class GameController {
         return gameService.getGameById(id);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+ @ResponseStatus(HttpStatus.OK)
     @GetMapping()
     public List<GameDto> getAllGames() {
         return gameService.getAllGames();
     }
 
     // search names, wprowadzić kryteria wyszukiwania
-    //search games
-    // nazwy endpointów, które są zachowaniami
-    // zmien na @RequestParam
-    // lub nowu model, który zawiera kryteria wyszukiwania SearchCriteriaRequest
-    // search kontroller zrobić i tam wyszukiwania userów i gameów
-    @PostMapping("/searchGame")
-    public List<GameDto> getGamesByName(@RequestParam String name) {
+    //    //search games
+    //    // nazwy endpointów, które są zachowaniami
+    //    // zmien na @RequestParam
+    //    // lub nowu model, który zawiera kryteria wyszukiwania SearchCriteriaRequest
+    //    // search kontroller zrobić i tam wyszukiwania userów i gameów
+    @GetMapping("/searchGame")
+    public List<GameDto> getGamesByName(@RequestParam(value = "name") String name) {
         return gameService.getGamesByName(name);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @GetMapping("/searchName")
+    public List<GameDto> getGamesByContainingName(@RequestParam(value = "name") String name) {
+        return gameService.getByContainingName(name);
+    }
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{gameId}")
     public String deleteGame(@PathVariable Long gameId) {
         gameService.deleteGame(gameId);
@@ -54,24 +60,25 @@ public class GameController {
     }
 
     //       update game
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/{gameId}")
     public void updateGame(@PathVariable(
             "gameId") Long gameId,
                            @RequestBody GameDto gameDto) {
         gameService.updateGame(gameId, gameDto);
     }
-    @GetMapping("/getMyGames/{userId}")
+    @GetMapping("/myGames/{userId}")
     public List<GameDto> getMyGames(@PathVariable("userId") Long userId) {
         return  gameService.getAllMyGames(userId);
     }
-    // zmień nazewnictwo enpointów
-    //get shelf i shelf będzie miał userId
-    // połaczyć te dta enpointy i zrobić półkę z dwiema listami
-    @GetMapping("/getBorrowedGames/{userId}")
+    @GetMapping("/borrowedGames/{userId}")
     public List<GameDto> getBorrowedGames(@PathVariable("userId") Long userId) {
-
-        return  gameService.getAllBorowedGame(userId);
+        return  gameService.getAllBorrowedGame(userId);
     }
 
+    @PatchMapping("/borrow/{gameId}")
+    public void borrowGame(@PathVariable("gameId") Long gameId,
+                           @RequestBody String email){
+        gameService.borrowGame(gameId, email);
+    }
 }

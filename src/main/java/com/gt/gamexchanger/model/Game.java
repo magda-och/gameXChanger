@@ -15,24 +15,25 @@ import lombok.NoArgsConstructor;
 public class Game {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String description;
-   @Enumerated(value = EnumType.STRING)
+   @Enumerated(EnumType.STRING)
+   @Column(name = "Game Status")
     private GameStatus gameStatus;
     //   @Lob
     //  private Byte[] image;
+
+     @Enumerated(EnumType.STRING)
+    private Visibility visibility;
+
+
     @ManyToOne
     @JoinColumn(name = "ownerId")
     private User owner;
     @ManyToOne
     private User actualUser;
-
-     @Enumerated(value = EnumType.STRING)
-    private Visibility visibility;
-
-
 
 
 }
