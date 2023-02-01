@@ -45,12 +45,12 @@ public class FriendRequestController {
         friendRequestService.updateStatus(requestId, requestStatus);
     }
 
-    /*@GetMapping("/send/{userId}")
+    @GetMapping("/send/{userId}")
     public List<RequestFriendDto> getSendReqests(@PathVariable("userId") Long userId) {
         return  friendRequestService.getMySendFriendRequest(userId);
-    }*/
-   /* @GetMapping("/received/{userId}")
+    }
+    @GetMapping("/received/{userId}")
     public List<RequestFriendDto> getReceivedReqests(@PathVariable("userId") Long userId) {
         return  friendRequestService.getReceivedFriendRequest(userId);
-    }*/
+    }
 }
