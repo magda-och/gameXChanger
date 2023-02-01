@@ -23,6 +23,7 @@ public interface FriendRequestRepository extends JpaRepository<RequestFriend, Lo
     @Query("SELECT r FROM RequestFriend r where r.requestFriendId=:id")
     Optional<RequestFriend> getRequestFriendByRequestFriendId(@Param("id") Long id);
 
+
    // List<RequestFriend> getMySendFriendRequest(Long fromUserId);
    // List<RequestFriend> getReceivedFriendRequest(Long toUserId);
    // void removeFriendRequestById(Long friendRequestId);

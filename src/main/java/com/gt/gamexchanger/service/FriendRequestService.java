@@ -50,18 +50,11 @@ public class FriendRequestService {
         return requestFriendOptional.get();
     }
 
-   /* public boolean removeFriendRequestById(Long friendRequestId) {
-        if (getRequestById(friendRequestId).isPresent()) {
-            friendRequestRepository.removeFriendRequestById(friendRequestId);
+    public boolean removeFriendRequestById(Long friendRequestId) {
+        if (friendRequestRepository.getRequestFriendByRequestFriendId(friendRequestId).isPresent()) {
+            friendRequestRepository.deleteById(friendRequestId);
             return true;
         }
         return false;
-    }*/
-   /*
-   //poprawić do updateStatus w serwisie i dodac taka metode do repository
-   private Optional<RequestFriend> getRequestById(Long requestId) {
-        return Optional.ofNullable(friendRequestRepository.getRequestById(requestId));
-    }*/
-
-
+    }
 }

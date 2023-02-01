@@ -31,11 +31,11 @@ public class FriendRequestController {
         //requestGameDto.setRequestStatus(RequestStatus.WAITING);
         return friendRequestService.addFriendRequest(requestGameDto);
     }
-   /* @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/delete/{requestId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{requestId}")
     public boolean deleteRequest(@PathVariable("requestId") Long requestId) {
         return friendRequestService.removeFriendRequestById(requestId);
-    }*/
+    }
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/{requestId}")
     public void updateStatus(
