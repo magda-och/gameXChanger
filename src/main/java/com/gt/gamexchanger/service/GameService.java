@@ -119,7 +119,7 @@ public class GameService {
 
     public void borrowGame(Long gameId, String email) {
         Optional<Game> gameOP = gameRepository.findById(gameId);
-        Optional<User> userOP = userRepository.findByEmail(email);
+        Optional<User> userOP = userRepository.findUserByEmail(email);
         User user;
         Game game;
         if (gameOP.isPresent() && userOP.isPresent()) {
