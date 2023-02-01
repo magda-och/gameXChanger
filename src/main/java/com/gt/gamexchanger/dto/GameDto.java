@@ -5,22 +5,19 @@ import com.gt.gamexchanger.enums.Visibility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
-
-import java.io.File;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class GameDto {
 
-    private Long id;
+   private Long id;
     private String name;
     private String description;
     private GameStatus gameStatus;
-  //  private File gamePhoto;
-   private Long ownerId;
-   private Long actualUserId;
+ // private byte[] image;
+  private UserDto ownerDto;
+  private UserDto actualUserDto;
    private Visibility visibility;
 
 

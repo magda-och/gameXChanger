@@ -2,28 +2,38 @@ package com.gt.gamexchanger.model;
 
 import com.gt.gamexchanger.enums.GameStatus;
 import com.gt.gamexchanger.enums.Visibility;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.File;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity(name = "games")
 public class Game {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String description;
+   @Enumerated(EnumType.STRING)
+   @Column(name = "Game Status")
     private GameStatus gameStatus;
- //   private File gamePhoto;
-    private Long ownerId;
-    private Long actualUserId;
-    private Visibility visibility;
-//
+    //   @Lob
+    //  private Byte[] image;
 
+     @Enumerated(EnumType.STRING)
+    private Visibility visibility;
+
+
+    @ManyToOne
+    @JoinColumn(name = "ownerId")
+    private User owner;
+    @ManyToOne
+    private User actualUser;
 
 
 }
