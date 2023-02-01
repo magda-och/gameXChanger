@@ -1,15 +1,8 @@
-//package com.gt.gamexchanger.controller;
-//<<<<<<< HEAD
-//
-//import com.gt.gamexchanger.dto.RequestGameDto;
-//import com.gt.gamexchanger.enums.RequestStatus;
-//import com.gt.gamexchanger.service.GameRequestService;
-//=======
+package com.gt.gamexchanger.controller;
 /*
 import com.gt.gamexchanger.dto.RequestFriendDto;
 import com.gt.gamexchanger.enums.RequestStatus;
 import com.gt.gamexchanger.service.FriendRequestService;
->>>>>>> master
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;

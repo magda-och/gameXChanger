@@ -1,6 +1,8 @@
 package com.gt.gamexchanger.repository;
 
+import com.gt.gamexchanger.model.Friend;
 import com.gt.gamexchanger.model.RequestFriend;
+import com.gt.gamexchanger.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
