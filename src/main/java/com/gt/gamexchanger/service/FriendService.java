@@ -40,13 +40,16 @@ public class FriendService {
         UserDto userDto2 = userDtoMapper.toDto(user);
 
         Friend friend = new Friend();
-        User user1 = userRepository.findUserByEmail(userDto1.getEmail());
-        User user2 = userRepository.findUserByEmail(userDto2.getEmail());
-        User firstUser = user1;
-        User secondUser = user2;
-        if (user1.getId() > user2.getId()) {
-            firstUser = user2;
-            secondUser = user1;
+        Optional<User> user1 = userRepository.findUserByEmail(userDto1.getEmail());
+        Optional<User> user2 = userRepository.findUserByEmail(userDto2.getEmail());
+        if(user1.isEmpty() || user2.isEmpty()){
+            throw new RuntimeException("no such users");
+        }
+        User firstUser = user1.get();
+        User secondUser = user2.get();
+        if (user1.get().getId() > user2.get().getId()) {
+            firstUser = user2.get();
+            secondUser = user1.get();
         }
 
         if (!(friendRepository.existsByFirstUserAndSecondUser(firstUser, secondUser))) {

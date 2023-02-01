@@ -17,9 +17,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //    List<User> searchByFirstAndOrLastName(@Param("firstName") String firstName,
 //                                          @Param ("lastName") String lastName);
 //}
-List<User> findUsersByName(String name);
 
-    User findUserByEmail(String email);
+    Optional<User> findUserByEmail(String email);
 
     User findUserById(Long id);
 }
