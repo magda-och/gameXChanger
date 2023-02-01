@@ -22,9 +22,9 @@ public class FriendRequestService {
     }
 
    public RequestFriendDto addFriendRequest(RequestFriendDto requestFriendDto) {
-        var requestFreind = dtoMapper.toDomainObject(requestFriendDto);
-        friendRequestRepository.save(requestFreind);
-        return dtoMapper.toDto(requestFreind);
+        var requestFriend = dtoMapper.toDomainObject(requestFriendDto);
+        friendRequestRepository.save(requestFriend);
+        return dtoMapper.toDto(requestFriend);
     }
     public List<RequestFriendDto> getAllRequest() {
 
