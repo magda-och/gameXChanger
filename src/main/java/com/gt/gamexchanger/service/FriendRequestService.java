@@ -40,6 +40,7 @@ public class FriendRequestService {
             receivedRequests.add(requestFreind);
             toUser.get().setReceivedRequests(receivedRequests);
         }
+        //
         return dtoMapper.toDto(requestFreind);
     }
     public List<RequestFriendDto> getAllRequest() {
