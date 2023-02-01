@@ -1,7 +1,6 @@
 package com.gt.gamexchanger.controller;
 
 import com.gt.gamexchanger.dto.GameDto;
-import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.service.GameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,7 @@ import static org.mockito.Mockito.*;
 
 class GameControllerTest {
 
-    GameService gameService;
+    GameService gameService ;
     UnderTest underTest;
     GameDto gameDto;
     UserDto userDto;
