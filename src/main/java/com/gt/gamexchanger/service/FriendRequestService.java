@@ -29,16 +29,16 @@ public class FriendRequestService {
         var requestFreind = dtoMapper.toDomainObject(requestFriendDto);
         friendRequestRepository.save(requestFreind);
         Optional<User> fromUser= userRepository.findUserById(requestFriendDto.getFromUserId().getId());
-       Optional<User> toUser= userRepository.findUserById(requestFriendDto.getToUserId().getId());
+        Optional<User> toUser= userRepository.findUserById(requestFriendDto.getToUserId().getId());
         if(fromUser.isPresent()){
             List<RequestFriend> sendRequests =fromUser.get().getSendRequests();
             sendRequests.add(requestFreind);
             fromUser.get().setSendRequests(sendRequests);
         }
         if(toUser.isPresent()){
-            List<RequestFriend> fromRequests =toUser.get().getReceivedRequests();
-            fromRequests.add(requestFreind);
-            toUser.get().setReceivedRequests(fromRequests);
+            List<RequestFriend> receivedRequests =toUser.get().getReceivedRequests();
+            receivedRequests.add(requestFreind);
+            toUser.get().setReceivedRequests(receivedRequests);
         }
         return dtoMapper.toDto(requestFreind);
     }
