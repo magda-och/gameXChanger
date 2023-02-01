@@ -22,10 +22,11 @@ public class UserService {
         this.dtoMapper = dtoMapper;
     }
 
-    public void addUser(UserDto userDto) {
+    public UserDto addUser(UserDto userDto) {
         if (areFieldsInRegistrationFilledCorrectly(userDto)) {
             User user = dtoMapper.toDomainObject(userDto);
             userRepository.save(user);
+            return dtoMapper.toDto(user);
         } else {
             throw new NoDataFoundException();
         }
