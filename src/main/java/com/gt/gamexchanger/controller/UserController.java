@@ -28,12 +28,12 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
-    public void addUser(@RequestBody UserDto userDto) {
-        userService.addUser(userDto);
+    public UserDto addUser(@RequestBody UserDto userDto) {
+        return userService.addUser(userDto);
     }
 
     @ResponseStatus(code = HttpStatus.OK)
-    @GetMapping("/find")
+    @GetMapping("/name")
     public @ResponseBody List<UserDto> findUserByName(@RequestParam(value = "firstName", required = false) String firstName,
                                                       @RequestParam(value = "lastName", required = false) String lastName) {
         return userService.searchUsers(firstName, lastName);
