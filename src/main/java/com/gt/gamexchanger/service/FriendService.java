@@ -35,8 +35,11 @@ public class FriendService {
 
     public void saveFriend(UserDto userDto1, long id) throws NullPointerException {
 
-        User user = userRepository.findUserById(id);
-
+        Optional<User> userOptional = userRepository.findUserById(id);
+        if(userOptional.isEmpty()){
+            throw  new RuntimeException("no such user");
+        }
+        User user = userOptional.get();
         UserDto userDto2 = userDtoMapper.toDto(user);
 
         Friend friend = new Friend();
@@ -53,6 +56,7 @@ public class FriendService {
         }
 
         if (!(friendRepository.existsByFirstUserAndSecondUser(firstUser, secondUser))) {
+
             friend.setCreatedDate(new Date());
             friend.setFirstUser(firstUser);
             friend.setSecondUser(secondUser);
@@ -61,15 +65,21 @@ public class FriendService {
     }
 
     public List<UserDto> getFriends(Long id) {
-        User currentUser = userRepository.findUserById(id);
+        Optional<User> currentUserOptional = userRepository.findUserById(id);
+        if(currentUserOptional.isEmpty()){
+            throw  new RuntimeException("no such user");
+        }
+        User currentUser = currentUserOptional.get();
         List<Friend> friendsByFirstUser = friendRepository.findByFirstUser(currentUser);
         List<Friend> friendsBySecondUser = friendRepository.findBySecondUser(currentUser);
         List<User> friendUsers = new ArrayList<>();
         for (Friend friend : friendsByFirstUser) {
-            friendUsers.add(userRepository.findUserById(friend.getSecondUser().getId()));
+            Optional<User> user1Optional = userRepository.findUserById(friend.getSecondUser().getId());
+            user1Optional.ifPresent(friendUsers::add);
         }
         for (Friend friend : friendsBySecondUser) {
-            friendUsers.add(userRepository.findUserById(friend.getFirstUser().getId()));
+            Optional<User> user2Optional = userRepository.findUserById(friend.getFirstUser().getId());
+            user2Optional.ifPresent(friendUsers::add);
         }
         return friendUsers.stream().map(userDtoMapper::toDto).collect(Collectors.toList());
     }
