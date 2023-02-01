@@ -28,5 +28,11 @@ public class User {
     List<Game> myGames;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "actualUser")
     List<Game> borrowedGames;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fromUserId")
+    List<RequestFriend> sendRequests;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "toUserId")
+    List<RequestFriend> receivedRequests;
+
+
 
 }

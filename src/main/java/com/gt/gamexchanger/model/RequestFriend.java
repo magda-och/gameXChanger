@@ -21,11 +21,10 @@ public class RequestFriend {
     @Enumerated
     private RequestStatus requestStatus;
     @ManyToOne
-    @JoinColumn
+    @JsonIgnore
     private User fromUserId;
     @ManyToOne
-    @JoinColumn
-
+    @JsonIgnore
     private User toUserId;
     private String message;
 
