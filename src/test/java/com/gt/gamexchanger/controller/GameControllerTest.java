@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 
 class GameControllerTest {
-
     GameService gameService ;
     UnderTest underTest;
     GameDto gameDto;
