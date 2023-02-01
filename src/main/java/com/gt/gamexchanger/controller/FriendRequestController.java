@@ -1,6 +1,7 @@
 package com.gt.gamexchanger.controller;
 
 import com.gt.gamexchanger.dto.RequestFriendDto;
+import com.gt.gamexchanger.enums.RequestStatus;
 import com.gt.gamexchanger.model.RequestFriend;
 import com.gt.gamexchanger.service.FriendRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +36,14 @@ public class FriendRequestController {
     public boolean deleteRequest(@PathVariable("requestId") Long requestId) {
         return friendRequestService.removeFriendRequestById(requestId);
     }*/
-   /* @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PatchMapping("/updateRequest/{requestId}")
-    public void updateRequest(
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping("/{requestId}")
+    public void updateStatus(
             @PathVariable("requestId") Long requestId,
-            @RequestBody RequestFriendDto requestGameDto) {
+            @RequestBody RequestStatus requestStatus) {
         //requestGameDto.setRequestStatus(RequestStatus.ACCEPTED);
-        friendRequestService.updateRequest(requestId, requestGameDto);
-    }*/
+        friendRequestService.updateStatus(requestId, requestStatus);
+    }
 
     /*@GetMapping("/send/{userId}")
     public List<RequestFriendDto> getSendReqests(@PathVariable("userId") Long userId) {

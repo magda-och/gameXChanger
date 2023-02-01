@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface FriendRequestRepository extends JpaRepository<RequestFriend, Long> {
     @Query("SELECT r FROM RequestFriend r")
@@ -17,6 +19,9 @@ public interface FriendRequestRepository extends JpaRepository<RequestFriend, Lo
     List<RequestFriend> getRequestFriendsByFromUserId(@Param("id") Long id);*/
    /* @Query("SELECT r FROM RequestFriend r where r.toUserId=:id")
     List<RequestFriend> getRequestFriendsByToUserId(@Param("id") Long id);*/
+
+    @Query("SELECT r FROM RequestFriend r where r.requestFriendId=:id")
+    Optional<RequestFriend> getRequestFriendByRequestFriendId(@Param("id") Long id);
 
    // List<RequestFriend> getMySendFriendRequest(Long fromUserId);
    // List<RequestFriend> getReceivedFriendRequest(Long toUserId);

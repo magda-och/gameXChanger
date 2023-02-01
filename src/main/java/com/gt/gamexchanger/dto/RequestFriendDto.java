@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RequestFriendDto {
 
-    private Long requestGameId;
+    private Long requestFriendId;
     private RequestStatus requestStatus;
     private User fromUserId;
     private User toUserId;

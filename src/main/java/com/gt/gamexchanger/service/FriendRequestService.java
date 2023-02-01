@@ -1,5 +1,6 @@
 package com.gt.gamexchanger.service;
 
+import com.gt.gamexchanger.enums.RequestStatus;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.RequestFriend;
 import com.gt.gamexchanger.dto.RequestFriendDto;
@@ -40,20 +41,14 @@ public class FriendRequestService {
                 .map(dtoMapper::toDto)
                 .toList();
     }*/
-
-    /*public void updateRequest(long requestId, RequestFriendDto requestFreindDto) {
-        var requestFriendOptional = getRequestById(requestId);
+    public RequestFriend updateStatus(Long requestId, RequestStatus requestStatus) {
+        Optional<RequestFriend> requestFriendOptional = friendRequestRepository.getRequestFriendByRequestFriendId(requestId);
         if (requestFriendOptional.isPresent()) {
-            var requestFreind = requestFriendOptional.get();
-            updateRequestStatus(requestFreindDto, requestFreind);
+            requestFriendOptional.get().setRequestStatus(requestStatus);
         }
-    }*/
-   /* private RequestFriend updateRequestStatus(RequestFriendDto requestFreindDto, RequestFriend requestFriend) {
-        if (requestFreindDto.getRequestStatus() != null) {
-            requestFriend.setRequestStatus(requestFreindDto.getRequestStatus());
-        }
-        return requestFriend;
-    }*/
+        friendRequestRepository.save(requestFriendOptional.get());
+        return requestFriendOptional.get();
+    }
 
    /* public boolean removeFriendRequestById(Long friendRequestId) {
         if (getRequestById(friendRequestId).isPresent()) {
@@ -62,7 +57,9 @@ public class FriendRequestService {
         }
         return false;
     }*/
-   /* private Optional<RequestFriend> getRequestById(Long requestId) {
+   /*
+   //poprawić do updateStatus w serwisie i dodac taka metode do repository
+   private Optional<RequestFriend> getRequestById(Long requestId) {
         return Optional.ofNullable(friendRequestRepository.getRequestById(requestId));
     }*/
 
