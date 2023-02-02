@@ -18,8 +18,8 @@ public class FriendDtoMapper implements DtoMapper<FriendDto, Friend> {
     public Friend toDomainObject(FriendDto dtoObject) {
         Friend friend = new Friend();
         friend.setCreatedDate(dtoObject.getCreatedDate());
-        friend.setFirstUser(dtoObject.getFirstUserId());
-        friend.setSecondUser(dtoObject.getSecondUserId());
+        friend.setFirstUser(dtoObject.getFirstUser());
+        friend.setSecondUser(dtoObject.getSecondUser());
         return friend;
     }
 }
