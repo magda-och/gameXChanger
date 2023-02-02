@@ -1,5 +1,6 @@
 package com.gt.gamexchanger.model;
 
+import com.gt.gamexchanger.enums.RequestStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,5 +28,8 @@ public class Friend {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "second_user_id", referencedColumnName = "id")
     User secondUser;
+
+    @Enumerated
+    RequestStatus requestStatus;
 
 }

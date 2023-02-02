@@ -56,7 +56,7 @@ public class FriendService {
         }
 
         if (!(friendRepository.existsByFirstUserAndSecondUser(firstUser, secondUser))) {
-
+            if()
             friend.setCreatedDate(new Date());
             friend.setFirstUser(firstUser);
             friend.setSecondUser(secondUser);
