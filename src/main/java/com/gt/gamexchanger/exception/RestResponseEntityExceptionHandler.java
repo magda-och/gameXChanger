@@ -34,4 +34,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(NoRequestExistException.class)
+    public ResponseEntity<Object> handleNoRequestExistException(
+            NoRequestExistException ex, WebRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestap", LocalDateTime.now());
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
 }
