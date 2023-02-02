@@ -13,6 +13,8 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User {
+
+    //todo dodać miasto do usera lub/i nr tel
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
