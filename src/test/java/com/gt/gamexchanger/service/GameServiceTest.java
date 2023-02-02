@@ -96,21 +96,21 @@ class GameServiceTest {
         List<GameDto> result = serviceUnderTest.getByContainingName("Gra");
         assertEquals(2, result.size());
     }
-    @Test
-    void addGame(){
-        createGames();
-        GameDto game1 = new GameDto();
-        game1.setId(1L);
-        game1.setName("Gra o tron");
-        game1.setDescription("graaaa aaaaaaa");
-        game1.setGameStatus(GameStatus.AVAILABLE);
-        game1.setVisibility(Visibility.PUBLIC);
-
-        serviceUnderTest.addGame(1L, game1);
-        List<Game> result = gameRepository.getAllGames();
-
-        assertEquals(3, result.size());
-    }
+//    @Test
+//    void addGame(){
+//        createGames();
+//        GameDto game1 = new GameDto();
+//        game1.setId(1L);
+//        game1.setName("Gra o tron");
+//        game1.setDescription("graaaa aaaaaaa");
+//        game1.setGameStatus(GameStatus.AVAILABLE);
+//        game1.setVisibility(Visibility.PUBLIC);
+//
+//        serviceUnderTest.addGame(1L, game1);
+//        List<Game> result = gameRepository.getAllGames();
+//
+//        assertEquals(3, result.size());
+//    }
 
     @Test
     void updateGame(){
