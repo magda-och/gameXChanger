@@ -3,6 +3,7 @@ package com.gt.gamexchanger.service;
 import com.gt.gamexchanger.dto.GameDto;
 import com.gt.gamexchanger.enums.GameStatus;
 import com.gt.gamexchanger.enums.Visibility;
+import com.gt.gamexchanger.exception.NoGameExists;
 import com.gt.gamexchanger.mapper.GameDtoMapper;
 import com.gt.gamexchanger.mapper.UserDtoMapper;
 import com.gt.gamexchanger.model.Game;
@@ -17,8 +18,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BooleanSupplier;
+
 @RunWith(MockitoJUnitRunner.class)
 class GameServiceTest {
 
@@ -60,7 +64,38 @@ class GameServiceTest {
     void deleteGame() {
         createGames();
         serviceUnderTest.deleteGame(1L);
-        assertEquals(1, serviceUnderTest.getAllGames().size());
+        assertEquals(2, serviceUnderTest.getAllGames().size());
+    }
+
+    @Test
+    void deleteGameException() {
+        createGames();
+        NoGameExists thrown = assertThrows(
+                NoGameExists.class,
+                () -> serviceUnderTest.deleteGame(6L)
+        );
+
+        assertEquals("No Game exist", thrown.getMessage());
+
+    }
+    @Test
+    void getMyGamesTest(){
+        createGames();
+       List<GameDto> result = serviceUnderTest.getAllMyGames(1L);
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void getBorrowedGames(){
+        createGames();
+        List<GameDto> result = serviceUnderTest.getAllBorrowedGame(2L);
+        assertEquals(1, result.size());
+    }
+    @Test
+    void findByContainingName(){
+        createGames();
+        List<GameDto> result = serviceUnderTest.getByContainingName("Gra");
+        assertEquals(2, result.size());
     }
 
     private void createGames() {
@@ -97,6 +132,24 @@ class GameServiceTest {
         game2.setGameStatus(GameStatus.AVAILABLE);
         game2.setVisibility(Visibility.PUBLIC);
         gameRepository.save(game2);
+
+        Game game3 = new Game();
+        game3.setId(2L);
+        game3.setName("Gra jakaś inna");
+        game3.setDescription("graaaa aaaaaaa");
+        game3.setOwner(user1);
+        game3.setActualUser(user2);
+        game3.setGameStatus(GameStatus.AVAILABLE);
+        game3.setVisibility(Visibility.PUBLIC);
+        gameRepository.save(game3);
+        List<Game> user1Games = new ArrayList<>();
+        user1Games.add(game1);
+        user1Games.add(game3);
+        user1.setMyGames(user1Games);
+
+        List<Game> user2Games = new ArrayList<>();
+        user2Games.add(game2);
+        user2.setMyGames(user2Games);
     }
 }
 

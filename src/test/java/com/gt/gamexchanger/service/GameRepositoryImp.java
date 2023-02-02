@@ -56,14 +56,14 @@ public class GameRepositoryImp implements GameRepository {
     @Override
     public List<Game> findAllByOwnerId(Long id) {
         return games.values().stream()
-                .filter(game -> Objects.equals(game.getOwner(), id))
+                .filter(game -> game.getOwner().getId().equals( id))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Game> getBorrowed(Long userId) {
         return games.values().stream()
-                .filter(g -> g.getActualUser().equals(userId) && !(g.getId().equals(userId)))
+                .filter(g -> g.getActualUser().getId().equals(userId) && !(g.getId().equals(userId)))
                 .collect(Collectors.toList());
     }
     @Override
@@ -78,7 +78,8 @@ public class GameRepositoryImp implements GameRepository {
 
     @Override
     public List<Game> findAllByNameContaining(String name) {
-        return null;
+        return games.values().stream().filter(game -> game.getName()
+                .contains(name)).collect(Collectors.toList());
     }
     @Override
     public void flush() {

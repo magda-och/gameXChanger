@@ -1,6 +1,7 @@
 package com.gt.gamexchanger.controller;
 
 import com.gt.gamexchanger.dto.GameDto;
+import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.service.GameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
