@@ -1,6 +1,7 @@
 package com.gt.gamexchanger.service;
 
 import com.gt.gamexchanger.enums.RequestStatus;
+import com.gt.gamexchanger.exception.NoRequestExistException;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.RequestFriend;
 import com.gt.gamexchanger.dto.RequestFriendDto;
@@ -61,16 +62,20 @@ public class FriendRequestService {
         Optional<RequestFriend> requestFriendOptional = friendRequestRepository.getRequestFriendByRequestFriendId(requestId);
         if (requestFriendOptional.isPresent()) {
             requestFriendOptional.get().setRequestStatus(requestStatus);
+            friendRequestRepository.save(requestFriendOptional.get());
+            return requestFriendOptional.get();
+        }else {
+            throw new NoRequestExistException();
         }
-        friendRequestRepository.save(requestFriendOptional.get());
-        return requestFriendOptional.get();
     }
 
     public boolean removeFriendRequestById(Long friendRequestId) {
         if (friendRequestRepository.getRequestFriendByRequestFriendId(friendRequestId).isPresent()) {
             friendRequestRepository.deleteById(friendRequestId);
             return true;
+        }else{
+            throw new NoRequestExistException();
         }
-        return false;
+
     }
 }
