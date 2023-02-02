@@ -46,8 +46,8 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
+    public Optional<UserDto> getUserById(Long id) {
+        return userRepository.findById(id).map(dtoMapper::toDto);
     }
 
     public void deleteUser(Long id) {
@@ -68,21 +68,22 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void changeUserFields(UserDto userDto, User user) {
-        if (userDto.getFirstName() != null) {
-            user.setFirstName(userDto.getFirstName());
+    public void changeUserFields(UserDto newUserDto, UserDto actualUserDto) {
+        if (newUserDto.getFirstName() != null) {
+            actualUserDto.setFirstName(newUserDto.getFirstName());
         }
-        if (userDto.getLastName() != null) {
-            user.setLastName(userDto.getLastName());
+        if (newUserDto.getLastName() != null) {
+            actualUserDto.setLastName(newUserDto.getLastName());
         }
     }
 
-    public void updateUser(Long userId, UserDto userDto) {
+    public void updateUser(Long userId, UserDto newUserDto) {
         var userOptional = getUserById(userId);
         if (userOptional.isPresent()) {
-            var user = userOptional.get();
-            changeUserFields(userDto, user);
-            userRepository.save(user);
+            var actualUserDto = userOptional.get();
+            changeUserFields(newUserDto, actualUserDto);
+            User userToSave = dtoMapper.toDomainObject(actualUserDto);
+            userRepository.save(userToSave);
         } else {
             throw new NoExistingUser();
         }
@@ -91,9 +92,10 @@ public class UserService {
     public void changePassword(Long userId, String newPassword) {
         var userOptional = getUserById(userId);
         if (userOptional.isPresent()) {
-            var user = userOptional.get();
-            user.setPassword(newPassword);
-            userRepository.save(user);
+            var actualUserDto = userOptional.get();
+            actualUserDto.setPassword(newPassword);
+            User userToSave = dtoMapper.toDomainObject(actualUserDto);
+            userRepository.save(userToSave);
         } else {
             throw new NoExistingUser();
         }
