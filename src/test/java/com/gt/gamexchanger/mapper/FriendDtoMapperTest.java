@@ -1,4 +1,3 @@
-
 package com.gt.gamexchanger.mapper;
 
 import com.gt.gamexchanger.dto.FriendDto;
@@ -8,8 +7,9 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class FriendDtoMapperTest {
 /*
+class FriendDtoMapperTest {
+
     FriendDtoMapper friendDtoMapper;
 
     @Test
@@ -42,6 +42,5 @@ class FriendDtoMapperTest {
 
         assertThat(friend.getFirstUserId()).isEqualTo(1);
         assertThat(friend.getSecondUserId()).isEqualTo(2);
-    }*/
-
-}
+    }
+}*/
