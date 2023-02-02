@@ -13,8 +13,8 @@ public class FriendDto {
 
     private Date createdDate;
 
-    private User firstUserId;
+    private User firstUser;
 
-    private User secondUserId;
+    private User secondUser;
 
 }
