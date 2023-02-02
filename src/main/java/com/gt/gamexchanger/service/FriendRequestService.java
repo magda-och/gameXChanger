@@ -44,7 +44,6 @@ public class FriendRequestService {
         return dtoMapper.toDto(requestFreind);
     }
     public List<RequestFriendDto> getAllRequest() {
-
         return friendRequestRepository.getAllRequest().stream().map(dtoMapper::toDto).collect(Collectors.toList());
     }
 

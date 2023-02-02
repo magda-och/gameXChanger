@@ -1,5 +1,6 @@
 package com.gt.gamexchanger.repository;
 
+import com.gt.gamexchanger.dto.RequestFriendDto;
 import com.gt.gamexchanger.model.Friend;
 import com.gt.gamexchanger.model.RequestFriend;
 import com.gt.gamexchanger.model.User;
@@ -22,7 +23,7 @@ public interface FriendRequestRepository extends JpaRepository<RequestFriend, Lo
 
     @Query("SELECT r FROM RequestFriend r where r.requestFriendId=:id")
     Optional<RequestFriend> getRequestFriendByRequestFriendId(@Param("id") Long id);
-
+    //RequestFriendDto addFriendRequest(RequestFriendDto requestFriendDto);
 }
 //dodac exception, dopisac testy
 //prawdopodobnie listy requestów w user oraz listy gier nie są potrzebne
