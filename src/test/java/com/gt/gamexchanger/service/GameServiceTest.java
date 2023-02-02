@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.BooleanSupplier;
 
 @RunWith(MockitoJUnitRunner.class)
 class GameServiceTest {
@@ -43,7 +42,7 @@ class GameServiceTest {
     void getAllGames() {
         createGames();
         List<GameDto> list = serviceUnderTest.getAllGames();
-        assertEquals(2, list.size());
+        assertEquals(3, list.size());
     }
 
     @Test
@@ -96,6 +95,38 @@ class GameServiceTest {
         createGames();
         List<GameDto> result = serviceUnderTest.getByContainingName("Gra");
         assertEquals(2, result.size());
+    }
+    @Test
+    void addGame(){
+        createGames();
+        GameDto game1 = new GameDto();
+        game1.setId(1L);
+        game1.setName("Gra o tron");
+        game1.setDescription("graaaa aaaaaaa");
+        game1.setGameStatus(GameStatus.AVAILABLE);
+        game1.setVisibility(Visibility.PUBLIC);
+
+        serviceUnderTest.addGame(1L, game1);
+        List<Game> result = gameRepository.getAllGames();
+
+        assertEquals(3, result.size());
+    }
+
+    @Test
+    void updateGame(){
+        createGames();
+        GameDto game1 = new GameDto();
+        game1.setId(1L);
+        game1.setName("updateowana");
+        game1.setDescription("up up up");
+        game1.setGameStatus(GameStatus.LENT);
+        game1.setVisibility(Visibility.PRIVATE);
+        serviceUnderTest.updateGame(1L, game1);
+
+        Game gameDto = gameRepository.getGameById(1L);
+
+        assertEquals("updateowana", gameRepository.getGames().get(1L).getName());
+        assertEquals("up up up", gameRepository.getGames().get(1L).getDescription());
     }
 
     private void createGames() {
