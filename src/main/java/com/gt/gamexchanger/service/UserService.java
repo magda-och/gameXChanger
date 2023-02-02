@@ -68,34 +68,32 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void changeUserFields(UserDto newUserDto, UserDto actualUserDto) {
+    public void changeUserFields(UserDto newUserDto, User modifiedUser) {
         if (newUserDto.getFirstName() != null) {
-            actualUserDto.setFirstName(newUserDto.getFirstName());
+            modifiedUser.setFirstName(newUserDto.getFirstName());
         }
         if (newUserDto.getLastName() != null) {
-            actualUserDto.setLastName(newUserDto.getLastName());
+            modifiedUser.setLastName(newUserDto.getLastName());
         }
     }
 
     public void updateUser(Long userId, UserDto newUserDto) {
-        var userOptional = getUserById(userId);
+        var userOptional = userRepository.findUserById(userId);
         if (userOptional.isPresent()) {
-            var actualUserDto = userOptional.get();
-            changeUserFields(newUserDto, actualUserDto);
-            User userToSave = dtoMapper.toDomainObject(actualUserDto);
-            userRepository.save(userToSave);
+            var modifiedUser = userOptional.get();
+            changeUserFields(newUserDto, modifiedUser);
+            userRepository.save(modifiedUser);
         } else {
             throw new NoExistingUser();
         }
     }
 
     public void changePassword(Long userId, String newPassword) {
-        var userOptional = getUserById(userId);
+        var userOptional = userRepository.findUserById(userId);
         if (userOptional.isPresent()) {
-            var actualUserDto = userOptional.get();
-            actualUserDto.setPassword(newPassword);
-            User userToSave = dtoMapper.toDomainObject(actualUserDto);
-            userRepository.save(userToSave);
+            var modifiedUser = userOptional.get();
+            modifiedUser.setPassword(newPassword);
+            userRepository.save(modifiedUser);
         } else {
             throw new NoExistingUser();
         }
