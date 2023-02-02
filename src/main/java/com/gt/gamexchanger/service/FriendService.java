@@ -33,7 +33,7 @@ public class FriendService {
         this.userRepository = userRepository;
     }
 
-    public void saveFriend(UserDto userDto1, long id) throws NullPointerException {
+    public Friend saveFriend(UserDto userDto1, long id) throws NullPointerException {
 
         Optional<User> userOptional = userRepository.findUserById(id);
         if(userOptional.isEmpty()){
@@ -60,8 +60,9 @@ public class FriendService {
             friend.setCreatedDate(new Date());
             friend.setFirstUser(firstUser);
             friend.setSecondUser(secondUser);
-            friendRepository.save(friend);
+
         }
+        return friendRepository.save(friend);
     }
 
     public List<UserDto> getFriends(Long id) {
