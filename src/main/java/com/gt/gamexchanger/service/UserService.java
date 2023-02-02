@@ -46,8 +46,8 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
+    public Optional<UserDto> getUserById(Long id) {
+        return userRepository.findById(id).map(dtoMapper::toDto);
     }
 
     public void deleteUser(Long id) {
@@ -68,32 +68,32 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void changeUserFields(UserDto userDto, User user) {
-        if (userDto.getFirstName() != null) {
-            user.setFirstName(userDto.getFirstName());
+    public void changeUserFields(UserDto newUserDto, User modifiedUser) {
+        if (newUserDto.getFirstName() != null) {
+            modifiedUser.setFirstName(newUserDto.getFirstName());
         }
-        if (userDto.getLastName() != null) {
-            user.setLastName(userDto.getLastName());
+        if (newUserDto.getLastName() != null) {
+            modifiedUser.setLastName(newUserDto.getLastName());
         }
     }
 
-    public void updateUser(Long userId, UserDto userDto) {
-        var userOptional = getUserById(userId);
+    public void updateUser(Long userId, UserDto newUserDto) {
+        var userOptional = userRepository.findUserById(userId);
         if (userOptional.isPresent()) {
-            var user = userOptional.get();
-            changeUserFields(userDto, user);
-            userRepository.save(user);
+            var modifiedUser = userOptional.get();
+            changeUserFields(newUserDto, modifiedUser);
+            userRepository.save(modifiedUser);
         } else {
             throw new NoExistingUser();
         }
     }
 
     public void changePassword(Long userId, String newPassword) {
-        var userOptional = getUserById(userId);
+        var userOptional = userRepository.findUserById(userId);
         if (userOptional.isPresent()) {
-            var user = userOptional.get();
-            user.setPassword(newPassword);
-            userRepository.save(user);
+            var modifiedUser = userOptional.get();
+            modifiedUser.setPassword(newPassword);
+            userRepository.save(modifiedUser);
         } else {
             throw new NoExistingUser();
         }
