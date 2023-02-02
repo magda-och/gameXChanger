@@ -3,13 +3,16 @@ package com.gt.gamexchanger.service;
 import com.gt.gamexchanger.enums.RequestStatus;
 import com.gt.gamexchanger.exception.NoRequestExistException;
 import com.gt.gamexchanger.mapper.DtoMapper;
+import com.gt.gamexchanger.model.Friend;
 import com.gt.gamexchanger.model.RequestFriend;
 import com.gt.gamexchanger.dto.RequestFriendDto;
 import com.gt.gamexchanger.model.User;
+import com.gt.gamexchanger.repository.FriendRepository;
 import com.gt.gamexchanger.repository.FriendRequestRepository;
 import com.gt.gamexchanger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,12 +21,15 @@ import java.util.stream.Collectors;
 public class FriendRequestService {
     private final FriendRequestRepository friendRequestRepository;
     private final UserRepository userRepository;
+
+    private final FriendRepository friendRepository;
     private final DtoMapper<RequestFriendDto, RequestFriend> dtoMapper;
 
-    public FriendRequestService(FriendRequestRepository friendRequestRepository, UserRepository userRepository, DtoMapper<RequestFriendDto, RequestFriend> dtoMapper) {
+    public FriendRequestService(FriendRequestRepository friendRequestRepository, UserRepository userRepository, DtoMapper<RequestFriendDto, RequestFriend> dtoMapper, FriendRepository friendRepository) {
         this.friendRequestRepository = friendRequestRepository;
         this.userRepository=userRepository;
         this.dtoMapper = dtoMapper;
+        this.friendRepository = friendRepository;
     }
 
    public RequestFriendDto addFriendRequest(RequestFriendDto requestFriendDto) {
@@ -63,6 +69,13 @@ public class FriendRequestService {
         if (requestFriendOptional.isPresent()) {
             requestFriendOptional.get().setRequestStatus(requestStatus);
             friendRequestRepository.save(requestFriendOptional.get());
+            if(requestStatus.equals(RequestStatus.ACCEPTED)){
+                Friend friend = new Friend();
+                friend.setFirstUser(requestFriendOptional.get().getFromUserId());
+                friend.setSecondUser(requestFriendOptional.get().getToUserId());
+                friend.setCreatedDate(new Date());
+                friendRepository.save(friend);
+            }
             return requestFriendOptional.get();
         }else {
             throw new NoRequestExistException();
