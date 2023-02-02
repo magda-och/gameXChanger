@@ -29,7 +29,4 @@ public class Friend {
     @JoinColumn(name = "second_user_id", referencedColumnName = "id")
     User secondUser;
 
-    @Enumerated
-    RequestStatus requestStatus;
-
 }

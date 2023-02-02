@@ -2,10 +2,12 @@ package com.gt.gamexchanger.service;
 
 import com.gt.gamexchanger.dto.FriendDto;
 import com.gt.gamexchanger.dto.UserDto;
+import com.gt.gamexchanger.enums.RequestStatus;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.Friend;
 import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.repository.FriendRepository;
+import com.gt.gamexchanger.repository.FriendRequestRepository;
 import com.gt.gamexchanger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +24,21 @@ public class FriendService {
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
 
+  //  private final FriendRequestRepository friendRequestRepository;
+
     private final DtoMapper<FriendDto, Friend> friendDtoMapper;
     private final DtoMapper<UserDto, User> userDtoMapper;
 
     public FriendService(FriendRepository friendRepository,
-                         UserRepository userRepository, DtoMapper<FriendDto, Friend> friendDtoMapper, DtoMapper<UserDto, User> userDtoMapper) {
+                         UserRepository userRepository,
+                         DtoMapper<FriendDto, Friend> friendDtoMapper,
+                         DtoMapper<UserDto, User> userDtoMapper/*,
+                         FriendRequestRepository friendRequestRepository*/) {
         this.friendRepository = friendRepository;
         this.friendDtoMapper = friendDtoMapper;
         this.userDtoMapper = userDtoMapper;
         this.userRepository = userRepository;
+    //    this.friendRequestRepository = friendRequestRepository;
     }
 
     public Friend saveFriend(UserDto userDto1, long id) throws NullPointerException {
@@ -56,10 +64,10 @@ public class FriendService {
         }
 
         if (!(friendRepository.existsByFirstUserAndSecondUser(firstUser, secondUser))) {
-            if()
-            friend.setCreatedDate(new Date());
-            friend.setFirstUser(firstUser);
-            friend.setSecondUser(secondUser);
+            /*if(friendRequestRepository.*/
+                friend.setCreatedDate(new Date());
+                friend.setFirstUser(firstUser);
+                friend.setSecondUser(secondUser);
 
         }
         return friendRepository.save(friend);
