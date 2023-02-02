@@ -19,7 +19,7 @@ public class GameController {
         this.gameService = gameService;
     }
 
-   @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{ownerId}")
     public GameDto addGame(@PathVariable("ownerId") Long ownerId,
                            @RequestBody GameDto gameDto) {
@@ -31,7 +31,7 @@ public class GameController {
         return gameService.getGameById(id);
     }
 
- @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping()
     public List<GameDto> getAllGames() {
         return gameService.getAllGames();
@@ -48,15 +48,16 @@ public class GameController {
         return gameService.getGamesByName(name);
     }
 
-    @GetMapping("/searchName")
-    public List<GameDto> getGamesByContainingName(@RequestParam(value = "name") String name) {
-        return gameService.getByContainingName(name);
-    }
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{gameId}")
     public String deleteGame(@PathVariable Long gameId) {
         gameService.deleteGame(gameId);
         return "Game has already deleted";
+    }
+
+    @GetMapping("/searchName")
+    public List<GameDto> getGamesByContainingName(@RequestParam(value = "name") String name) {
+        return gameService.getByContainingName(name);
     }
 
     //       update game
@@ -67,18 +68,20 @@ public class GameController {
                            @RequestBody GameDto gameDto) {
         gameService.updateGame(gameId, gameDto);
     }
+
     @GetMapping("/myGames/{userId}")
     public List<GameDto> getMyGames(@PathVariable("userId") Long userId) {
-        return  gameService.getAllMyGames(userId);
-    }
-    @GetMapping("/borrowedGames/{userId}")
-    public List<GameDto> getBorrowedGames(@PathVariable("userId") Long userId) {
-        return  gameService.getAllBorrowedGame(userId);
+        return gameService.getAllMyGames(userId);
     }
 
-    @PatchMapping("/borrow/{gameId}")
+    @GetMapping("/borrowedGames/{userId}")
+    public List<GameDto> getBorrowedGames(@PathVariable("userId") Long userId) {
+        return gameService.getAllBorrowedGame(userId);
+    }
+
+    @PatchMapping("/borrowGame/{gameId}")
     public void borrowGame(@PathVariable("gameId") Long gameId,
-                           @RequestBody String email){
+                           @RequestBody String email) {
         gameService.borrowGame(gameId, email);
     }
 }

@@ -61,12 +61,13 @@ public class GameService {
         return gameRepository.findById(id);
     }
 
-    public void deleteGame(Long id) {
+    public boolean deleteGame(Long id) {
         if (getGameById(id).isPresent()) {
             gameRepository.deleteById(id);
         } else {
             throw new NoGameExists();
         }
+        return false;
     }
 
     public void updateGame(Long gameId, GameDto gameDto) {
