@@ -69,7 +69,7 @@ public class FriendRequestService {
         if (requestFriendOptional.isPresent()) {
             requestFriendOptional.get().setRequestStatus(requestStatus);
             friendRequestRepository.save(requestFriendOptional.get());
-            if(requestFriendOptional.get().equals(RequestStatus.ACCEPTED)){
+            if(requestStatus.equals(RequestStatus.ACCEPTED)){
                 Friend friend = new Friend();
                 friend.setFirstUser(requestFriendOptional.get().getFromUserId());
                 friend.setSecondUser(requestFriendOptional.get().getToUserId());
