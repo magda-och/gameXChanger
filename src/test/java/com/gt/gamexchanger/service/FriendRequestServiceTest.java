@@ -2,6 +2,7 @@ package com.gt.gamexchanger.service;
 
 import com.gt.gamexchanger.dto.RequestFriendDto;
 import com.gt.gamexchanger.dto.UserDto;
+import com.gt.gamexchanger.enums.RequestStatus;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.RequestFriend;
 import com.gt.gamexchanger.model.User;
@@ -11,10 +12,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import static org.mockito.Mockito.verify;
+
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class FriendRequestServiceTest {
     private FriendRequestService friendRequestService;
@@ -42,13 +47,28 @@ class FriendRequestServiceTest {
 
     @Test
     void addFriendRequest() {
-      //  friendRequestService.addFriendRequest(requestFriendDto);
-        //verify(friendRequestRepository).save(requestFriendDto.)
+       // friendRequestService.addFriendRequest(requestFriendDto);
+       // verify(friendRequestRepository).save(Mockito.isA(RequestFriend.class));
     }
     @Test
     void getAllRequest() {
-        friendRequestService.getAllRequest();
-        verify(friendRequestRepository).getAllRequest();
+        RequestFriend rf1 = new RequestFriend(1L, RequestStatus.WAITING,null,null,"cos");
+        RequestFriend rf2 = new RequestFriend(2L,RequestStatus.WAITING,null,null,"cos2");
+        List<RequestFriend> r= Arrays.asList(rf1, rf2);
+
+        RequestFriendDto rfd1 = new RequestFriendDto(1L, RequestStatus.WAITING,null,null,"cos");
+        RequestFriendDto rfd2 = new RequestFriendDto(2L,RequestStatus.WAITING,null,null,"cos2");
+        List<RequestFriendDto> expected=Arrays.asList(rfd1,rfd2);
+
+        when(friendRequestRepository.getAllRequest()).thenReturn(r);
+        when(dtoMapper.toDto(rf1)).thenReturn(rfd1);
+        when(dtoMapper.toDto(rf2)).thenReturn(rfd2);
+        when(friendRequestRepository.getAllRequest()).thenReturn(r);;
+
+        assertEquals(expected, friendRequestService.getAllRequest());
+
+        verify(friendRequestRepository, times(1)).getAllRequest();
+        verify(dtoMapper, times(2)).toDto(Mockito.isA(RequestFriend.class));
     }
 
     @Test
