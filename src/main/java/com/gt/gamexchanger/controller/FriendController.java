@@ -34,10 +34,10 @@ public class FriendController {
         return new ResponseEntity<>(myFriends, HttpStatus.OK);
     }
 
-    @DeleteMapping("remove/{id}")
-    public ResponseEntity<?> remove(@PathVariable String id) {
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> remove(@PathVariable Long userId, @RequestParam Long currentUserId) {
         try{
-            friendService.deleteFriends(Long.valueOf(id));
+            friendService.deleteFriends(userId, currentUserId);
             return ResponseEntity.noContent().build();
         }
         catch (EmptyResultDataAccessException e){

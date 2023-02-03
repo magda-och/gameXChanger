@@ -2,12 +2,12 @@ package com.gt.gamexchanger.service;
 
 import com.gt.gamexchanger.dto.FriendDto;
 import com.gt.gamexchanger.dto.UserDto;
-import com.gt.gamexchanger.enums.RequestStatus;
+import com.gt.gamexchanger.exception.NoExistingFriend;
+import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.Friend;
 import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.repository.FriendRepository;
-import com.gt.gamexchanger.repository.FriendRequestRepository;
 import com.gt.gamexchanger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -76,7 +76,7 @@ public class FriendService {
     public List<UserDto> getFriends(Long id) {
         Optional<User> currentUserOptional = userRepository.findUserById(id);
         if(currentUserOptional.isEmpty()){
-            throw  new RuntimeException("no such user");
+            throw  new NoExistingUser();
         }
         User currentUser = currentUserOptional.get();
         List<Friend> friendsByFirstUser = friendRepository.findByFirstUser(currentUser);
@@ -90,11 +90,25 @@ public class FriendService {
             Optional<User> user2Optional = userRepository.findUserById(friend.getFirstUser().getId());
             user2Optional.ifPresent(friendUsers::add);
         }
+        if(friendUsers.isEmpty()){
+            throw new NoExistingFriend();
+        }
         return friendUsers.stream().map(userDtoMapper::toDto).collect(Collectors.toList());
     }
 
-    public void deleteFriends(Long valueOf) {
+    public void deleteFriends(Long userId, Long currentUserId) {
+        Optional<User> user = userRepository.findUserById(userId);
+        Optional<User> currentUser = userRepository.findUserById(currentUserId);
 
+        if(user.isPresent() && currentUser.isPresent()){
+            if(friendRepository.existsByFirstUserAndSecondUser(user.get(), currentUser.get())){
+                Friend friend = friendRepository.findFriendByFirstUserAndSecondUser(user.get(), currentUser.get());
+                friendRepository.delete(friend);
+                friendRepository.flush();
+            }
+        }else{
+            throw new NoExistingFriend();
+        }
     }
 }
 
