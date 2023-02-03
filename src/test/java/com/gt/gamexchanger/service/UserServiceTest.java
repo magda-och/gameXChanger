@@ -78,9 +78,12 @@ public class UserServiceTest {
     @Test
     void getUserById_userAdded_shouldFindProperly() {
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(testingUser));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(testingUser)); //testedUser
         when(dtoMapper.toDto(testingUser)).thenReturn(testingUserDto);
 
-        assertEquals(testingUserDto, userService.getUserById(1L).get());
+        assertEquals(testingUserDto, userService.getUserById(1L).get()); // konwencja taka sama ma być given when then
+        //  model i dto moze byc tworzony, reszta mock
+        // współna konwencja do nazw testów do endpointów, given when then itd...
+        // czyletniejsze nazwy zmiennych
     }
 }

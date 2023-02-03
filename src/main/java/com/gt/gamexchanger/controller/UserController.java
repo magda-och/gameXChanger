@@ -37,6 +37,8 @@ public class UserController {
     public @ResponseBody List<UserDto> findUserByName(@RequestParam(value = "firstName", required = false) String firstName,
                                                       @RequestParam(value = "lastName", required = false) String lastName) {
         return userService.searchUsers(firstName, lastName);
+        // podzielic na kilka endpointow - /name, /lastname // searchingengine
+        // ew konkatenacja imienia i nazwiska
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -51,7 +53,7 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PatchMapping("/password/{userId}")
+    @PatchMapping("/password/{userId}") // zmienić kolejność password i userId
     public void updatePassword(@PathVariable Long userId, @RequestBody String newPassword) {
         userService.changePassword(userId, newPassword);
     }
