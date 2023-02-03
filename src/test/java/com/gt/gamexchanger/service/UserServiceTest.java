@@ -1,6 +1,7 @@
 package com.gt.gamexchanger.service;
 
 import com.gt.gamexchanger.dto.UserDto;
+import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.repository.UserRepository;
@@ -21,13 +22,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@MockitoSettings(strictness = Strictness.LENIENT)
+//@MockitoSettings(strictness = Strictness.LENIENT)
 
 public class UserServiceTest {
 
@@ -103,15 +104,49 @@ public class UserServiceTest {
         assertEquals(usersDto, userService.searchUsers(firstNameToSearch, lastNameToSearch));
     }
 
+    @Test
+    void addUser_userAdded_shouldReturnCorrectUser() {
+        when(userRepository.save(testingUser)).thenReturn(testingUser);
+
+        when(dtoMapper.toDomainObject(testingUserDto)).thenReturn(testingUser);
+        when(dtoMapper.toDto(testingUser)).thenReturn(testingUserDto);
+
+        UserDto result = userService.addUser(testingUserDto);
+
+        assertTrue(testingUserDto.getPassword().equals(result.getPassword()));
+    }
+
+    @Test
+    void deleteUser_userAdded_shouldBeDeletedCorrectly() {
+        when(userRepository.findById(testingUser.getId())).thenReturn(Optional.of(testingUser));
+        when(dtoMapper.toDto(testingUser)).thenReturn(testingUserDto);
+
+        userService.deleteUser(testingUserDto.getId());
+
+        verify(userRepository).deleteById(testingUser.getId());
+    }
+
+    @Test
+    public void should_throw_exception_when_user_doesnt_exist() {
+        given(userRepository.findById(anyLong())).willReturn(Optional.ofNullable(null));
+
+        assertThrows(
+                NoExistingUser.class,
+                () -> userService.deleteUser(3L),
+                "User doesn't exist"
+        );
+    }
+}
+
 //    @Test
-//    void addUser_userAdded_shouldReturnCorrectUser(){
-//        userRepository.save(testingUser);
+//    public void updateUser_userFieldChanged_shouldBeChanged(){
+//        UserDto newUser = new UserDto();
+//        newUser.setFirstName("Magda");
+//        given(userRepository.findById(testingUser.getId())).willReturn(Optional.of(testingUser));
+//        userService.updateUser(testingUser.getId(), newUser);
 //
-//        when(dtoMapper.toDto(testingUser)).thenReturn(testingUserDto);
+//        assertEquals("Magda", testingUser.getFirstName());
+//    }
 //
-//        UserDto result = userService.addUser(testingUserDto);
-//
-//        assertTrue(testingUserDto.getPassword().equals(result.getPassword()));
 //    }
 
-}
