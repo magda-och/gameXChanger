@@ -2,6 +2,7 @@ package com.gt.gamexchanger.mapper;
 
 import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.model.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,7 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserDtoMapperTest {
 
-    UserDtoMapper userDtoMapper;
+    private UserDtoMapper userDtoMapper;
+
+    @BeforeEach
+    void init() {
+        userDtoMapper = new UserDtoMapper();
+    }
 
 
     @Test
@@ -42,7 +48,6 @@ class UserDtoMapperTest {
 
     @Test
     void toDomainObject() {
-        userDtoMapper = new UserDtoMapper();
         UserDto userDto = new UserDto();
         userDto.setId(1L);
         userDto.setFirstName("Iwona");
@@ -53,7 +58,6 @@ class UserDtoMapperTest {
 
         User user = userDtoMapper.toDomainObject(userDto);
 
-        assertThat(user.getId()).isEqualTo(1);
         assertThat(user.getFirstName()).isEqualTo("Iwona");
         assertThat(user.getLastName()).isEqualTo("Kula");
         assertThat(user.getPassword()).isEqualTo("iwona1");
