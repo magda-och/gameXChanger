@@ -11,17 +11,23 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-//@MockitoSettings(strictness = Strictness.LENIENT)
+@MockitoSettings(strictness = Strictness.LENIENT)
 
 public class UserServiceTest {
 
@@ -83,4 +89,29 @@ public class UserServiceTest {
 
         assertEquals(testingUserDto, userService.getUserById(1L).get());
     }
+
+    @Test
+    void searchUsers_userAdded_shouldSearchUser() {
+        String firstNameToSearch = testingUser.getFirstName();
+        String lastNameToSearch = testingUser.getLastName();
+
+        when(userRepository.searchUsersByFirstNameAndLastName(firstNameToSearch,
+                lastNameToSearch)).thenReturn(users);
+
+        when(dtoMapper.toDto(testingUser)).thenReturn(testingUserDto);
+
+        assertEquals(usersDto, userService.searchUsers(firstNameToSearch, lastNameToSearch));
+    }
+
+//    @Test
+//    void addUser_userAdded_shouldReturnCorrectUser(){
+//        userRepository.save(testingUser);
+//
+//        when(dtoMapper.toDto(testingUser)).thenReturn(testingUserDto);
+//
+//        UserDto result = userService.addUser(testingUserDto);
+//
+//        assertTrue(testingUserDto.getPassword().equals(result.getPassword()));
+//    }
+
 }
