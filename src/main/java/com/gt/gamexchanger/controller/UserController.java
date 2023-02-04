@@ -54,7 +54,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/password/{userId}") // zmienić kolejność password i userId
-    public void updatePassword(@PathVariable Long userId, @RequestBody String newPassword) {
+    public void changePassword(@PathVariable Long userId, @RequestBody String newPassword) {
         userService.changePassword(userId, newPassword);
     }
 }
