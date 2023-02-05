@@ -99,6 +99,10 @@ public class UserService {
             throw new NoExistingUser();
         }
     }
+
+    public Optional<UserDto> findUserByEmail(String email){
+        return userRepository.findUserByEmail(email).map(dtoMapper::toDto);
+    }
 }
 
 

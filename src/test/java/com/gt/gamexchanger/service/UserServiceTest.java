@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,7 +95,7 @@ public class UserServiceTest {
         String lastNameToSearch = testedUser.getLastName();
 
         when(userRepository.searchUsersByFirstNameAndLastName(firstNameToSearch,
-                lastNameToSearch)).thenReturn(users);
+                lastNameToSearch)).thenReturn((HashSet<User>) users);
 
         when(dtoMapper.toDto(testedUser)).thenReturn(testedUserDto);
 
@@ -136,7 +137,7 @@ public class UserServiceTest {
 
     @Test
     public void changePassword_newPasswordGiven_shouldChangeCorrectly() {
-        given(userRepository.findUserById(testedUser.getId())).willReturn(Optional.of(testedUser));
+        given(userRepository.findById(testedUser.getId())).willReturn(Optional.of(testedUser));
         userService.changePassword(testedUser.getId(), "kotek");
 
         assertTrue(testedUser.getPassword().equals("kotek"));
@@ -148,7 +149,7 @@ public class UserServiceTest {
         UserDto newUser = new UserDto();
         newUser.setFirstName("Magda");
 
-        given(userRepository.findUserById(testedUser.getId())).willReturn(Optional.of(testedUser));
+        given(userRepository.findById(testedUser.getId())).willReturn(Optional.of(testedUser));
         userService.updateUser(testedUser.getId(), newUser);
 
         assertTrue(testedUser.getFirstName().equals("Magda"));
