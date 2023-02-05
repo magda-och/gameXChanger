@@ -68,7 +68,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void changeUserFields(UserDto newUserDto, User modifiedUser) {
+    public void changeUserFields(User modifiedUser, UserDto newUserDto) {
         if (newUserDto.getFirstName() != null) {
             modifiedUser.setFirstName(newUserDto.getFirstName());
         }
@@ -81,7 +81,7 @@ public class UserService {
         var userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             var modifiedUser = userOptional.get();
-            changeUserFields(newUserDto, modifiedUser);
+            changeUserFields(modifiedUser, newUserDto);
             userRepository.save(modifiedUser);
         } else {
             throw new NoExistingUser();
