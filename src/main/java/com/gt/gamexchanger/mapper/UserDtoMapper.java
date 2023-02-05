@@ -1,7 +1,7 @@
 package com.gt.gamexchanger.mapper;
 
-import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.dto.UserDto;
+import com.gt.gamexchanger.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,8 +12,8 @@ public class UserDtoMapper implements DtoMapper<UserDto, User> {
         if (user == null) {
             return null;
         }
-        UserDto userDto =  new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
-//        userDto.setGamesShelf(user.getGamesShelf());
+        UserDto userDto = new UserDto(user.getId(), user.getFirstName(), user.getLastName(),
+                user.getEmail(), user.getPassword(), user.getCity(), user.getPhoneNumber());
 
         return userDto;
     }
@@ -25,7 +25,9 @@ public class UserDtoMapper implements DtoMapper<UserDto, User> {
         user.setLastName(userDto.getLastName());
         user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
-//        user.setGamesShelf(userDto.getGamesShelf());
+        user.setCity(userDto.getCity());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+
         return user;
     }
 }

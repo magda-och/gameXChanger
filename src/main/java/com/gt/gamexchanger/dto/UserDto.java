@@ -1,9 +1,8 @@
 package com.gt.gamexchanger.dto;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -15,5 +14,7 @@ public class UserDto {
     private String lastName;
     private String email;
     private String password;
+    private String city;
+    private int phoneNumber;
 
 }
