@@ -78,7 +78,7 @@ public class UserService {
     }
 
     public void updateUser(Long userId, UserDto newUserDto) {
-        var userOptional = userRepository.findUserById(userId);
+        var userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             var modifiedUser = userOptional.get();
             changeUserFields(modifiedUser, newUserDto);
@@ -89,7 +89,7 @@ public class UserService {
     }
 
     public void changePassword(Long userId, String newPassword) {
-        var userOptional = userRepository.findUserById(userId);
+        var userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             var modifiedUser = userOptional.get();
             modifiedUser.setPassword(newPassword);

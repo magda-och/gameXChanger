@@ -12,19 +12,17 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT user FROM User user WHERE LOWER(user.firstName) = LOWER(:firstName)")
+    @Query("SELECT users FROM users WHERE LOWER(firstName) = LOWER(:firstName)")
     List<User> searchUsersByFirstName(@Param("firstName") String firstName);
 // zmienic na ignore case --- sprawdzić
-    @Query("SELECT user FROM User user WHERE LOWER(user.lastName) = LOWER(:lastName)")
+    @Query("SELECT users FROM users WHERE LOWER(lastName) = LOWER(:lastName)")
     List<User> searchUsersByLastName(@Param("lastName") String lastName);
 
-    @Query("SELECT user FROM User user WHERE LOWER(user.firstName) = LOWER(:firstName)"
-            +" AND LOWER(user.lastName) = LOWER(:lastName)")
+    @Query("SELECT users FROM users WHERE LOWER(firstName) = LOWER(:firstName)"
+            +" AND LOWER(lastName) = LOWER(:lastName)")
     List<User> searchUsersByFirstNameAndLastName(@Param("firstName") String firstName,
                                           @Param ("lastName") String lastName);
 
     Optional<User> findUserByEmail(String email);
-
-    Optional<User> findUserById(Long id);
 
 }
