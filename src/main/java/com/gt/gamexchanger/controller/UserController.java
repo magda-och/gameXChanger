@@ -4,8 +4,10 @@ import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -28,14 +30,15 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
-    public UserDto addUser(@RequestBody UserDto userDto) {
-        return userService.addUser(userDto);
+    public ResponseEntity<?> addUser(@RequestBody UserDto userDto) {
+        userService.addUser(userDto);
+        return ResponseEntity.ok("User created!");
     }
 
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping("/name")
     public @ResponseBody List<UserDto> findUserByName(@RequestParam(value = "firstName", required = false) String firstName,
-                                                      @RequestParam(value = "lastName", required = false) String lastName) {
+                                                         @RequestParam(value = "lastName", required = false) String lastName) {
         return userService.searchUsers(firstName, lastName);
         // podzielic na kilka endpointow - /name, /lastname // searchingengine
         // ew konkatenacja imienia i nazwiska
@@ -43,18 +46,21 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{userId}")
-    public void deleteUser(@PathVariable Long userId) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
+        return ResponseEntity.ok("User successfully removed!");
     }
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/{userId}")
-    public void updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
+    public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
         userService.updateUser(userId, userDto);
+        return ResponseEntity.ok("User successfully updated!");
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/password/{userId}") // zmienić kolejność password i userId
-    public void changePassword(@PathVariable Long userId, @RequestBody String newPassword) {
+    public ResponseEntity<?> changePassword(@PathVariable Long userId, @RequestBody String newPassword) {
         userService.changePassword(userId, newPassword);
+        return ResponseEntity.ok("Password changed!");
     }
 }
