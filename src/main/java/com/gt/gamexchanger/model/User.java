@@ -10,8 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity
-@Table(name = "users")
+@Entity(name = "users")
 public class User {
 
     //todo dodać miasto do usera lub/i nr tel
