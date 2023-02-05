@@ -8,6 +8,7 @@ import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,7 +60,7 @@ public class UserService {
     }
 
     public List<UserDto> searchUsers(String firstName, String lastName) {
-        List<User> userResults = userRepository.searchUsersByFirstNameAndLastName(firstName, lastName);
+        HashSet<User> userResults = userRepository.searchUsersByFirstNameAndLastName(firstName, lastName);
         userResults.addAll(userRepository.searchUsersByLastName(lastName));
         userResults.addAll(userRepository.searchUsersByFirstName(firstName));
 
