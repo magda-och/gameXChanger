@@ -7,9 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3100")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -62,5 +63,19 @@ public class UserController {
     public ResponseEntity<?> changePassword(@PathVariable Long userId, @RequestBody String newPassword) {
         userService.changePassword(userId, newPassword);
         return ResponseEntity.ok("Password changed!");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody UserDto userDto) {
+        Optional<UserDto> user = userService.findUserByEmail(userDto.getEmail());
+
+        if (user.isEmpty() || wrongPassword(user, userDto)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    private boolean wrongPassword(Optional<UserDto> user, UserDto userDto) {
+        return !user.get().getPassword().equals(userDto.getPassword());
     }
 }
