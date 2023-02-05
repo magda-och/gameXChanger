@@ -43,7 +43,7 @@ public class FriendService {
 
     public Friend saveFriend(UserDto userDto1, long id) throws NullPointerException {
 
-        Optional<User> userOptional = userRepository.findUserById(id);
+        Optional<User> userOptional = userRepository.findById(id);
         if(userOptional.isEmpty()){
             throw  new RuntimeException("no such user");
         }
@@ -74,7 +74,7 @@ public class FriendService {
     }
 
     public List<UserDto> getFriends(Long id) {
-        Optional<User> currentUserOptional = userRepository.findUserById(id);
+        Optional<User> currentUserOptional = userRepository.findById(id);
         if(currentUserOptional.isEmpty()){
             throw  new RuntimeException("no such user");
         }
@@ -83,11 +83,11 @@ public class FriendService {
         List<Friend> friendsBySecondUser = friendRepository.findBySecondUser(currentUser);
         List<User> friendUsers = new ArrayList<>();
         for (Friend friend : friendsByFirstUser) {
-            Optional<User> user1Optional = userRepository.findUserById(friend.getSecondUser().getId());
+            Optional<User> user1Optional = userRepository.findById(friend.getSecondUser().getId());
             user1Optional.ifPresent(friendUsers::add);
         }
         for (Friend friend : friendsBySecondUser) {
-            Optional<User> user2Optional = userRepository.findUserById(friend.getFirstUser().getId());
+            Optional<User> user2Optional = userRepository.findById(friend.getFirstUser().getId());
             user2Optional.ifPresent(friendUsers::add);
         }
         return friendUsers.stream().map(userDtoMapper::toDto).collect(Collectors.toList());
