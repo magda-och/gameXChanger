@@ -25,7 +25,3 @@ public interface FriendRequestRepository extends JpaRepository<RequestFriend, Lo
     Optional<RequestFriend> getRequestFriendByRequestFriendId(@Param("id") Long id);
     //RequestFriendDto addFriendRequest(RequestFriendDto requestFriendDto);
 }
-//dodac exception, dopisac testy
-//prawdopodobnie listy requestów w user oraz listy gier nie są potrzebne
-//oraz przy dodawaniu requestu dodawanie go do usera bo można wyszukiwać
-//send i reveived request prosto z requestRepo po from i to user

@@ -14,13 +14,14 @@ class FriendControllerTest {
     FriendService friendService;
     FriendControllerTest.UnderTest underTest;
     UserDto currentUserDto;
-    Long friendId;
+    Long friendId; // prywatne
     @BeforeEach
     void setUp() {
-        currentUserDto = new UserDto();
-        friendId = 2L;
+        currentUserDto = new UserDto(); // mockowac zaleznosci!!!!!!!!!!!
+        friendId = 2L; // do stalej
         friendService = mock(FriendService.class);
         underTest = new FriendControllerTest.UnderTest();
+        // chyba ze model tworzy prymitiwny, ale reszte mockowac
     }
 
     @Test

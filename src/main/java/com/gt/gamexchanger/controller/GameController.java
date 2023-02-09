@@ -45,7 +45,7 @@ public class GameController {
     //    // search kontroller zrobić i tam wyszukiwania userów i gameów
     @GetMapping("/searchGame")
     public List<GameDto> getGamesByName(@RequestParam(value = "name") String name) {
-        return gameService.getGamesByName(name);
+        return gameService.getGamesByName(name); // dodać {/name}
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -79,9 +79,11 @@ public class GameController {
         return gameService.getAllBorrowedGame(userId);
     }
 
-    @PatchMapping("/borrowGame/{gameId}")
+    @PatchMapping("/borrowGame/{gameId}") // dodać do borrowed games
     public void borrowGame(@PathVariable("gameId") Long gameId,
-                           @RequestBody String email) {
+                           @RequestBody String email) { // jeden agument w
+        // parametrze lub json,
+        // ale jedna konwencja dla wszystkich kontrollerów
         gameService.borrowGame(gameId, email);
     }
 }

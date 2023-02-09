@@ -8,6 +8,7 @@ import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,7 +60,7 @@ public class UserService {
     }
 
     public List<UserDto> searchUsers(String firstName, String lastName) {
-        List<User> userResults = userRepository.searchUsersByFirstNameAndLastName(firstName, lastName);
+        HashSet<User> userResults = userRepository.searchUsersByFirstNameAndLastName(firstName, lastName);
         userResults.addAll(userRepository.searchUsersByLastName(lastName));
         userResults.addAll(userRepository.searchUsersByFirstName(firstName));
 
@@ -68,7 +69,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void changeUserFields(UserDto newUserDto, User modifiedUser) {
+    public void changeUserFields(User modifiedUser, UserDto newUserDto) {
         if (newUserDto.getFirstName() != null) {
             modifiedUser.setFirstName(newUserDto.getFirstName());
         }
@@ -78,10 +79,10 @@ public class UserService {
     }
 
     public void updateUser(Long userId, UserDto newUserDto) {
-        var userOptional = userRepository.findUserById(userId);
+        var userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             var modifiedUser = userOptional.get();
-            changeUserFields(newUserDto, modifiedUser);
+            changeUserFields(modifiedUser, newUserDto);
             userRepository.save(modifiedUser);
         } else {
             throw new NoExistingUser();
@@ -89,7 +90,7 @@ public class UserService {
     }
 
     public void changePassword(Long userId, String newPassword) {
-        var userOptional = userRepository.findUserById(userId);
+        var userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             var modifiedUser = userOptional.get();
             modifiedUser.setPassword(newPassword);
@@ -97,6 +98,10 @@ public class UserService {
         } else {
             throw new NoExistingUser();
         }
+    }
+
+    public Optional<UserDto> findUserByEmail(String email){
+        return userRepository.findUserByEmail(email).map(dtoMapper::toDto);
     }
 }
 

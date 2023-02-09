@@ -1,6 +1,7 @@
 package com.gt.gamexchanger.service;
 
 import com.gt.gamexchanger.dto.UserDto;
+import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.repository.UserRepository;
@@ -13,10 +14,12 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,14 +29,13 @@ import static org.mockito.Mockito.*;
 public class UserServiceTest {
 
     private UserService userService;
-
     @Mock
     private UserRepository userRepository;
     @Mock
     private DtoMapper<UserDto, User> dtoMapper;
-    private User testingUser;
+    private User testedUser;
     private List<User> users;
-    private UserDto testingUserDto;
+    private UserDto testedUserDto;
     private List<UserDto> usersDto;
 
     @BeforeEach
@@ -41,33 +43,33 @@ public class UserServiceTest {
         userService = new UserService(userRepository, dtoMapper);
 
         //creating testing user
-        testingUser = new User();
-        testingUser.setId(1L);
-        testingUser.setFirstName("Jan");
-        testingUser.setLastName("Kowalski");
-        testingUser.setEmail("jan.kowalski@wp.pl");
-        testingUser.setPassword("janek");
+        testedUser = new User();
+        testedUser.setId(1L);
+        testedUser.setFirstName("Jan");
+        testedUser.setLastName("Kowalski");
+        testedUser.setEmail("jan.kowalski@wp.pl");
+        testedUser.setPassword("janek");
 
         //creating list with users
-        users = Arrays.asList(testingUser);
+        users = Arrays.asList(testedUser);
 
         //creating UserDto
-        testingUserDto = new UserDto();
-        testingUserDto.setId(1L);
-        testingUserDto.setFirstName("Jan");
-        testingUserDto.setLastName("Kowalski");
-        testingUserDto.setEmail("jan.kowalski@wp.pl");
-        testingUserDto.setPassword("janek");
+        testedUserDto = new UserDto();
+        testedUserDto.setId(1L);
+        testedUserDto.setFirstName("Jan");
+        testedUserDto.setLastName("Kowalski");
+        testedUserDto.setEmail("jan.kowalski@wp.pl");
+        testedUserDto.setPassword("janek");
 
         //creating list with Users Dto
-        usersDto = Arrays.asList(testingUserDto);
+        usersDto = Arrays.asList(testedUserDto);
     }
 
     @Test
     void getAllUsers_userAdded_userShouldBeReturned() {
 
         when(userRepository.findAll()).thenReturn(users);
-        when(dtoMapper.toDto(testingUser)).thenReturn(testingUserDto);
+        when(dtoMapper.toDto(testedUser)).thenReturn(testedUserDto);
 
         assertEquals(usersDto, userService.getAllUsers());
 
@@ -78,9 +80,84 @@ public class UserServiceTest {
     @Test
     void getUserById_userAdded_shouldFindProperly() {
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(testingUser));
-        when(dtoMapper.toDto(testingUser)).thenReturn(testingUserDto);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(testedUser)); //testedUser
+        when(dtoMapper.toDto(testedUser)).thenReturn(testedUserDto);
 
-        assertEquals(testingUserDto, userService.getUserById(1L).get());
+        assertEquals(testedUserDto, userService.getUserById(1L).get()); // konwencja taka sama ma być given when then
+        //  model i dto moze byc tworzony, reszta mock
+        // współna konwencja do nazw testów do endpointów, given when then itd...
+        // czyletniejsze nazwy zmiennych
     }
+
+    @Test
+    void searchUsers_userAdded_shouldSearchUser() {
+        String firstNameToSearch = testedUser.getFirstName();
+        String lastNameToSearch = testedUser.getLastName();
+
+        when(userRepository.searchUsersByFirstNameAndLastName(firstNameToSearch,
+                lastNameToSearch)).thenReturn((HashSet<User>) users);
+
+        when(dtoMapper.toDto(testedUser)).thenReturn(testedUserDto);
+
+        assertEquals(usersDto, userService.searchUsers(firstNameToSearch, lastNameToSearch));
+    }
+
+    @Test
+    void addUser_userAdded_shouldReturnCorrectUser() {
+        when(userRepository.save(testedUser)).thenReturn(testedUser);
+
+        when(dtoMapper.toDomainObject(testedUserDto)).thenReturn(testedUser);
+        when(dtoMapper.toDto(testedUser)).thenReturn(testedUserDto);
+
+        UserDto result = userService.addUser(testedUserDto);
+
+        assertTrue(testedUserDto.getPassword().equals(result.getPassword()));
+    }
+
+    @Test
+    void deleteUser_userAdded_shouldBeDeletedCorrectly() {
+        when(userRepository.findById(testedUser.getId())).thenReturn(Optional.of(testedUser));
+        when(dtoMapper.toDto(testedUser)).thenReturn(testedUserDto);
+
+        userService.deleteUser(testedUserDto.getId());
+
+        verify(userRepository).deleteById(testedUser.getId());
+    }
+
+    @Test
+    public void should_throw_exception_when_user_doesnt_exist() {
+        given(userRepository.findById(anyLong())).willReturn(Optional.ofNullable(null));
+
+        assertThrows(
+                NoExistingUser.class,
+                () -> userService.deleteUser(3L),
+                "User doesn't exist"
+        );
+    }
+
+    @Test
+    public void changePassword_newPasswordGiven_shouldChangeCorrectly() {
+        given(userRepository.findById(testedUser.getId())).willReturn(Optional.of(testedUser));
+        userService.changePassword(testedUser.getId(), "kotek");
+
+        assertTrue(testedUser.getPassword().equals("kotek"));
+
+    }
+
+    @Test
+    public void updateUser_userFieldChanged_shouldBeChangedCorrectly() {
+        UserDto newUser = new UserDto();
+        newUser.setFirstName("Magda");
+
+        given(userRepository.findById(testedUser.getId())).willReturn(Optional.of(testedUser));
+        userService.updateUser(testedUser.getId(), newUser);
+
+        assertTrue(testedUser.getFirstName().equals("Magda"));
+        verify(userRepository).save(testedUser);
+
+    }
+
 }
+
+
+
