@@ -1,5 +1,6 @@
 package com.gt.gamexchanger.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gt.gamexchanger.enums.RequestStatus;
 import jakarta.persistence.*;
@@ -21,17 +22,11 @@ public class RequestFriend {
     @Enumerated
     private RequestStatus requestStatus;
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference("sendRequests")
     private User fromUserId;
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference("receivedRequests")
     private User toUserId;
     private String message;
 
-    public RequestFriend(RequestStatus requestStatus, User fromUserId, User toUserId, String message) {
-        this.requestStatus = requestStatus;
-        this.fromUserId = fromUserId;
-        this.toUserId = toUserId;
-        this.message=message;
-    }
 }
