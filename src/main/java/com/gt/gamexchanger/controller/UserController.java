@@ -3,6 +3,7 @@ package com.gt.gamexchanger.controller;
 import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -73,6 +74,22 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("/friends/{userId}")
+    public ResponseEntity<List<UserDto>> getFriends(@PathVariable("userId") Long userId){
+        List<UserDto> myFriends = userService.getMyFriends(userId);
+        return new ResponseEntity<>(myFriends, HttpStatus.OK);
+    }
+
+    @DeleteMapping("friends/{userId}")
+    public ResponseEntity<?> remove(@PathVariable Long userId, @RequestParam Long friendId) {
+        try{
+            userService.deleteFriend(userId,friendId);
+            return ResponseEntity.noContent().build();
+        }
+        catch (EmptyResultDataAccessException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     private boolean wrongPassword(Optional<UserDto> user, UserDto userDto) {
