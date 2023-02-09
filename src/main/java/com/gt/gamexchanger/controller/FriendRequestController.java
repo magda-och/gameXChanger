@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/requests")
+@RequestMapping("/friends/requests")
 public class FriendRequestController {
     private final FriendRequestService friendRequestService;
 
