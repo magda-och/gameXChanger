@@ -24,9 +24,9 @@ public class FriendRequestController {
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
-    @PostMapping("/")
-    public RequestFriendDto addReqest(@RequestBody RequestFriendDto requestGameDto) {
-        return friendRequestService.addFriendRequest(requestGameDto);
+    @PostMapping
+    public RequestFriendDto addRequest(@RequestBody RequestFriendDto requestFriendDto) {
+        return friendRequestService.addFriendRequest(requestFriendDto);
     }
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{requestId}")
@@ -42,11 +42,11 @@ public class FriendRequestController {
     }
 
     @GetMapping("/send/{userId}")
-    public List<RequestFriendDto> getSendReqests(@PathVariable("userId") Long userId) {
+    public List<RequestFriendDto> getSendRequests(@PathVariable("userId") Long userId) {
         return  friendRequestService.getMySendFriendRequest(userId);
     }
     @GetMapping("/received/{userId}")
-    public List<RequestFriendDto> getReceivedReqests(@PathVariable("userId") Long userId) {
+    public List<RequestFriendDto> getReceivedRequests(@PathVariable("userId") Long userId) {
         return  friendRequestService.getReceivedFriendRequest(userId);
     }
 }
