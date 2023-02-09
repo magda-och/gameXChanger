@@ -67,10 +67,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> login(@RequestBody UserDto userDto) {
         Optional<UserDto> user = userService.findUserByEmail(userDto.getEmail());
 
-        if (user.isEmpty() || wrongPassword(user, userDto)) {
+        if (user.isEmpty() || wrongPassword(user.get(), userDto)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok().build();
@@ -92,7 +92,7 @@ public class UserController {
         }
     }
 
-    private boolean wrongPassword(Optional<UserDto> user, UserDto userDto) {
-        return !user.get().getPassword().equals(userDto.getPassword());
+    private boolean wrongPassword(UserDto user, UserDto userDto) {
+        return !user.getPassword().equals(userDto.getPassword());
     }
 }
