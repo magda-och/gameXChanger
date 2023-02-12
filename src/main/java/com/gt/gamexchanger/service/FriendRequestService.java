@@ -66,6 +66,9 @@ public class FriendRequestService {
             if(requestStatus.equals(RequestStatus.ACCEPTED)){
                 acceptFriend(requestFriendOptional.get());
             }
+            if(requestStatus.equals(RequestStatus.REJECTED)){
+                rejectFriend(requestFriendOptional.get());
+            }
             return requestFriendOptional.get();
         }else {
             throw new NoRequestExistException();
@@ -90,4 +93,10 @@ public class FriendRequestService {
         userRepository.save(firstUser);
         userRepository.save(secondUser);
     }
+
+    private void rejectFriend(RequestFriend requestFriend) {
+        friendRequestRepository.deleteById(requestFriend.getRequestFriendId());
+    }
+
+
 }
