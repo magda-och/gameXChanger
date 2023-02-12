@@ -34,8 +34,8 @@ public class FriendRequestControllerTest {
         underTest = new FriendRequestControllerTest.UnderTest();
     }
     @Test
-    void addReqest() {
-        underTest.addReqest(requestFriendDto);
+    void addRequest() {
+        underTest.addRequest(requestFriendDto);
         verify(friendRequestService,times(1)).addFriendRequest(requestFriendDto);
     }
     @Test
@@ -56,13 +56,13 @@ public class FriendRequestControllerTest {
     }
 
     @Test
-    void getSendReqests() {
-        underTest.getSendReqests(requestFriendDto.getRequestFriendId());
+    void getSendRequests() {
+        underTest.getSendRequests(requestFriendDto.getRequestFriendId());
         verify(friendRequestService,times(1)).getMySendFriendRequest(requestFriendDto.getRequestFriendId());
     }
     @Test
-    void getReceivedReqests() {
-        underTest.getReceivedReqests(requestFriendDto.getRequestFriendId());
+    void getReceivedRequests() {
+        underTest.getReceivedRequests(requestFriendDto.getRequestFriendId());
         verify(friendRequestService,times(1)).getReceivedFriendRequest(requestFriendDto.getRequestFriendId());
     }
     class UnderTest extends FriendRequestController{

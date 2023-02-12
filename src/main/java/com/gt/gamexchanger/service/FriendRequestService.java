@@ -1,18 +1,15 @@
 package com.gt.gamexchanger.service;
 
+import com.gt.gamexchanger.dto.RequestFriendDto;
 import com.gt.gamexchanger.enums.RequestStatus;
 import com.gt.gamexchanger.exception.NoRequestExistException;
 import com.gt.gamexchanger.mapper.DtoMapper;
-import com.gt.gamexchanger.model.Friend;
 import com.gt.gamexchanger.model.RequestFriend;
-import com.gt.gamexchanger.dto.RequestFriendDto;
 import com.gt.gamexchanger.model.User;
-import com.gt.gamexchanger.repository.FriendRepository;
 import com.gt.gamexchanger.repository.FriendRequestRepository;
 import com.gt.gamexchanger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,34 +18,31 @@ import java.util.stream.Collectors;
 public class FriendRequestService {
     private final FriendRequestRepository friendRequestRepository;
     private final UserRepository userRepository;
-
-    private final FriendRepository friendRepository;
     private final DtoMapper<RequestFriendDto, RequestFriend> dtoMapper;
 
-    public FriendRequestService(FriendRequestRepository friendRequestRepository, UserRepository userRepository, DtoMapper<RequestFriendDto, RequestFriend> dtoMapper, FriendRepository friendRepository) {
+    public FriendRequestService(FriendRequestRepository friendRequestRepository, UserRepository userRepository, DtoMapper<RequestFriendDto, RequestFriend> dtoMapper) {
         this.friendRequestRepository = friendRequestRepository;
         this.userRepository=userRepository;
         this.dtoMapper = dtoMapper;
-        this.friendRepository = friendRepository;
     }
 
    public RequestFriendDto addFriendRequest(RequestFriendDto requestFriendDto) {
-        var requestFreind = dtoMapper.toDomainObject(requestFriendDto);
-        friendRequestRepository.save(requestFreind);
+        var requestFriend = dtoMapper.toDomainObject(requestFriendDto);
+        friendRequestRepository.save(requestFriend);
         Optional<User> fromUser= userRepository.findById(requestFriendDto.getFromUserId().getId());
         Optional<User> toUser= userRepository.findById(requestFriendDto.getToUserId().getId());
         if(fromUser.isPresent()){
             List<RequestFriend> sendRequests =fromUser.get().getSendRequests();
-            sendRequests.add(requestFreind);
+            sendRequests.add(requestFriend);
             fromUser.get().setSendRequests(sendRequests);
         }
         if(toUser.isPresent()){
             List<RequestFriend> receivedRequests =toUser.get().getReceivedRequests();
-            receivedRequests.add(requestFreind);
+            receivedRequests.add(requestFriend);
             toUser.get().setReceivedRequests(receivedRequests);
         }
         //
-        return dtoMapper.toDto(requestFreind);
+        return dtoMapper.toDto(requestFriend);
     }
     public List<RequestFriendDto> getAllRequest() {
         return friendRequestRepository.getAllRequest().stream().map(dtoMapper::toDto).collect(Collectors.toList());
@@ -70,11 +64,7 @@ public class FriendRequestService {
             requestFriendOptional.get().setRequestStatus(requestStatus);
             friendRequestRepository.save(requestFriendOptional.get());
             if(requestStatus.equals(RequestStatus.ACCEPTED)){
-                Friend friend = new Friend();
-                friend.setFirstUser(requestFriendOptional.get().getFromUserId());
-                friend.setSecondUser(requestFriendOptional.get().getToUserId());
-                friend.setCreatedDate(new Date());
-                friendRepository.save(friend);
+                acceptFriend(requestFriendOptional.get());
             }
             return requestFriendOptional.get();
         }else {
@@ -89,6 +79,15 @@ public class FriendRequestService {
         }else{
             throw new NoRequestExistException();
         }
+    }
 
+    private void acceptFriend(RequestFriend requestFriend) {
+
+        User firstUser = requestFriend.getFromUserId();
+        User secondUser = requestFriend.getToUserId();
+        firstUser.getFriends().add(secondUser);
+        secondUser.getFriends().add(firstUser);
+        userRepository.save(firstUser);
+        userRepository.save(secondUser);
     }
 }

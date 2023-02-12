@@ -1,13 +1,9 @@
 package com.gt.gamexchanger.service;
 
 import com.gt.gamexchanger.dto.RequestFriendDto;
-import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.enums.RequestStatus;
 import com.gt.gamexchanger.mapper.DtoMapper;
-import com.gt.gamexchanger.model.Friend;
 import com.gt.gamexchanger.model.RequestFriend;
-import com.gt.gamexchanger.model.User;
-import com.gt.gamexchanger.repository.FriendRepository;
 import com.gt.gamexchanger.repository.FriendRequestRepository;
 import com.gt.gamexchanger.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -16,16 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -38,8 +27,6 @@ class FriendRequestServiceTest {
     @Mock
     private UserRepository userRepository;
     @Mock
-    private FriendRepository friendRepository;
-    @Mock
     private DtoMapper<RequestFriendDto, RequestFriend> dtoMapper;
     @Mock
     private RequestFriendDto requestFriendDto;
@@ -48,7 +35,7 @@ class FriendRequestServiceTest {
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
         requestFriendDto = new RequestFriendDto();
-        friendRequestService = new FriendRequestService(friendRequestRepository, userRepository,dtoMapper,friendRepository);
+        friendRequestService = new FriendRequestService(friendRequestRepository, userRepository,dtoMapper);
     }
 
     @AfterEach
@@ -74,7 +61,7 @@ class FriendRequestServiceTest {
         when(friendRequestRepository.getAllRequest()).thenReturn(r);
         when(dtoMapper.toDto(rf1)).thenReturn(rfd1);
         when(dtoMapper.toDto(rf2)).thenReturn(rfd2);
-        when(friendRequestRepository.getAllRequest()).thenReturn(r);;
+        when(friendRequestRepository.getAllRequest()).thenReturn(r);
 
         assertEquals(expected, friendRequestService.getAllRequest());
 

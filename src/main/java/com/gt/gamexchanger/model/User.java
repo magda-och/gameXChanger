@@ -1,5 +1,7 @@
 package com.gt.gamexchanger.model;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +15,6 @@ import java.util.List;
 @Entity(name = "users")
 public class User {
 
-    //todo dodać miasto do usera lub/i nr tel
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,10 +29,14 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "actualUser")
     List<Game> borrowedGames;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fromUserId")
+    @JsonManagedReference("sendRequests")
     List<RequestFriend> sendRequests;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "toUserId")
+    @JsonManagedReference("receivedRequests")
     List<RequestFriend> receivedRequests;
-
+    @OneToMany
+    @JsonIncludeProperties("id")
+    List<User> friends;
 
 
 }

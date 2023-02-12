@@ -103,6 +103,29 @@ public class UserService {
     public Optional<UserDto> findUserByEmail(String email){
         return userRepository.findUserByEmail(email).map(dtoMapper::toDto);
     }
+
+    public List<UserDto> getMyFriends(Long userId) {
+        var userOptional = userRepository.findById(userId);
+        if(userOptional.isEmpty()){
+            throw new NoExistingUser();
+        }
+        List<User> myFriends = userOptional.get().getFriends();
+        return myFriends.stream()
+                .map(dtoMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public void deleteFriend(Long userId, Long friendId) {
+        var userOptional = userRepository.findById(userId);
+        var friendOptional = userRepository.findById(friendId);
+        if(userOptional.isEmpty() || friendOptional.isEmpty()){
+            throw new NoExistingUser();
+        }
+        userOptional.get().getFriends().remove(friendOptional.get());
+        friendOptional.get().getFriends().remove(userOptional.get());
+        userRepository.save(userOptional.get());
+        userRepository.save(friendOptional.get());
+    }
 }
 
 
