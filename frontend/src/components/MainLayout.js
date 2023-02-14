@@ -3,7 +3,6 @@ import Footer from "./Footer";
 import {Outlet} from "react-router-dom";
 import Header from "./Header";
 import classes from "./MainLayout.module.css";
-import Profile from "../pages/Profile";
 
 function MainLayout({title}) {
     return (

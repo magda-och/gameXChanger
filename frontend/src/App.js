@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contacts from "./pages/Contacts";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
             {path: '/contacts', element: <Contacts/>}
         ],
     },
+    {
+        path: '/user',
+        element: <Profile/>
+    }
 ]);
 
 function App() {
