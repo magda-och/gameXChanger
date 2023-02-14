@@ -11,10 +11,12 @@ function Profile({title}) {
             <LeftSidebar />
             <Header/>
             <main className={classes.content}>
+                <UserService/>
                 <Outlet/>
             </main>
             <h2>{title}</h2>
             <Footer/>
+
         </>
     );
 }
