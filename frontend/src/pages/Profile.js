@@ -1,10 +1,20 @@
 import React from 'react';
-import UserService from "../services/UserService";
+import LeftSidebar from "../components/LeftSidebar";
+import Header from "../components/Header";
+import classes from "../components/MainLayout.module.css";
+import {Outlet} from "react-router-dom";
+import Footer from "../components/Footer";
 
-function Profile() {
+function Profile({title}) {
     return (
         <>
-
+            <LeftSidebar />
+            <Header/>
+            <main className={classes.content}>
+                <Outlet/>
+            </main>
+            <h2>{title}</h2>
+            <Footer/>
         </>
     );
 }

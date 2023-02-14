@@ -2,10 +2,10 @@ import SideNav, {Toggle, NavItem, NavIcon, NavText} from '@trendmicro/react-side
 
 import '@trendmicro/react-sidenav/dist/react-sidenav.css'
 import classes from "./MainLayout.module.css";
-import {useNavigate, useNavigation} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 function LeftSidebar (){
-
+const navigate = useNavigate();
     return <SideNav
     onSelect={selected=> {
     console.log(selected)
@@ -14,27 +14,27 @@ function LeftSidebar (){
     className = {classes.leftSidebar}
     >
     <SideNav.Toggle />
-    <SideNav.Nav  defaulfSelected = "home">
-        <NavItem eventKey={"home"}>
-            <NavIcon><i className='fa fa-fw fa-home' style={{fontSize: "1.5em"}}></i> </NavIcon>
-            <NavText>Home</NavText>
-            <navLink></navLink>
-        </NavItem>
-        <NavItem>
-            <NavIcon><i className='fa fa-fw fa-solid fa-user' style={{fontSize: "1.5em"}}></i> </NavIcon>
-            <NavText>Profile</NavText>
-        </NavItem>
-        <NavItem>
+    <SideNav.Nav  defaulfSelected = "profile">
+        <NavItem eventKey={"shelf"}>
             <NavIcon>  <i className='fa fa-fw fa-solid fa-gamepad' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>My shelf</NavText>
         </NavItem>
-        <NavItem>
+        <NavItem eventKey={"borrowed"}>
             <NavIcon>  <i className='fa fa-fw fa-solid fa-download' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Borrowed games</NavText>
         </NavItem>
-        <NavItem>
-            <NavIcon>  <i className='fa fa-fw fa-solid fa-poo' style={{fontSize: "1.5em"}}></i> </NavIcon>
+        <NavItem eventKey={"profile"}>
+            <NavIcon><i className='fa fa-fw fa-solid fa-user' style={{fontSize: "1.5em"}}></i> </NavIcon>
+            <NavText>Profile</NavText>
+        </NavItem>
+        <NavItem eventKey={"friends"}>
+            <NavIcon>  <i className='fa fa-fw fa-solid fa-people-arrows' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Friends</NavText>
+        </NavItem>
+        <NavItem eventKey={""}>
+            <NavIcon><i className='fa fa-fw fa-home' style={{fontSize: "1.5em"}}></i> </NavIcon>
+            <NavText>Home</NavText>
+            <navLink></navLink>
         </NavItem>
     </SideNav.Nav></SideNav>
 }

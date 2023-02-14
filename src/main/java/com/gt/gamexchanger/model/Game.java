@@ -18,13 +18,11 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String description;
    @Enumerated(EnumType.STRING)
    @Column(name = "Game Status")
     private GameStatus gameStatus;
     //   @Lob
     //  private Byte[] image;
-
      @Enumerated(EnumType.STRING)
     private Visibility visibility;
 
