@@ -1,13 +1,18 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
-import Profile from "../pages/Profile";
+import Users from "../pages/users/Users";
 
 
 
 function UserService() {
-    const [users, getUsers] = useState('');
+    const [users, setUsers] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        city: "",
+    });
 
-    const USER_REST_API_URL ='localhost:3100/user';
+    const USER_REST_API_URL ='http://localhost:3100/user';
 
     useEffect(()=>{
         getAllUsers();
@@ -16,15 +21,15 @@ function UserService() {
     const getAllUsers =() =>{
         axios.get(USER_REST_API_URL)
             .then((response) =>{
-                const allUsers = response.data.users.allUsers;
-                getUsers(allUsers);
+                const allUsers = response.data;
+                setUsers(allUsers);
         })
             .catch(error => console.error('Error: ${error'));
     }
 
     return (
-        <Profile users = {users}/>
+        <Users users = {users}/>
     )
 }
 
-export default new UserService;
+export default UserService;
