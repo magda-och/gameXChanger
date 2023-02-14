@@ -100,7 +100,7 @@ public class UserService {
         }
     }
 
-    public Optional<UserDto> findUserByEmail(String email){
+    public Optional<UserDto> findUserByEmail(String email) {
         return userRepository.findUserByEmail(email).map(dtoMapper::toDto);
     }
 

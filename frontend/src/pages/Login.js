@@ -1,8 +1,12 @@
 import React from 'react';
+import AddUser from "./users/AddUser";
 
 function Login() {
     return (
-        <div>Log in or Register</div>
+        <>
+            <AddUser/>
+
+        </>
     );
 }
 
