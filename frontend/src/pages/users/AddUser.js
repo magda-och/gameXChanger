@@ -1,6 +1,9 @@
 import {useState} from "react";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 export default function AddUser() {
+
     const [user, setUser] = useState({
         firstName: "",
         lastName: "",
@@ -11,93 +14,118 @@ export default function AddUser() {
 
     const {firstName, lastName, email, password, city} = user;
 
-    const onInputChange = (e) => {
-        setUser({...user, [e.target.firstName]: e.target.value})
-    }
 
     const onSubmit = (e) => {
         e.preventDefault();
+        axios.post("http://localhost:3100/user", user)
+            .then((response) => {
+            })
+    }
+
+
+    let name, value;
+
+    const handleInputs = (e) => {
+        console.log(e);
+        name = e.target.name;
+        value = e.target.value;
+
+        setUser({...user, [name]: value});
+
     }
 
     return (
         <div className="container">
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-                    <h2 className="text-venter m-4"> Join us! </h2>
+                    <h2 className="text-center m-4"> Join us! </h2>
 
-                    <form onSubmit={(e) => onSubmit(e)}>
+                    <form className="register-form" id="register-form">
                         <div className="mb-3">
-                            <label htmlFor="First name" className="form-label">
+                            <label htmlFor="firstName" className="form-label">
                                 First name
                             </label>
                             <input
-                                type={"text"}
+                                type="text"
                                 className="form-control"
                                 placeholder="Enter your first name"
-                                name="name"
-                                value={firstName}
-                                onChange={(e) => onInputChange(e)}
+                                name="firstName"
+                                id="firstname"
+                                value={user.firstName}
+                                onChange={handleInputs}
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="Last name" className="form-label">
+                            <label htmlFor="lastName" className="form-label">
                                 Last name
                             </label>
                             <input
-                                type={"text"}
+                                type="text"
                                 className="form-control"
                                 placeholder="Enter your last name"
-                                lastName="lastName"
-                                value={lastName}
-                                onChange={(e) => onInputChange(e)}
+                                name="lastName"
+                                id="lastname"
+                                value={user.lastName}
+                                onChange={handleInputs}
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="Email" className="form-label">
+                            <label htmlFor="email" className="form-label">
                                 Email address
                             </label>
                             <input
-                                type={"text"}
+                                type="text"
                                 className="form-control"
                                 placeholder="Enter your email address"
-                                email="email"
-                                value={email}
-                                onChange={(e) => onInputChange(e)}
+                                name="email"
+                                id="email"
+                                value={user.email}
+                                onChange={handleInputs}
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="Password" className="form-label">
+                            <label htmlFor="password" className="form-label">
                                 Password
                             </label>
                             <input
-                                type = {"text"}
+                                type={"text"}
                                 className="form-control"
                                 placeholder="Enter your password"
-                                password = "password"
-                                value={password}
-                                onChange={(e) => onInputChange(e)}
+                                name="password"
+                                id="password"
+                                value={user.password}
+                                onChange={handleInputs}
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="City" className="form-label">
-                               City
+                            <label htmlFor="city" className="form-label">
+                                City
                             </label>
                             <input
-                                type = {"text"}
+                                type={"text"}
                                 className="form-control"
                                 placeholder="Enter your city"
-                                city = "city"
-                                value={city}
-                                onChange={(e) => onInputChange(e)}
+                                name="city"
+                                id="city"
+                                value={user.city}
+                                onChange={handleInputs}
                             />
                         </div>
-                        <button type = "submit" className="btn btn-outline-primary">
+                        <button type="submit" onClick={onSubmit} className="btn btn-primary">
                             Submit
                         </button>
+                        <div className="mt-3">
+                            <p className="mb-0  text-center">
+                                Already have an account?{' '}
+                                <a href="{''}" className="text-primary fw-bold">
+                                    Sign In
+                                </a>
+                            </p>
+                        </div>
                     </form>
 
                 </div>
             </div>
         </div>
-)
+    )
 }

@@ -4,9 +4,9 @@ import AddUser from "./users/AddUser";
 function Login() {
     return (
         <>
+            <AddUser/>
 
-        <AddUser />
-            </>
+        </>
     );
 }
 
