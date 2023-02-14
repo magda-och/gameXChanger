@@ -1,6 +1,10 @@
 import {useState} from "react";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 export default function AddUser() {
+
+    let navigate = useNavigate()
     const [user, setUser] = useState({
         firstName: "",
         lastName: "",
@@ -12,31 +16,35 @@ export default function AddUser() {
     const {firstName, lastName, email, password, city} = user;
 
     const onInputChange = (e) => {
-        setUser({...user, [e.target.firstName]: e.target.value})
+        setUser({...user, [e.target.name]: e.target.value})
     }
 
-    const onSubmit = (e) => {
+    const onSubmit =async (e) => {
+        let self = this;
         e.preventDefault();
+        await axios.post("http://localhost:3100/user", user)
+            .then(function (response) {
+                navigate("/about")})
     }
 
     return (
         <div className="container">
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-                    <h2 className="text-venter m-4"> Join us! </h2>
+                    <h2 className="text-center m-4"> Join us! </h2>
 
-                    <form onSubmit={(e) => onSubmit(e)}>
+                    <form onSubmit={onSubmit}>
                         <div className="mb-3">
-                            <label htmlFor="First name" className="form-label">
+                            <label htmlFor="firstName" className="form-label">
                                 First name
                             </label>
                             <input
-                                type={"text"}
+                                type= "firstName"
                                 className="form-control"
                                 placeholder="Enter your first name"
                                 name="name"
-                                value={firstName}
-                                onChange={(e) => onInputChange(e)}
+                               value = {user.firstName}
+                                onChange={handleChange}
                             />
                         </div>
                         <div className="mb-3">
@@ -48,7 +56,7 @@ export default function AddUser() {
                                 className="form-control"
                                 placeholder="Enter your last name"
                                 lastName="lastName"
-                                value={lastName}
+                                defaultValue={user.lastName}
                                 onChange={(e) => onInputChange(e)}
                             />
                         </div>
@@ -61,12 +69,12 @@ export default function AddUser() {
                                 className="form-control"
                                 placeholder="Enter your email address"
                                 email="email"
-                                value={email}
+                                defaultValue={user.email}
                                 onChange={(e) => onInputChange(e)}
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="Password" className="form-label">
+                            <label htmlFor="password" className="form-label">
                                 Password
                             </label>
                             <input
@@ -74,7 +82,7 @@ export default function AddUser() {
                                 className="form-control"
                                 placeholder="Enter your password"
                                 password = "password"
-                                value={password}
+                                defaultValue={user.password}
                                 onChange={(e) => onInputChange(e)}
                             />
                         </div>
@@ -87,11 +95,11 @@ export default function AddUser() {
                                 className="form-control"
                                 placeholder="Enter your city"
                                 city = "city"
-                                value={city}
+                                defaultValue={user.city}
                                 onChange={(e) => onInputChange(e)}
                             />
                         </div>
-                        <button type = "submit" className="btn btn-outline-primary">
+                        <button type="submit" className="btn btn-outline-primary" >
                             Submit
                         </button>
                     </form>
