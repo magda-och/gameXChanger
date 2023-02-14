@@ -4,7 +4,6 @@ import {useNavigate} from "react-router-dom";
 
 export default function AddUser() {
 
-    let navigate = useNavigate()
     const [user, setUser] = useState({
         firstName: "",
         lastName: "",
@@ -15,16 +14,24 @@ export default function AddUser() {
 
     const {firstName, lastName, email, password, city} = user;
 
-    const onInputChange = (e) => {
-        setUser({...user, [e.target.name]: e.target.value})
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        axios.post("http://localhost:3100/user", user)
+            .then((response) => {
+            })
     }
 
-    const onSubmit =async (e) => {
-        let self = this;
-        e.preventDefault();
-        await axios.post("http://localhost:3100/user", user)
-            .then(function (response) {
-                navigate("/about")})
+
+    let name, value;
+
+    const handleInputs = (e) => {
+        console.log(e);
+        name = e.target.name;
+        value = e.target.value;
+
+        setUser({...user, [name]: value});
+
     }
 
     return (
@@ -33,44 +40,47 @@ export default function AddUser() {
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
                     <h2 className="text-center m-4"> Join us! </h2>
 
-                    <form onSubmit={onSubmit}>
+                    <form className="register-form" id="register-form">
                         <div className="mb-3">
                             <label htmlFor="firstName" className="form-label">
                                 First name
                             </label>
                             <input
-                                type= "firstName"
+                                type="text"
                                 className="form-control"
                                 placeholder="Enter your first name"
-                                name="name"
-                               value = {user.firstName}
-                                onChange={handleChange}
+                                name="firstName"
+                                id="firstname"
+                                value={user.firstName}
+                                onChange={handleInputs}
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="Last name" className="form-label">
+                            <label htmlFor="lastName" className="form-label">
                                 Last name
                             </label>
                             <input
-                                type={"text"}
+                                type="text"
                                 className="form-control"
                                 placeholder="Enter your last name"
-                                lastName="lastName"
-                                defaultValue={user.lastName}
-                                onChange={(e) => onInputChange(e)}
+                                name="lastName"
+                                id="lastname"
+                                value={user.lastName}
+                                onChange={handleInputs}
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="Email" className="form-label">
+                            <label htmlFor="email" className="form-label">
                                 Email address
                             </label>
                             <input
-                                type={"text"}
+                                type="text"
                                 className="form-control"
                                 placeholder="Enter your email address"
-                                email="email"
-                                defaultValue={user.email}
-                                onChange={(e) => onInputChange(e)}
+                                name="email"
+                                id="email"
+                                value={user.email}
+                                onChange={handleInputs}
                             />
                         </div>
                         <div className="mb-3">
@@ -78,34 +88,44 @@ export default function AddUser() {
                                 Password
                             </label>
                             <input
-                                type = {"text"}
+                                type={"text"}
                                 className="form-control"
                                 placeholder="Enter your password"
-                                password = "password"
-                                defaultValue={user.password}
-                                onChange={(e) => onInputChange(e)}
+                                name="password"
+                                id="password"
+                                value={user.password}
+                                onChange={handleInputs}
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="City" className="form-label">
-                               City
+                            <label htmlFor="city" className="form-label">
+                                City
                             </label>
                             <input
-                                type = {"text"}
+                                type={"text"}
                                 className="form-control"
                                 placeholder="Enter your city"
-                                city = "city"
-                                defaultValue={user.city}
-                                onChange={(e) => onInputChange(e)}
+                                name="city"
+                                id="city"
+                                value={user.city}
+                                onChange={handleInputs}
                             />
                         </div>
-                        <button type="submit" className="btn btn-outline-primary" >
+                        <button type="submit" onClick={onSubmit} className="btn btn-primary">
                             Submit
                         </button>
+                        <div className="mt-3">
+                            <p className="mb-0  text-center">
+                                Already have an account?{' '}
+                                <a href="{''}" className="text-primary fw-bold">
+                                    Sign In
+                                </a>
+                            </p>
+                        </div>
                     </form>
 
                 </div>
             </div>
         </div>
-)
+    )
 }
