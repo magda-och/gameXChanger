@@ -24,8 +24,10 @@ public class User {
     private String password;
     private String city;
     private int phoneNumber;
+    @JsonManagedReference("myGames")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     List<Game> myGames;
+    @JsonManagedReference("borrowedGames")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "actualUser")
     List<Game> borrowedGames;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fromUserId")
