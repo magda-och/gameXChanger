@@ -20,20 +20,19 @@ const router = createBrowserRouter([
             {index: true, element: <Home/>},
             {path: '/about', element: <About/>},
             {path: '/user/login', element: <Login/>},
-            {path: '/contacts', element: <Contacts/>}
+            {path: '/contacts', element: <Contacts/>},
         ],
-    }, {
-    path: '/profile',
+    },
+    {
+        path: '/profile',
         element: <ProfileLayout/>,
         children: [
-            {index: '/', element: <Home/>},
-            {index: this, element: <Profile/>},
-            {index: '/games', element: <Shelf/>},
-        //    {index: '/borrowedGames', element: <Borrowed/>},
-         //    {index: '/friends', element: <Friends/>},
-    ]} , {
-        path: '/user',
-        element: <Profile/>
+            {index: true, element: <Home/>},
+            {path: this, element: <Profile/>},
+            {path: '/games', element: <Shelf/>},
+            //    {index: '/borrowedGames', element: <Borrowed/>},
+            //    {index: '/friends', element: <Friends/>},
+        ],
     },
 ]);
 
