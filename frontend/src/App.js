@@ -33,13 +33,8 @@ const router = createBrowserRouter([
          //    {index: '/friends', element: <Friends/>},
     ]} , {
         path: '/user',
-        element: <Profile/>}
-
-    // },
-    // {
-    //     path: '/user',
-    //     element: <Profile/>
-    // }
+        element: <Profile/>
+    },
 ]);
 
 function App() {

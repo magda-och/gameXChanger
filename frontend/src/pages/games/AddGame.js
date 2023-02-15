@@ -1,6 +1,5 @@
 import {useState} from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
 
 export default function AddGame() {
 
@@ -46,7 +45,7 @@ export default function AddGame() {
                                 className="form-control"
                                 placeholder="Enter name of game you want to add"
                                 name="name"
-                                id="firstname"
+                                id="name"
                                 value={game.name}
                                 onChange={handleInputs}
                             />
