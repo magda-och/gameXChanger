@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin
+
+@CrossOrigin(origins = "http://localhost:3100")
 @RestController
 @RequestMapping("/friends/requests")
 public class FriendRequestController {
