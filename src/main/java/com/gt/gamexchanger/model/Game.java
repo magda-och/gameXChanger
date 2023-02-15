@@ -1,5 +1,6 @@
 package com.gt.gamexchanger.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gt.gamexchanger.enums.GameStatus;
 import com.gt.gamexchanger.enums.Visibility;
 import jakarta.persistence.*;
@@ -26,10 +27,11 @@ public class Game {
      @Enumerated(EnumType.STRING)
     private Visibility visibility;
 
-
+    @JsonBackReference("myGames")
     @ManyToOne
     @JoinColumn(name = "ownerId")
     private User owner;
+    @JsonBackReference("borrowedGames")
     @ManyToOne
     private User actualUser;
 

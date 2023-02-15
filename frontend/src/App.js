@@ -9,6 +9,7 @@ import About from "./pages/About";
 import Contacts from "./pages/Contacts";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import Invitations from "./pages/Invitations";
 import ProfileLayout from "./components/ProfileLayout";
 import Shelf from "./pages/games/Shelf";
 
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
             {path: '/about', element: <About/>},
             {path: '/user/login', element: <Login/>},
             {path: '/contacts', element: <Contacts/>},
+            {path: '/invitations', element: <Invitations/>}
         ],
     },
     {
