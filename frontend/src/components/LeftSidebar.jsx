@@ -1,7 +1,7 @@
 import SideNav, {Toggle, NavItem, NavIcon, NavText} from '@trendmicro/react-sidenav'
 
 import '@trendmicro/react-sidenav/dist/react-sidenav.css'
-import classes from "./MainLayout.module.css";
+import classes from "./LeftSidebar.module.css";
 import {useNavigate} from "react-router-dom";
 
 function LeftSidebar (){
@@ -15,7 +15,7 @@ const navigate = useNavigate();
     >
     <SideNav.Toggle />
     <SideNav.Nav  defaulfSelected = "profile">
-        <NavItem eventKey={"shelf"}>
+        <NavItem eventKey={"games"}>
             <NavIcon>  <i className='fa fa-fw fa-solid fa-gamepad' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>My shelf</NavText>
         </NavItem>
@@ -24,15 +24,20 @@ const navigate = useNavigate();
             <NavText>Borrowed games</NavText>
         </NavItem>
         <NavItem eventKey={"profile"}>
-            <NavIcon><i className='fa fa-fw fa-solid fa-user' style={{fontSize: "1.5em"}}></i> </NavIcon>
+            <NavIcon><i className='fa fa-fw fa-solid fa-circle-user' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Profile</NavText>
         </NavItem>
         <NavItem eventKey={"friends"}>
-            <NavIcon>  <i className='fa fa-fw fa-solid fa-people-arrows' style={{fontSize: "1.5em"}}></i> </NavIcon>
+            <NavIcon>  <i className='fa fa-fw fa-solid fa-users' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Friends</NavText>
         </NavItem>
-        <NavItem eventKey={""}>
+        <NavItem eventKey={"invitations"}>
             <NavIcon><i className='fa fa-fw fa-home' style={{fontSize: "1.5em"}}></i> </NavIcon>
+            <NavText>Invitations</NavText>
+            <navLink></navLink>
+        </NavItem>
+        <NavItem eventKey={""}>
+            <NavIcon><i className='fa fa-fw fa-solid fa-envelope' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Home</NavText>
             <navLink></navLink>
         </NavItem>

@@ -9,6 +9,8 @@ import About from "./pages/About";
 import Contacts from "./pages/Contacts";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import ProfileLayout from "./components/ProfileLayout";
+import Shelf from "./pages/games/Shelf";
 
 const router = createBrowserRouter([
     {
@@ -26,15 +28,18 @@ const router = createBrowserRouter([
         children: [
             {index: '/', element: <Home/>},
             {index: this, element: <Profile/>},
-            // {index: '/', element: <Shelf/>},
-            // {index: '/', element: <Borrowed/>},
-            // {index: '/', element: <Friends/>},
-    // ]}
+            {index: '/games', element: <Shelf/>},
+        //    {index: '/borrowedGames', element: <Borrowed/>},
+         //    {index: '/friends', element: <Friends/>},
+    ]} , {
+        path: '/user',
+        element: <Profile/>}
+
     // },
     // {
     //     path: '/user',
     //     element: <Profile/>
-     }
+    // }
 ]);
 
 function App() {

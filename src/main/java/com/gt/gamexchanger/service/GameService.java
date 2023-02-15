@@ -84,9 +84,6 @@ public class GameService {
         if (gameDto.getName() != null) {
             game.setName(gameDto.getName());
         }
-        if (gameDto.getDescription() != null) {
-            game.setDescription(gameDto.getDescription());
-        }
         if (gameDto.getGameStatus() != null) {
             game.setGameStatus(gameDto.getGameStatus());
         }

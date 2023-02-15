@@ -2,20 +2,15 @@ import React from 'react';
 import Footer from "./Footer";
 import {Outlet} from "react-router-dom";
 import Header from "./Header";
-import classes from "./MainLayout.module.css";
+import classes from "./LeftSidebar.module.css";
 import LeftSidebar from "./LeftSidebar";
-
-
-
 
 function ProfileLayout({title}) {
     return (
-        <> <div>
-            <LeftSidebar/>
-        </div>
-
+        <>
             <Header/>
-            <main className={classes.content}>
+            <LeftSidebar className={classes.leftSidebar}/>
+            <main>
                 <Outlet/>
             </main>
             <h2>{title}</h2>
