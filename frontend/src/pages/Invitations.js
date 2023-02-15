@@ -5,22 +5,35 @@ class Invitations extends React.Component{
     constructor(props) {
         super(props);
         this.state= {
-            invitations: []
+            sendInvitations: [],
+            receivedInvitations:[]
         }
     }
 
     componentDidMount() {
-        InvitationService.getAllRequests().then(
+        InvitationService.getSendRequests().then(
             (response) => {
                 //this.state.invitations = response.data
-                this.setState({ invitations: [{
-                        id: 1,
+                this.setState({ sendInvitations: [{
+                        requestFriendId: 1,
                         requestStatus: 1,
                         fromUserId: 1,
-                        requestFriendId: 1
+                        toUserId: 1,
+                        message:1
                     }] });
-                this.setState({ invitations:response.data });
+                this.setState({ sendInvitations:response.data });
         });
+        InvitationService.getReceivedRequests().then(
+            (response) => {
+                this.setState({ receivedInvitations: [{
+                        requestFriendId: 1,
+                        requestStatus: 1,
+                        fromUserId: 1,
+                        toUserId: 1,
+                        message:1
+                    }] });
+                this.setState({ receivedInvitations:response.data });
+            });
     }
 
     render() {
@@ -41,7 +54,7 @@ class Invitations extends React.Component{
                     </thead>
                     <tbody>
                     {
-                        this.state.invitations.map(
+                        this.state.receivedInvitations.map(
                             invitation => {
                                 return <tr>
                                     <td>{invitation.requestFriendId}</td>
@@ -73,7 +86,7 @@ class Invitations extends React.Component{
                         </thead>
                         <tbody>
                         {
-                            this.state.invitations.map(
+                            this.state.sendInvitations.map(
                                 invitation => {
                                     return <tr>
                                         <td>{invitation.requestFriendId}</td>
