@@ -22,7 +22,9 @@ class Invitations extends React.Component{
                         message:1
                     }] });
                 this.setState({ sendInvitations:response.data });
+                console.log(this.state)
         });
+
         InvitationService.getReceivedRequests().then(
             (response) => {
                 this.setState({ receivedInvitations: [{
@@ -35,6 +37,13 @@ class Invitations extends React.Component{
                 this.setState({ receivedInvitations:response.data });
             });
     }
+/*    deleteInvitation(id){
+    InvitationService.deleteRequest(id).then(response =>{
+    this.setState({sendInvitations:this.state.sendInvitations
+                      .filter(sendInvitation =>sendInvitation.requestFriendId !== id)})
+});
+}*/
+
 
     render() {
         return(
@@ -59,12 +68,11 @@ class Invitations extends React.Component{
                                 return <tr>
                                     <td>{invitation.requestFriendId}</td>
                                     <td>{invitation.requestStatus}</td>
-                                    <td>{invitation.fromUserId.toString()}</td>
-                                    <td>{invitation.toUserId.toString()}</td>
+                                    <td>{invitation.fromUserId.firstName+ " "+ invitation.fromUserId.lastName}</td>
+                                    <td>{invitation.toUserId.firstName+ " "+ invitation.toUserId.lastName}</td>
                                     <td>{invitation.message}</td>
-                                    <button>Accept</button>
-                                    <button>Reject</button>
-
+                                    <button className="btn btn-danger">Accept</button>
+                                    <button className="btn btn-danger">Reject</button>
                                 </tr>
                             }
                         )
@@ -91,9 +99,10 @@ class Invitations extends React.Component{
                                     return <tr>
                                         <td>{invitation.requestFriendId}</td>
                                         <td>{invitation.requestStatus}</td>
-                                        <td>{invitation.fromUserId.toString()}</td>
-                                        <td>{invitation.toUserId.toString()}</td>
+                                        <td>{invitation.fromUserId.firstName+ " " + invitation.fromUserId.lastName}</td>
+                                        <td>{invitation.toUserId.firstName+ " "+ invitation.fromUserId.lastName}</td>
                                         <td>{invitation.message}</td>
+                                        <button className="btn btn-danger" onClick={ InvitationService.deleteRequest(invitation.requestFriendId)}>Cancel Invitation</button>
                                     </tr>
                                 }
                             )
