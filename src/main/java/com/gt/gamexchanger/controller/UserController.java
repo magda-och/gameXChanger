@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -81,8 +81,8 @@ public class UserController {
         return new ResponseEntity<>(myFriends, HttpStatus.OK);
     }
 
-    @DeleteMapping("friends/{userId}")
-    public ResponseEntity<?> remove(@PathVariable Long userId, @RequestParam Long friendId) {
+    @DeleteMapping("friends/{userId}/{friendId}")
+    public ResponseEntity<?> remove(@PathVariable Long friendId, @PathVariable Long userId) {
         try{
             userService.deleteFriend(userId,friendId);
             return ResponseEntity.noContent().build();

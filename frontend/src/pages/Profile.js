@@ -3,9 +3,9 @@ import UserService from "../services/UserService";
 
 function Profile() {
     return (
-        <>
+        <div>
             <UserService/>
-        </>
+        </div>
     );
 }
 
