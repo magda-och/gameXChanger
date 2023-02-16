@@ -1,32 +1,30 @@
 import {useState} from "react";
 import axios from "axios";
+import InvitationService from "../../services/InvitationService";
+import GameService from "../../services/GameService";
+function addGame(name){
+    console.log(name)
+    const game = {
+        "name": name,
+        "description": "fajna gra",
+        "gameStatus": "AVAILABLE",
+        "visibility":"PRIVATE"
+    };
 
+    axios.post('http://localhost:3100/games/2', game)
+        .then(res =>{
+           /* axios.get('http://localhost:3100/games')
+                .then(res => {
+                    this.setState({ res });
+                });*/
+        });
+}
 export default function AddGame() {
 
-    const [game, setGame] = useState({
-        gameName: "",
-    });
-
-
-    const {gameName} = game;
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-        axios.post("http://localhost:3100/addgame", game)
-            .then((response) => {
-            })
-    }
-
-
-    let name, value;
-
-    const handleInputs = (e) => {
-        console.log(e);
-        name = e.target.name;
-        value = e.target.value;
-
-        setGame({...game, [name]: value});
-
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        addGame(event.target.name.value)
+        window.location.replace('/profile/games')
     }
 
     return (
@@ -35,7 +33,7 @@ export default function AddGame() {
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
                     <h2 className="text-center m-4"> Add game</h2>
 
-                    <form className="add-game" id="add-game">
+                    <form className="add-game" id="add-game" onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">
                                game name
@@ -46,11 +44,9 @@ export default function AddGame() {
                                 placeholder="Enter name of game you want to add"
                                 name="name"
                                 id="name"
-                                value={game.name}
-                                onChange={handleInputs}
                             />
                         </div>
-                        <button type="submit" onClick={onSubmit} className="btn btn-primary">
+                        <button type="submit" className="btn btn-primary">
                             add
                         </button>
                     </form>

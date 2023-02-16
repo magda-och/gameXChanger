@@ -6,8 +6,9 @@ function Friends(props) {
 
     const removeFriend = async (id) => {
         try {
-            const res = await axios.delete(`${"http://localhost:3100/user/friends/1"}/${id}`)
+            const res = await axios.delete(`${"http://localhost:3100/user/friends/2"}/${id}`)
             console.log('Item successfully deleted.')
+
             return res;
         } catch (error) {
             alert(error)
@@ -40,7 +41,7 @@ function Friends(props) {
                                             <td>{friend.firstName}</td>
                                             <td>{friend.lastName}</td>
                                             <td>{friend.city}</td>
-                                            <button onClick={() => removeFriend(friend.id)}>Delete</button>
+                                            <td><button className="btn btn-danger" onClick={() => removeFriend(friend.id)}>Delete</button></td>
                                             </tr>
                                     }
                                 )

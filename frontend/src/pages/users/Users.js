@@ -1,6 +1,23 @@
 import React from 'react';
+import axios from "axios";
+
+function addInvitation(fromId, toId){
+    const invitation = {
+        "requestStatus": "WAITING",
+        "fromUserId":{
+            "id":fromId
+        },
+        "toUserId":{
+            "id":toId
+        },
+        "message": "Zapraszam do znajomych"
+    };
+    axios.post('http://localhost:3100/friends/requests', invitation)
+        .then(/*response => this.setState({ articleId: response.data.id })*/);
+}
 
 function Users(props) {
+
 
     const displayUsers = (props) => {
         const {users} = props;
@@ -31,7 +48,7 @@ function Users(props) {
                                             <td>{user.lastName}</td>
                                             <td>{user.email}</td>
                                             <td>{user.city}</td>
-                                            <button>Invite</button>
+                                            <td><button className="btn btn-success" onClick={(e) => addInvitation(2, user.id)}>Invite</button></td>
                                         </tr>
                                     }
                                 )

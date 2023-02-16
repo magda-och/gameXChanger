@@ -7,7 +7,7 @@ import Friends from "../pages/users/Friends";
 function FriendsService() {
     const [friends, setFriends] = useState([]);
 
-    const FRIEND_REST_API_URL ='http://localhost:3100/user/friends/1';
+    const FRIEND_REST_API_URL ='http://localhost:3100/user/friends/2';
 
     useEffect(()=>{
         getAllFriends();

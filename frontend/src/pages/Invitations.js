@@ -1,6 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import InvitationService from "../services/InvitationService";
+import classes from "./Invitations.module.css"
+import axios from "axios";
 
+const API_URL = "http://localhost:3100/friends/requests";
 class Invitations extends React.Component{
     constructor(props) {
         super(props);
@@ -37,17 +40,29 @@ class Invitations extends React.Component{
                 this.setState({ receivedInvitations:response.data });
             });
     }
-/*    deleteInvitation(id){
-    InvitationService.deleteRequest(id).then(response =>{
-    this.setState({sendInvitations:this.state.sendInvitations
-                      .filter(sendInvitation =>sendInvitation.requestFriendId !== id)})
-});
-}*/
 
+    cancelInvitation(id, e){
+        axios.delete(API_URL+ `/${id}`)
+            .then(res => {
+                console.log(res);
+                const sendInvitations = this.state.sendInvitations.filter(item => item.requestFriendId !== id);
+                this.setState({ sendInvitations });
+            })
+    }
+
+    updateInvitationStatus(id, status, e){
+        axios.patch(API_URL+ `/${id}` +"?requestStatus="+`${status}`)
+            .then(res =>{
+                InvitationService.getReceivedRequests().then(
+                    (response) => {
+                        this.setState({ receivedInvitations:response.data });
+                    });
+            });
+    }
 
     render() {
         return(
-            <div>
+            <div className={classes.invitations}>
                 <div>
                 <h1 className ="text-center"> Received Invitations</h1>
                 <table className="table table-striped">
@@ -65,14 +80,15 @@ class Invitations extends React.Component{
                     {
                         this.state.receivedInvitations.map(
                             invitation => {
+                                const visibility = invitation.requestStatus === "WAITING" ? classes.visible : classes.hidden
                                 return <tr>
                                     <td>{invitation.requestFriendId}</td>
                                     <td>{invitation.requestStatus}</td>
                                     <td>{invitation.fromUserId.firstName+ " "+ invitation.fromUserId.lastName}</td>
                                     <td>{invitation.toUserId.firstName+ " "+ invitation.toUserId.lastName}</td>
                                     <td>{invitation.message}</td>
-                                    <button className="btn btn-danger" onClick={InvitationService.updateRequest(invitation.requestFriendId,"ACCEPTED")}>Accept</button>
-                                    <button className="btn btn-danger">Reject</button>
+                                    <td><button className={"btn btn-success " + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"ACCEPTED", e)}>Accept</button></td>
+                                    <td><button className={"btn btn-danger " + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"REJECTED", e)}>Reject</button></td>
                                 </tr>
                             }
                         )
@@ -100,9 +116,9 @@ class Invitations extends React.Component{
                                         <td>{invitation.requestFriendId}</td>
                                         <td>{invitation.requestStatus}</td>
                                         <td>{invitation.fromUserId.firstName+ " " + invitation.fromUserId.lastName}</td>
-                                        <td>{invitation.toUserId.firstName+ " "+ invitation.fromUserId.lastName}</td>
+                                        <td>{invitation.toUserId.firstName+ " "+ invitation.toUserId.lastName}</td>
                                         <td>{invitation.message}</td>
-                                        <button className="btn btn-danger" onClick={ InvitationService.deleteRequest(invitation.requestFriendId)}>Cancel Invitation</button>
+                                        <td><button className="btn btn-danger" onClick={(e) => this.cancelInvitation(invitation.requestFriendId, e)}>Cancel</button></td>
                                     </tr>
                                 }
                             )

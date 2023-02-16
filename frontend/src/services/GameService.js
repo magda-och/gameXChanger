@@ -7,7 +7,7 @@ function GameService() {
        name: "",
     });
 
-    const GAME_REST_API_URL ='http://localhost:3100/games';
+    const GAME_REST_API_URL ='http://localhost:3100/games/myGames/2';
 
     useEffect(()=>{
         getALlGames();

@@ -7,19 +7,34 @@ function Games(props) {
 
         if (games.length > 0) {
             return (
-                <ul>
+                <div>
+                    <h1 className ="text-center">My Games</h1>
+                    <table className="table table-striped">
+                        <thead>
+                        <tr>
+                            <td> Game id</td>
+                            <td> Game name</td>
+                            <td> Game Visibility</td>
+                            <td> Game Status</td>
+                            <td> Actual owner</td>
+                        </tr>
+                        </thead>
+                        <tbody>
                     {
-                        games.map(game =>
-                            <li key={game.id}>
-                                <p>{game.name}</p>
-                                <p> {game.visibility}</p>
-                                <p> {game.status}</p>
-                                <p> {game.actual}</p>
-                                <p></p>
-                            </li>
+                        games.map(game => {
+                            return <tr>
+                                <td> {game.id}</td>
+                                <td>{game.name}</td>
+                                <td> {game.visibility}</td>
+                                <td> {game.status}</td>
+                                <td> {game.actual}</td>
+                            </tr>
+                        }
                         )
                     }
-                </ul>
+                    </tbody>
+                    </table>
+                </div>
             )
         } else {
             return (

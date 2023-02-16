@@ -1,0 +1,14 @@
+.invitations {
+    margin-left: 20%;
+    margin-right: 15%;
+    margin-top: 10%;
+
+}
+
+.visible {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
+}
