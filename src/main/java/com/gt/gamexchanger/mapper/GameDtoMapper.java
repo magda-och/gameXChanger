@@ -23,7 +23,7 @@ public class GameDtoMapper implements DtoMapper<GameDto, Game> {
         Long id = game.getId();
         UserDto ownerDto = mapperForUser.toDto(game.getOwner());
         UserDto actualDto = mapperForUser.toDto(game.getActualUser());
-        return new GameDto(id,  game.getName(), game.getDescription(), game.getGameStatus(),
+        return new GameDto(id,  game.getName(), game.getGameStatus(),
              ownerDto, actualDto, game.getVisibility());
     }
 
@@ -37,7 +37,6 @@ public class GameDtoMapper implements DtoMapper<GameDto, Game> {
             game.setId(gameDto.getId());
         }
         game.setName(gameDto.getName());
-        game.setDescription(gameDto.getDescription());
      game.setGameStatus(gameDto.getGameStatus());
     //   game.setGamePhoto(gameDto.getGamePhoto());
 //        game.setOwner(owner);

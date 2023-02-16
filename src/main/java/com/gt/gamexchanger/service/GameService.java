@@ -36,6 +36,7 @@ public class GameService {
             User owner = userRepository.findById(ownerId).get();
             game.setOwner(owner);
             game.setActualUser(owner);
+            game.setGameStatus(GameStatus.AVAILABLE);
             gameRepository.save(game);
             return (GameDto) gameDtoMapper.toDto(game);
         } else {
@@ -83,9 +84,6 @@ public class GameService {
     private Game updateGameFields(Game game, GameDto gameDto) {
         if (gameDto.getName() != null) {
             game.setName(gameDto.getName());
-        }
-        if (gameDto.getDescription() != null) {
-            game.setDescription(gameDto.getDescription());
         }
         if (gameDto.getGameStatus() != null) {
             game.setGameStatus(gameDto.getGameStatus());

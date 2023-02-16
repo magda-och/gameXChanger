@@ -10,6 +10,8 @@ import Contacts from "./pages/Contacts";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Invitations from "./pages/Invitations";
+import ProfileLayout from "./components/ProfileLayout";
+import Games from "./pages/Games";
 
 const router = createBrowserRouter([
     {
@@ -20,13 +22,19 @@ const router = createBrowserRouter([
             {path: '/about', element: <About/>},
             {path: '/user/login', element: <Login/>},
             {path: '/contacts', element: <Contacts/>},
-            {path: '/invitations', element: <Invitations/>}
+            {path: '/invitations', element: <Invitations/>},
         ],
     },
     {
         path: '/profile',
-        element: <Profile/>
-    }
+        element: <ProfileLayout/>,
+        children: [
+            {path: this, element: <Profile/>},
+            {path: '/profile/games', element: <Games/>},
+            //{index: '/borrowedGames', element: <Borrowed/>},
+            //{index: '/friends', element: <Friends/>},
+        ],
+    },
 ]);
 
 function App() {
