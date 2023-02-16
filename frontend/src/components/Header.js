@@ -26,6 +26,9 @@ function Header() {
                             <li className="nav-item active">
                                 <Link className="nav-link" to={"/contacts"}>Contacts</Link>
                             </li>
+                            <li className="nav-item active">
+                                <Link className="nav-link" to={"/profile"}>Profile</Link>
+                            </li>
                         </ul>
 
                         <ul className="navbar-nav ms-auto d-flex flex-row">
