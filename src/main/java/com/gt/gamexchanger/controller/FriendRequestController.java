@@ -38,7 +38,7 @@ public class FriendRequestController {
     @PatchMapping("/{requestId}")
     public void updateStatus(
             @PathVariable("requestId") Long requestId,
-            @RequestBody RequestStatus requestStatus) {
+            @RequestParam("requestStatus") RequestStatus requestStatus) {
         friendRequestService.updateStatus(requestId, requestStatus);
     }
 

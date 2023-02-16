@@ -28,7 +28,7 @@ const navigate = useNavigate();
             <NavText>Friends</NavText>
         </NavItem>
         <NavItem eventKey={"profile/invitations"}>
-            <NavIcon><i className='fa fa-fw fa-home' style={{fontSize: "1.5em"}}></i> </NavIcon>
+            <NavIcon><i className='fa fa-fw fa-envelope' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Invitations</NavText>
         </NavItem>
         <NavItem eventKey={""}>
