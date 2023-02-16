@@ -7,21 +7,38 @@ function Users(props) {
 
         if (users.length > 0) {
             return (
+                <div>
+                    <div>
+                        <h1 className ="text-center"> All users </h1>
+                        <table className="table table-striped">
+                            <thead>
+                            <tr>
+                                <td> User id</td>
+                                <td> User first name</td>
+                                <td> User last name</td>
+                                <td> User email</td>
+                                <td> User city</td>
 
-                <ul>
-                    {
-                        users.map(user =>
-                            <li key={user.id}>
-                                <p>{user.id}</p>
-                                <p> {user.firstName}</p>
-                                <p> {user.lastName}</p>
-                                <p> {user.email}</p>
-                                <p> {user.city}</p>
-                                <p></p>
-                            </li>
-                        )
-                    }
-                </ul>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                users.map(
+                                    user => {
+                                        return <tr>
+                                            <td>{user.id}</td>
+                                            <td>{user.firstName}</td>
+                                            <td>{user.lastName}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.city}</td>
+                                        </tr>
+                                    }
+                                )
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             )
         } else {
             return (

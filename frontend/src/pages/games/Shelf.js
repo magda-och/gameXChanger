@@ -1,5 +1,4 @@
 import React from 'react';
-import AddGame from "./AddGame";
 
 function Games(props) {
 
@@ -26,7 +25,6 @@ function Games(props) {
             return (
                 <>
                     <h3>No games yet</h3>
-                    <AddGame/>
                 </>
             )
                 ;
