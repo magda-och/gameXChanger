@@ -13,7 +13,6 @@ public class GameDto {
 
    private Long id;
     private String name;
-    private String description;
     private GameStatus gameStatus;
  // private byte[] image;
   private UserDto ownerDto;
