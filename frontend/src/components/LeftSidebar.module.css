@@ -1,0 +1,13 @@
+.profile{
+    margin-left: 10%;
+}
+
+
+.leftSidebar {
+    height: 100%;
+    width: 5%;
+    background-color: #0F3D3E;
+    font-family: "Segoe UI Historic", serif;
+    margin-top: 60px;
+    text-decoration-color: #344D67;
+}

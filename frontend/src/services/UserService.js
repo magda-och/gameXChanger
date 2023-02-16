@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import Users from "../pages/users/Users";
 
 
-
 function UserService() {
     const [users, setUsers] = useState({
         firstName: "",
