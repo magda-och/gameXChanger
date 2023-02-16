@@ -1,5 +1,4 @@
 import SideNav, {Toggle, NavItem, NavIcon, NavText} from '@trendmicro/react-sidenav'
-
 import '@trendmicro/react-sidenav/dist/react-sidenav.css'
 import classes from "./LeftSidebar.module.css";
 import {useNavigate} from "react-router-dom";
@@ -31,7 +30,7 @@ const navigate = useNavigate();
             <NavIcon>  <i className='fa fa-fw fa-solid fa-users' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Friends</NavText>
         </NavItem>
-        <NavItem eventKey={"invitations"}>
+        <NavItem eventKey={"profile/invitations"}>
             <NavIcon><i className='fa fa-fw fa-home' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Invitations</NavText>
         </NavItem>
