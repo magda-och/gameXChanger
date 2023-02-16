@@ -28,8 +28,6 @@ function Games(props) {
                     <h3>No games yet</h3>
                     <AddGame/>
                 </>
-
-
             )
                 ;
         }
