@@ -71,8 +71,8 @@ class Invitations extends React.Component{
                                     <td>{invitation.fromUserId.firstName+ " "+ invitation.fromUserId.lastName}</td>
                                     <td>{invitation.toUserId.firstName+ " "+ invitation.toUserId.lastName}</td>
                                     <td>{invitation.message}</td>
-                                    <button className="btn btn-danger">Accept</button>
-                                    <button className="btn btn-danger">Reject</button>
+                                    <button className="btn btn-danger" onClick={InvitationService.updateRequest(invitation.requestFriendId,"ACCEPTED")}>Accept</button>
+                                    <button className="btn btn-danger" onClick={InvitationService.updateRequest(invitation.requestFriendId,"REJECTED")}>Reject</button>
                                 </tr>
                             }
                         )

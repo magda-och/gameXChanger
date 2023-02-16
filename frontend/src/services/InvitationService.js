@@ -19,8 +19,12 @@ class InvitationService{
     getReceivedRequests(){
         return axios.get(API_URL_RECEIVED).then();
     }
-    async deleteRequest(id){
-        return await axios.delete(API_URL+ `/${id}`);
+     deleteRequest(id){
+        return  axios.delete(API_URL+ `/${id}`);
     }
+    updateRequest(id, status){
+        return axios.patch(API_URL+ `/${id}` +"?requestStatus="+`${status}`);
+    }
+    //http://localhost:3100/friends/requests/1?requestStatus=ACCEPTED
 }
 export default new InvitationService();
