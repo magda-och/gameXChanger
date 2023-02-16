@@ -11,7 +11,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Invitations from "./pages/Invitations";
 import ProfileLayout from "./components/ProfileLayout";
-import Shelf from "./pages/games/Shelf";
+import Games from "./pages/Games";
 
 const router = createBrowserRouter([
     {
@@ -29,9 +29,9 @@ const router = createBrowserRouter([
         path: '/profile',
         element: <ProfileLayout/>,
         children: [
-            {index: true, element: <Home/>},
+            {index: true, element: <Profile/>},
             {path: this, element: <Profile/>},
-            {path: '/games', element: <Shelf/>},
+            {path: '/profile/games', element: <Games/>},
             //    {index: '/borrowedGames', element: <Borrowed/>},
             //    {index: '/friends', element: <Friends/>},
         ],

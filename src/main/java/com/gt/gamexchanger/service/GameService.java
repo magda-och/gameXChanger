@@ -36,6 +36,7 @@ public class GameService {
             User owner = userRepository.findById(ownerId).get();
             game.setOwner(owner);
             game.setActualUser(owner);
+            game.setGameStatus(GameStatus.AVAILABLE);
             gameRepository.save(game);
             return (GameDto) gameDtoMapper.toDto(game);
         } else {

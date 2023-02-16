@@ -8,13 +8,14 @@ function Games(props) {
 
         if (games.length > 0) {
             return (
-
                 <ul>
                     {
                         games.map(game =>
                             <li key={game.id}>
-                                <p>{game.id}</p>
-                                <p> {game.name}</p>
+                                <p>{game.name}</p>
+                                <p> {game.visibility}</p>
+                                <p> {game.status}</p>
+                                <p> {game.actual}</p>
                                 <p></p>
                             </li>
                         )
@@ -28,7 +29,9 @@ function Games(props) {
                     <AddGame/>
                 </>
 
-            );
+
+            )
+                ;
         }
     }
     return (
@@ -36,7 +39,6 @@ function Games(props) {
             {displayGames(props)}
         </>
     );
-
 }
 
 export default Games;

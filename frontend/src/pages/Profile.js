@@ -5,6 +5,7 @@ import classes from "../components/MainLayout.module.css";
 import {Outlet} from "react-router-dom";
 import Footer from "../components/Footer";
 import UserService from "../services/UserService";
+import GameService from "../services/GameService";
 
 function Profile({title}) {
     return (
@@ -13,6 +14,7 @@ function Profile({title}) {
             <LeftSidebar/>
             <main className={classes.content}>
                 <UserService/>
+                <GameService/>
                 <Outlet/>
                 <h1>profile</h1>
             </main>

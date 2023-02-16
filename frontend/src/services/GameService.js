@@ -4,7 +4,7 @@ import Games from "../pages/games/Shelf";
 
 function GameService() {
     const [games, setGames] = useState({
-       name: ""
+       name: "",
     });
 
     const GAME_REST_API_URL ='http://localhost:3100/games';
