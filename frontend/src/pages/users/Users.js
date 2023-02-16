@@ -31,7 +31,7 @@ function Users(props) {
                                             <td>{user.lastName}</td>
                                             <td>{user.email}</td>
                                             <td>{user.city}</td>
-                                            <button>Invite</button>
+                                            <td><button className="btn btn-success">Invite</button></td>
                                         </tr>
                                     }
                                 )
