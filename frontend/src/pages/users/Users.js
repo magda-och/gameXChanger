@@ -31,6 +31,7 @@ function Users(props) {
                                             <td>{user.lastName}</td>
                                             <td>{user.email}</td>
                                             <td>{user.city}</td>
+                                            <button>Invite</button>
                                         </tr>
                                     }
                                 )
