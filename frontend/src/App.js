@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import Invitations from "./pages/Invitations";
 import ProfileLayout from "./components/ProfileLayout";
 import Games from "./pages/Games";
+import Friends from "./pages/Friends";
 
 const router = createBrowserRouter([
     {
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
             {path: this, element: <Profile/>},
             {path: '/profile/games', element: <Games/>},
             //{index: '/borrowedGames', element: <Borrowed/>},
-            //{index: '/friends', element: <Friends/>},
+            {path: '/profile/friends', element: <Friends/>},
         ],
     },
 ]);
