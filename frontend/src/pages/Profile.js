@@ -14,7 +14,6 @@ function Profile({title}) {
             <main className={classes.content}>
                 <UserService/>
                 <Outlet/>
-                <h1>profile</h1>
             </main>
             <h2>{title}</h2>
             <Footer/>
