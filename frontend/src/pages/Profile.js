@@ -13,7 +13,6 @@ function Profile({title}) {
             <LeftSidebar/>
             <main className={classes.content}>
                 <Outlet/>
-                <h1>profile</h1>
             </main>
             <h2>{title}</h2>
             <UserService/>

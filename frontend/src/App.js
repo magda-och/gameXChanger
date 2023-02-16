@@ -23,7 +23,7 @@ const router = createBrowserRouter([
             {path: '/about', element: <About/>},
             {path: '/user/login', element: <Login/>},
             {path: '/contacts', element: <Contacts/>},
-            {path: '/invitations', element: <Invitations/>},
+
         ],
     },
     {
@@ -34,6 +34,8 @@ const router = createBrowserRouter([
             {path: '/profile/games', element: <Games/>},
             //{index: '/borrowedGames', element: <Borrowed/>},
             {path: '/profile/friends', element: <Friends/>},
+           // {index: '/profile/friends', element: <Friends/>},
+            {path: '/profile/invitations', element: <Invitations/>},
         ],
     },
 ]);
