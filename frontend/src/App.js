@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         path: '/profile',
         element: <ProfileLayout/>,
         children: [
-            {path: this, element: <Profile/>},
+            {path: '/profile', element: <Profile/>},
             {path: '/profile/games', element: <Games/>},
             //{index: '/borrowedGames', element: <Borrowed/>},
             {path: '/profile/friends', element: <Friends/>},
