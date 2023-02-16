@@ -33,7 +33,7 @@ function Header() {
 
                         <ul className="navbar-nav ms-auto d-flex flex-row">
                             <li className="nav-item active">
-                                <Link className="nav-link" to={"/user/login"}>Log in</Link>
+                                <Link className="nav-link" to={"/user/login"}>Sign in</Link>
                             </li>
                         </ul>
 

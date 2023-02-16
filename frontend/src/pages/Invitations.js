@@ -9,11 +9,10 @@ class Invitations extends React.Component{
         super(props);
         this.state= {
             sendInvitations: [],
-            receivedInvitations:[],
-            counter: 0
+            receivedInvitations:[]
         }
     }
-    visible
+
     componentDidMount() {
         InvitationService.getSendRequests().then(
             (response) => {
@@ -58,12 +57,6 @@ class Invitations extends React.Component{
                     (response) => {
                         this.setState({ receivedInvitations:response.data });
                     });
-/*
-                console.log(res);
-                console.log(this.state.receivedInvitations);
-                const receivedInvitations = this.state.receivedInvitations.filter(item => item.requestFriendId !== id);
-                console.log(receivedInvitations);
-                this.setState({ receivedInvitations });*/
             });
     }
 
@@ -123,7 +116,7 @@ class Invitations extends React.Component{
                                         <td>{invitation.requestFriendId}</td>
                                         <td>{invitation.requestStatus}</td>
                                         <td>{invitation.fromUserId.firstName+ " " + invitation.fromUserId.lastName}</td>
-                                        <td>{invitation.toUserId.firstName+ " "+ invitation.fromUserId.lastName}</td>
+                                        <td>{invitation.toUserId.firstName+ " "+ invitation.toUserId.lastName}</td>
                                         <td>{invitation.message}</td>
                                         <td><button className="btn btn-danger" onClick={(e) => this.cancelInvitation(invitation.requestFriendId, e)}>Cancel</button></td>
                                     </tr>

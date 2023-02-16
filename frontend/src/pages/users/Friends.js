@@ -8,6 +8,7 @@ function Friends(props) {
         try {
             const res = await axios.delete(`${"http://localhost:3100/user/friends/2"}/${id}`)
             console.log('Item successfully deleted.')
+
             return res;
         } catch (error) {
             alert(error)
