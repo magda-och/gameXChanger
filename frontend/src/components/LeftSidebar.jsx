@@ -19,10 +19,6 @@ const navigate = useNavigate();
             <NavIcon>  <i className='fa fa-fw fa-solid fa-gamepad' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>My shelf</NavText>
         </NavItem>
-        <NavItem eventKey={"profile/borrowed"}>
-            <NavIcon>  <i className='fa fa-fw fa-solid fa-download' style={{fontSize: "1.5em"}}></i> </NavIcon>
-            <NavText>Borrowed games</NavText>
-        </NavItem>
         <NavItem eventKey={"profile"}>
             <NavIcon><i className='fa fa-fw fa-solid fa-circle-user' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Profile</NavText>
@@ -31,12 +27,12 @@ const navigate = useNavigate();
             <NavIcon>  <i className='fa fa-fw fa-solid fa-users' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Friends</NavText>
         </NavItem>
-        <NavItem eventKey={"invitations"}>
+        <NavItem eventKey={"profile/invitations"}>
             <NavIcon><i className='fa fa-fw fa-home' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Invitations</NavText>
         </NavItem>
         <NavItem eventKey={""}>
-            <NavIcon><i className='fa fa-fw fa-solid fa-envelope' style={{fontSize: "1.5em"}}></i> </NavIcon>
+            <NavIcon><i className='fa fa-fw fa-solid fa-home' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Home</NavText>
         </NavItem>
     </SideNav.Nav></SideNav>

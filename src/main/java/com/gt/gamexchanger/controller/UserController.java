@@ -81,8 +81,8 @@ public class UserController {
         return new ResponseEntity<>(myFriends, HttpStatus.OK);
     }
 
-    @DeleteMapping("friends/{userId}")
-    public ResponseEntity<?> remove(@PathVariable Long userId, @RequestParam Long friendId) {
+    @DeleteMapping("friends/{userId}/{friendId}")
+    public ResponseEntity<?> remove(@PathVariable Long friendId, @PathVariable Long userId) {
         try{
             userService.deleteFriend(userId,friendId);
             return ResponseEntity.noContent().build();
