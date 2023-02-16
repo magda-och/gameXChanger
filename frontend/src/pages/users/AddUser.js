@@ -13,11 +13,15 @@ export default function AddUser() {
 
     const {firstName, lastName, email, password, city} = user;
 
+    const [firstNameErr, setFirstNameErr] = useState("")
+
 
     const onSubmit = (e) => {
         e.preventDefault();
         axios.post("http://localhost:3100/user", user)
             .then((response) => {
+                alert("User created!")
+                window.location.replace('/profile')
             })
     }
 
