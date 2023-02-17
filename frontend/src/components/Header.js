@@ -8,7 +8,7 @@ function Header() {
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
                 <div className="container-fluid">
 
-                    <a href="#" className="navbar-brand">
+                    <a href={"/"} className="navbar-brand">
                         <img src="https://img.icons8.com/bubbles/512/ludo-game.png" width="45" alt=""
                              className="d-inline-block align-middle mr-2"/>
                             <span className="text-uppercase font-weight-bold">GameXChanger</span>
