@@ -2,7 +2,7 @@ import React from 'react';
 import Footer from "./Footer";
 import {Outlet} from "react-router-dom";
 import Header from "./Header";
-import classes from "./LeftSidebar.module.css";
+import classes from "../styles/LeftSidebar.module.css";
 import LeftSidebar from "./LeftSidebar";
 
 function ProfileLayout({title}) {
