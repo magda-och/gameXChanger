@@ -1,7 +1,7 @@
 import SideNav, {Toggle, NavItem, NavIcon, NavText} from '@trendmicro/react-sidenav'
 
 import '@trendmicro/react-sidenav/dist/react-sidenav.css'
-import classes from "./LeftSidebar.module.css";
+import classes from "../styles/LeftSidebar.module.css";
 import {useNavigate} from "react-router-dom";
 
 function LeftSidebar (){

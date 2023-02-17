@@ -1,6 +1,6 @@
 import React from 'react';
 import FriendService from "../services/FriendService";
-import classes from './Friends.module.css'
+import classes from '../styles/Friends.module.css'
 
 function Friends() {
     return (

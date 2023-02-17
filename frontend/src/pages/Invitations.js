@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import InvitationService from "../services/InvitationService";
-import classes from "./Invitations.module.css"
+import classes from "../styles/Invitations.module.css"
 import axios from "axios";
 
 const API_URL = "http://localhost:3100/friends/requests";
