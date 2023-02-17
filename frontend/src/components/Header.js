@@ -9,7 +9,7 @@ function Header() {
                 <div className="container-fluid">
 
                     <a href={"/"} className="navbar-brand">
-                        <img src="https://img.icons8.com/bubbles/512/ludo-game.png" width="45" alt=""
+                        <img src="https://cdn-icons-png.flaticon.com/512/3430/3430812.png" width="45" alt=""
                              className="d-inline-block align-middle mr-2"/>
                             <span className="text-uppercase font-weight-bold">GameXChanger</span>
                     </a>
