@@ -31,9 +31,7 @@ const router = createBrowserRouter([
         children: [
             {path: '/profile', element: <Profile/>},
             {path: '/profile/games', element: <Games/>},
-            //{index: '/borrowedGames', element: <Borrowed/>},
             {path: '/profile/friends', element: <Friends/>},
-           // {index: '/profile/friends', element: <Friends/>},
             {path: '/profile/invitations', element: <Invitations/>},
         ],
     },

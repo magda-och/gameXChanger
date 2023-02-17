@@ -3,6 +3,8 @@ import InvitationService from "../services/InvitationService";
 import classes from "../styles/Invitations.module.css"
 import axios from "axios";
 
+// URL w servisie -- wszystko w serwisie
+
 const API_URL = "http://localhost:3100/friends/requests";
 class Invitations extends React.Component{
     constructor(props) {
