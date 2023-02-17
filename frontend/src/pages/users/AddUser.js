@@ -1,6 +1,8 @@
 import {useState} from "react";
 import axios from "axios";
 
+//Zmiana nazwy na Registation lub inny rzeczownik
+
 export default function AddUser() {
 
     const [user, setUser] = useState({

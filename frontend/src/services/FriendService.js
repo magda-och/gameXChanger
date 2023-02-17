@@ -2,7 +2,8 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import Friends from "../pages/users/Friends";
 
-
+// konfiguracja - poczytac i usatlić jak trzymamamy url
+// obsługa API - wszystkie metody tutaj
 
 function FriendsService() {
     const [friends, setFriends] = useState([]);
