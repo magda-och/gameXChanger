@@ -15,24 +15,24 @@ const navigate = useNavigate();
     >
     <SideNav.Toggle />
     <SideNav.Nav  defaulfSelected = "profile">
-        <NavItem eventKey={"profile/games"}>
+        <NavItem eventKey={"profile/games"} id = "nav-id">
             <NavIcon>  <i className='fa fa-fw fa-solid fa-gamepad' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>My shelf</NavText>
         </NavItem>
-        <NavItem eventKey={"profile"}>
+        <NavItem eventKey={"profile"} id = "nav-id">
             <NavIcon><i className='fa fa-fw fa-solid fa-circle-user' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Profile</NavText>
         </NavItem>
-        <NavItem eventKey={"profile/friends"}>
+        <NavItem eventKey={"profile/friends"} id = "nav-id">
             <NavIcon>  <i className='fa fa-fw fa-solid fa-users' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Friends</NavText>
         </NavItem>
-        <NavItem eventKey={"profile/invitations"}>
+        <NavItem eventKey={"profile/invitations"} id = "nav-id">
             <NavIcon><i className='fa fa-fw fa-envelope' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>Invitations</NavText>
         </NavItem>
-        <NavItem eventKey={""}>
-            <NavIcon><i className='fa fa-fw fa-solid fa-home' style={{fontSize: "1.5em"}}></i> </NavIcon>
+        <NavItem eventKey={""} id = "nav-id">
+            <NavIcon><i className='fa fa-fw fa-solid fa-home' style={{fontSize: "1.7em"}}></i> </NavIcon>
             <NavText>Home</NavText>
         </NavItem>
     </SideNav.Nav></SideNav>
