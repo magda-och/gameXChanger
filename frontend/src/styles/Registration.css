@@ -1,0 +1,12 @@
+.password-box {
+    position: relative;
+}
+
+.grayscaled {
+    color: lightgray;
+}
+
+.form-control.errClass {
+    border: 1px solid red;
+}
+
