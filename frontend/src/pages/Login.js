@@ -1,9 +1,9 @@
 import React from 'react';
-import AddUser from "./users/AddUser";
+import Registration from "./Registration";
 
 function Login() {
     return (
-            <AddUser/>
+            <Registration/>
     );
 }
 
