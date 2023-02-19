@@ -1,4 +1,4 @@
-import './styles/App.css';
+import './App.css';
 import {
     createBrowserRouter,
     RouterProvider
@@ -11,7 +11,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Invitations from "./pages/Invitations";
 import ProfileLayout from "./components/ProfileLayout";
-import Games from "./pages/Games";
+import Shelf from "./pages/Shelf";
 import Friends from "./pages/Friends";
 
 const router = createBrowserRouter([
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         element: <ProfileLayout/>,
         children: [
             {path: '/profile', element: <Profile/>},
-            {path: '/profile/games', element: <Games/>},
+            {path: '/profile/shelf', element: <Shelf/>},
             {path: '/profile/friends', element: <Friends/>},
             {path: '/profile/invitations', element: <Invitations/>},
         ],

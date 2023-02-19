@@ -15,7 +15,7 @@ const navigate = useNavigate();
     >
     <SideNav.Toggle />
     <SideNav.Nav  defaultSelected = "profile" style={{'backgroundColor': '#0F3D3E'}}>
-        <NavItem eventKey={"profile/games"} id = "nav-id">
+        <NavItem eventKey={"profile/shelf"} id = "nav-id">
             <NavIcon>  <i className='fa fa-fw fa-solid fa-gamepad' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>My shelf</NavText>
         </NavItem>
