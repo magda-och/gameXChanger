@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
-import Games from "../components/Games/Games";
+import Borrowed from "../components/Games/Borrowed";
 import {GameAPI} from "../api/GameAPI";
 
-function GameService() {
+function BorrowedGameList() {
     const [games, setGames] = useState([])
 
     useEffect(() => {
-        GameAPI.getAll().then(
+        GameAPI.getBorrowedGames(2).then(
             function (response) {
                 setGames(response.data)
             }
@@ -16,8 +16,8 @@ function GameService() {
     }, []);
 
     return (
-        <Games games = {games}/>
+        <Borrowed games = {games}/>
     )
 }
 
-export default GameService;
+export default BorrowedGameList;
