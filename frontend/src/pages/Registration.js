@@ -1,8 +1,8 @@
 import {useState} from "react";
-import axios from "axios";
 import {useForm} from 'react-hook-form';
 import React, {useRef} from "react";
 import "../styles/Registration.css";
+import {UserAPI} from "../api/UserAPI";
 
 export default function Registration() {
 
@@ -34,8 +34,8 @@ export default function Registration() {
             password: data.password,
             city: data.city
         }
-        axios.post("http://localhost:3100/user", newUser)
-            .then((response) => {
+        UserAPI.create(newUser)
+            .then(() => {
                 alert("User created!")
                 window.location.replace('/profile')
             })
@@ -130,7 +130,7 @@ export default function Registration() {
                                         and one special sign</p>}
                             </div>
                         </div>
-                        <div className="mb-3">
+{/*                        <div className="mb-3">
                             <label htmlFor="c_password" className="form-label">
                                 Confirm password
                             </label>
@@ -146,9 +146,9 @@ export default function Registration() {
                                         value === password.current || "The passwords do not match"
                                 })}
                             />
-                            {/*{errors.c_password?.type === 'validate' &&*/}
-                            {/*    <p role="alert">Password doesn't match</p>}*/}
-                        </div>
+                            {errors.c_password?.type === 'validate' &&
+                                <p role="alert">Password doesn't match</p>}
+                        </div>*/}
                         <div className="mb-3">
                             <label htmlFor="city" className="form-label">
                                 City
