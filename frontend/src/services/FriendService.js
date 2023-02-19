@@ -1,27 +1,23 @@
-import axios from "axios";
 import {useEffect, useState} from "react";
-import Friends from "../pages/users/Friends";
+import Friends from "../components/Users/Friends";
+import {FriendAPI} from "../api/FriendAPI";
 
 // konfiguracja - poczytac i usatlić jak trzymamamy url
 // obsługa API - wszystkie metody tutaj
 
 function FriendsService() {
-    const [friends, setFriends] = useState([]);
 
-    const FRIEND_REST_API_URL ='http://localhost:3100/user/friends/2';
+    const [friends, setFriends] = useState([])
 
-    useEffect(()=>{
-        getAllFriends();
+    useEffect(() => {
+        FriendAPI.getAll(2).then(
+            function (response) {
+                setFriends(response.data)
+            }
+        ).catch(function (error) {
+            console.error(`Error: ${error}`)
+        });
     }, []);
-
-    const getAllFriends =() =>{
-        axios.get(FRIEND_REST_API_URL)
-            .then((response) =>{
-                const allFriends = response.data;
-                setFriends(allFriends);
-            })
-            .catch(error => console.error('Error: ${error'));
-    }
 
     return (
         <Friends friends = {friends}/>

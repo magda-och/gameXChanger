@@ -22,7 +22,7 @@ function Users(props) {
     const displayUsers = (props) => {
         const {users} = props;
 
-        if (users.length > 0) {
+
             return (
                 <div>
                     <div>
@@ -58,11 +58,6 @@ function Users(props) {
                     </div>
                 </div>
             )
-        } else {
-            return (
-                <h3>No users yet</h3>
-            );
-        }
     }
     return (
         <>
