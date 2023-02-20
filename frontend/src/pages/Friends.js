@@ -1,11 +1,11 @@
 import React from 'react';
-import FriendService from "../services/FriendService";
-import classes from '../styles/Friends.module.css'
+import classes from '../components/Friends/Friends.module.css'
+import FriendsList from "../components/Friends/FriendsList";
 
 function Friends() {
     return (
         <div className={classes.friends}>
-            <FriendService/>
+            <FriendsList/>
         </div>
     );
 }

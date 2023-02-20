@@ -1,17 +1,17 @@
-import './styles/App.css';
+import './App.css';
 import {
     createBrowserRouter,
     RouterProvider
 } from "react-router-dom";
-import MainLayout from "./components/MainLayout";
+import MainLayout from "./components/MainLayout/MainLayout";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contacts from "./pages/Contacts";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Invitations from "./pages/Invitations";
-import ProfileLayout from "./components/ProfileLayout";
-import Games from "./pages/Games";
+import ProfileLayout from "./components/ProfileLayout/ProfileLayout";
+import Shelf from "./pages/Shelf";
 import Friends from "./pages/Friends";
 
 const router = createBrowserRouter([
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         element: <ProfileLayout/>,
         children: [
             {path: '/profile', element: <Profile/>},
-            {path: '/profile/games', element: <Games/>},
+            {path: '/profile/shelf', element: <Shelf/>},
             {path: '/profile/friends', element: <Friends/>},
             {path: '/profile/invitations', element: <Invitations/>},
         ],

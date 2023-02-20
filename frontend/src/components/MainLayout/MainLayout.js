@@ -1,8 +1,8 @@
 import React from 'react';
-import Footer from "./Footer";
+import Footer from "../Footer/Footer";
 import {Outlet} from "react-router-dom";
-import Header from "./Header";
-import classes from "../styles/MainLayout.module.css";
+import Header from "../Header/Header";
+import classes from "./MainLayout.module.css";
 
 
 

@@ -1,7 +1,7 @@
 import SideNav, {Toggle, NavItem, NavIcon, NavText} from '@trendmicro/react-sidenav'
 
 import '@trendmicro/react-sidenav/dist/react-sidenav.css'
-import classes from "../styles/LeftSidebar.module.css";
+import classes from "./LeftSidebar.module.css";
 import {useNavigate} from "react-router-dom";
 
 function LeftSidebar (){
@@ -15,7 +15,7 @@ const navigate = useNavigate();
     >
     <SideNav.Toggle />
     <SideNav.Nav  defaultSelected = "profile" style={{'backgroundColor': '#0F3D3E'}}>
-        <NavItem eventKey={"profile/games"} id = "nav-id">
+        <NavItem eventKey={"profile/shelf"} id = "nav-id">
             <NavIcon>  <i className='fa fa-fw fa-solid fa-gamepad' style={{fontSize: "1.5em"}}></i> </NavIcon>
             <NavText>My shelf</NavText>
         </NavItem>

@@ -1,6 +1,5 @@
 import React from 'react';
-import classes from '../styles/Footer.module.css'
-// pakiet footer w tym js, css, jsx
+import classes from './Footer.module.css'
 // naprawić footer w profilu
 function Footer() {
     return (
