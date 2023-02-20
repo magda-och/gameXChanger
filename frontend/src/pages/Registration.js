@@ -6,33 +6,23 @@ import {UserAPI} from "../api/UserAPI";
 
 export default function Registration() {
 
-    const [user, setUser] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        city: "",
-    });
-
     const [togglePassword, setTogglePassword] = useState(false);
-
-    const {firstName, lastName, email, password, city} = user;
-
-    const [firstNameErr, setFirstNameErr] = useState("");
-
 
     const {register, watch, handleSubmit,  getValues, formState: {errors}} =
         useForm({mode: "onBlur"});
 
 
     const onSubmit = data => {
+        let modifiedFirstName = firstUpper(data.firstName)
+        let modifiedLastName = firstUpper(data.lastName)
+        let modifiedCity = firstUpper(data.city)
         // e.preventDefault();
         const newUser = {
-            firstName: data.firstName,
-            lastName: data.lastName,
+            firstName: modifiedFirstName,
+            lastName: modifiedLastName,
             email: data.email,
             password: data.password,
-            city: data.city
+            city: modifiedCity,
         }
         UserAPI.create(newUser)
             .then(() => {
@@ -40,6 +30,12 @@ export default function Registration() {
                 window.location.replace('/profile')
             })
     };
+
+    function firstUpper(name){
+
+        return name && name[0].toUpperCase() + name.slice(1) || name;
+
+    }
 
     return (
         <div className="container">
@@ -54,14 +50,20 @@ export default function Registration() {
                             </label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className={`form-control ${errors.firstName ? 'errFirstName' : ''}`}
                                 placeholder="Enter your first name"
                                 name="firstName"
                                 id="firstname"
-                                {...register("firstName", {required: true})}
-                                aria-invalid={errors.firstName ? "true" : "false"}
+                                {...register("firstName", {
+                                    required: true,
+                                    minLength: 3,
+                                    pattern: /^[a-zA-Z]+$/
+                                })}
+                                // aria-invalid={errors.firstName ? "true" : "false"}
                             />
-                            {errors.firstName?.type === 'required' && <p role="alert">First name is required</p>}
+                            {errors.firstName?.type === 'required' && <p id='alert-msg' role="alert">First name is required</p>}
+                            {errors.firstName?.type === 'minLength' && <p id='alert-msg' role="alert">First name should be at least 3 characters long</p>}
+                            {errors.firstName?.type === 'pattern' && <p id="alert-msg" role="alert">First name is not valid - should contains only letters </p>}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="lastName" className="form-label">
@@ -69,13 +71,20 @@ export default function Registration() {
                             </label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className={`form-control ${errors.lastName ? 'errLastName' : ''}`}
                                 placeholder="Enter your last name"
                                 name="lastName"
                                 id="lastname"
-                                {...register("lastName", {required: true})}
+                                {...register("lastName", {
+                                    required: true,
+                                    minLength: 3,
+                                    // pattern: /^[A-Z][a-z]+$/
+                                    pattern : /^[a-zA-Z]+$/
+                                })}
                             />
-                            {errors.lastName?.type === 'required' && <p role="alert">Last name is required</p>}
+                            {errors.lastName?.type === 'required' && <p id='alert-msg' role="alert">Last name is required</p>}
+                            {errors.lastName?.type === 'minLength' && <p id='alert-msg' role="alert">Last name should be at least 3 characters long</p>}
+                            {errors.lastName?.type === 'pattern' && <p id="alert-msg" role="alert">Last name is not valid - should contains only letters </p>}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">
@@ -83,7 +92,7 @@ export default function Registration() {
                             </label>
                             <input
                                 type="email"
-                                className="form-control"
+                                className={`form-control ${errors.email ? 'errEmail' : ''}`}
                                 placeholder="Enter your email address"
                                 name="email"
                                 id="email"
@@ -92,8 +101,8 @@ export default function Registration() {
                                     pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
                                 })}
                             />
-                            {errors.email?.type === 'required' && <p role="alert">Email is required</p>}
-                            {errors.email?.type === 'pattern' && <p role="alert">Email is not valid</p>}
+                            {errors.email?.type === 'required' && <p id='alert-msg' role="alert">Email is required</p>}
+                            {errors.email?.type === 'pattern' && <p id='alert-msg' role="alert">Email is not valid</p>}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">
@@ -109,60 +118,60 @@ export default function Registration() {
                                 ></i>
                                 <input
                                     type={togglePassword ? "text" : "password"}
-                                    className={`form-control ${errors.password ? 'errClass' : ''}`}
+                                    className={`form-control ${errors.password ? 'errPassword' : ''}`}
                                     placeholder="Enter your password"
                                     name="password"
                                     id="password"
-                                    // value={user.password}
-                                    // onChange={handleInputs}
                                     {...register("password", {
                                         required: true,
                                         minLength: 6,
                                         pattern: /(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$/
                                     })}
                                 />
-                                {errors.password?.type === 'required' && <p role="alert">Password is required</p>}
+                                {errors.password?.type === 'required' && <p id='alert-msg' role="alert">Password is required</p>}
                                 {errors.password?.type === 'minLength' &&
-                                    <p role="alert">Password should have min 6 characters</p>}
+                                    <p id='alert-msg' role="alert">Password should have min 6 characters</p>}
                                 {errors.password?.type === 'pattern' &&
-                                    <p role="alert">Password should have minimum one small letter, one capital, one
+                                    <p id='alert-msg' role="alert">Password should have minimum one small letter, one capital, one
                                         number
                                         and one special sign</p>}
                             </div>
                         </div>
-{/*                        <div className="mb-3">
-                            <label htmlFor="c_password" className="form-label">
-                                Confirm password
-                            </label>
-                            <input
-                                // type={toggle2 ? "text" : "password"}
-                                type="password"
-                                className="form-control"
-                                placeholder="Repeat your password"
-                                name="c_password"
-                                id="c_password"
-                                {...register("c_password" , {
-                                    validate: value =>
-                                        value === password.current || "The passwords do not match"
-                                })}
-                            />
-                            {errors.c_password?.type === 'validate' &&
-                                <p role="alert">Password doesn't match</p>}
-                        </div>*/}
                         <div className="mb-3">
                             <label htmlFor="city" className="form-label">
-                                City
+                                City (optional)
                             </label>
                             <input
                                 type={"text"}
-                                className="form-control"
+                                className={`form-control ${errors.city ? 'errCity' : ''}`}
                                 placeholder="Enter your city"
                                 name="city"
                                 id="city"
-                                // value={user.city}
-                                // onChange={handleInputs}
-                                {...register("city")}
+                                {...register("city", {
+                                    minLength: 3,
+                                    pattern: /^[a-zA-Z]+$/    //todo? nie akceptuje polskich znaków
+                                })}
                             />
+                            {errors.city?.type === 'minLength' && <p id='alert-msg' role="alert">City should be at least 3 characters long</p>}
+                            {errors.city?.type === 'pattern' && <p id="alert-msg" role="alert">City is not valid - should contains only letters </p>}
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="phoneNumber" className="form-label">
+                                Phone number (optional)
+                            </label>
+                            <input
+                                type={"text"}
+                                className={`form-control ${errors.phoneNumber ? 'errPhoneNumber' : ''}`}
+                                placeholder="Enter your phone number"
+                                name="phoneNumber"
+                                id="phoneNumber"
+                                {...register("phoneNumber", {
+                                    minLength: 9,
+                                    pattern: /^\d+$/
+                                })}
+                            />
+                            {errors.phoneNumber?.type === 'minLength' && <p id='alert-msg' role="alert">Phone number should be at least 9 characters long</p>}
+                            {errors.phoneNumber?.type === 'pattern' && <p id="alert-msg" role="alert">Phone number is not valid - should contains only digits </p>}
                         </div>
                         <button type="submit" className="btn btn-primary">
                             Submit

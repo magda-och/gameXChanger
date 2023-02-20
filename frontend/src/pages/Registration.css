@@ -1,12 +1,34 @@
-.password-box {
-    position: relative;
+#alert-msg {
+    font-weight: bold;
+    color: red;
 }
 
-.grayscaled {
-    color: lightgray;
+.form-label{
+    font-weight: bold;
+}
+.errFirstName {
+    box-shadow: rgba(246, 10, 10, 0.98) 1px 1px 8px 1px;
 }
 
-.form-control.errClass {
-    border: 1px solid red;
+.errLastName {
+    box-shadow: rgba(246, 10, 10, 0.98) 1px 1px 8px 1px;
 }
+
+.errEmail {
+    box-shadow: rgba(246, 10, 10, 0.98) 1px 1px 8px 1px;
+}
+
+.errPassword {
+    box-shadow: rgba(246, 10, 10, 0.98) 1px 1px 8px 1px;
+}
+
+.errCity {
+    box-shadow: rgba(246, 10, 10, 0.98) 1px 1px 8px 1px;
+}
+
+.errPhoneNumber {
+    box-shadow: rgba(246, 10, 10, 0.98) 1px 1px 8px 1px;
+}
+
+
 
