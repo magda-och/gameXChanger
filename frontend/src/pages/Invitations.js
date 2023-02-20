@@ -1,11 +1,7 @@
-import React, {useState} from "react";
-import InvitationService from "../services/InvitationService";
-import classes from "../styles/Invitations.module.css"
-import axios from "axios";
+import React from "react";
+import classes from "./Invitations.module.css"
+import {InvitationAPI} from "../api/InvitationAPI";
 
-// URL w servisie -- wszystko w serwisie
-
-const API_URL = "http://localhost:3100/friends/requests";
 class Invitations extends React.Component{
     constructor(props) {
         super(props);
@@ -16,7 +12,7 @@ class Invitations extends React.Component{
     }
 
     componentDidMount() {
-        InvitationService.getSendRequests().then(
+        InvitationAPI.getSend(2).then(
             (response) => {
                 //this.state.invitations = response.data
                 this.setState({ sendInvitations: [{
@@ -30,7 +26,7 @@ class Invitations extends React.Component{
                 console.log(this.state)
         });
 
-        InvitationService.getReceivedRequests().then(
+        InvitationAPI.getReceived(2).then(
             (response) => {
                 this.setState({ receivedInvitations: [{
                         requestFriendId: 1,
@@ -44,7 +40,7 @@ class Invitations extends React.Component{
     }
 
     cancelInvitation(id, e){
-        axios.delete(API_URL+ `/${id}`)
+        InvitationAPI.delete(id)
             .then(res => {
                 console.log(res);
                 const sendInvitations = this.state.sendInvitations.filter(item => item.requestFriendId !== id);
@@ -53,11 +49,17 @@ class Invitations extends React.Component{
     }
 
     updateInvitationStatus(id, status, e){
-        axios.patch(API_URL+ `/${id}` +"?requestStatus="+`${status}`)
+        InvitationAPI.update(id, status)
             .then(res =>{
-                InvitationService.getReceivedRequests().then(
+                console.log(res);
+                if(status==="ACCEPTED"){
+                    alert("You added friend!")
+                } else {
+                    alert("You reject user")
+                }
+                InvitationAPI.getReceived(2).then(
                     (response) => {
-                        this.setState({ receivedInvitations:response.data });
+                        this.setState({ receivedInvitations:response.data});
                     });
             });
     }
