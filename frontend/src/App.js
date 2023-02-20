@@ -3,14 +3,14 @@ import {
     createBrowserRouter,
     RouterProvider
 } from "react-router-dom";
-import MainLayout from "./components/MainLayout";
+import MainLayout from "./components/MainLayout/MainLayout";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contacts from "./pages/Contacts";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Invitations from "./pages/Invitations";
-import ProfileLayout from "./components/ProfileLayout";
+import ProfileLayout from "./components/ProfileLayout/ProfileLayout";
 import Shelf from "./pages/Shelf";
 import Friends from "./pages/Friends";
 

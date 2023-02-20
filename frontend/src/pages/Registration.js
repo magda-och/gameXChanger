@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useForm} from 'react-hook-form';
 import React, {useRef} from "react";
-import "../styles/Registration.css";
+import "./Registration.css";
 import {UserAPI} from "../api/UserAPI";
 
 export default function Registration() {
