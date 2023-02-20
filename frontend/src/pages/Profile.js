@@ -1,10 +1,10 @@
 import React from 'react';
-import UserService from "../services/UserService";
+import UserList from "../components/Users/UserList";
 import classes from "../components/ProfileLayout/Profile.module.css";
 function Profile() {
     return (
         <div className={classes.profile}>
-            <UserService/>
+            <UserList/>
         </div>
     );
 }

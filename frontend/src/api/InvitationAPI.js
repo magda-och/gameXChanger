@@ -32,7 +32,7 @@ export const InvitationAPI = {
     create: function (invitation) {
         return api.request({
             method: "POST",
-            url: `/friends/requests/`,
+            url: `/friends/requests`,
             data: invitation
         });
     },

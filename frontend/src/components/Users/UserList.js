@@ -1,9 +1,8 @@
-import {UserAPI} from "../api/UserAPI";
+import {UserAPI} from "../../api/UserAPI";
 import React, {useEffect, useState} from "react";
-import Users from "../components/Users/Users";
-import {InvitationAPI} from "../api/InvitationAPI";
+import {InvitationAPI} from "../../api/InvitationAPI";
 
-function UserService() {
+function UserList() {
 
     const [users, setUsers] = useState([])
 
@@ -17,6 +16,24 @@ function UserService() {
         });
     }, []);
 
+    function addInvitation(fromId, toId) {
+        const invitation = {
+            "requestStatus": "WAITING",
+            "fromUserId": {
+                "id": fromId
+            },
+            "toUserId": {
+                "id": toId
+            },
+            "message": "Zapraszam do znajomych"
+        };
+
+        InvitationAPI.create(invitation)
+            .then(() => {
+            alert("Invitation successfully send!")
+            window.location.replace("profile/invitations")
+        })
+    }
 
     return (
         <div>
@@ -43,7 +60,7 @@ function UserService() {
                                     <td>{user.lastName}</td>
                                     <td>{user.email}</td>
                                     <td>{user.city}</td>
-                                    <td><button className="btn btn-success" onClick={(e) => Users.addInvitation(2, user.id)}>Invite</button></td>
+                                    <td><button className="btn btn-success" onClick={(e) => addInvitation(2, user.id)}>Invite</button></td>
                                 </tr>
                             }
                         )
@@ -55,4 +72,4 @@ function UserService() {
     )
 }
 
-export default UserService;
+export default UserList;
