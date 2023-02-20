@@ -1,17 +1,17 @@
 import React from 'react';
-import classes from "../styles/Games.module.css"
+import classes from "./Shelf.module.css"
 import AddGame from "../components/Games/AddGame";
-import GameService from "../services/GameService";
+import MyGameList from "../services/MyGameList";
 import BorrowedGameList from "../services/BorrowedGamesList";
-import AddGameButton from "../components/Games/AddGameButton";
+
 
 
 
 function Shelf() {
     return (
       <div className={classes.games}>
-          <AddGameButton title={"Add new game"}/>
-          <GameService/>
+          <AddGame/>
+          <MyGameList/>
           <BorrowedGameList/>
       </div>
     );

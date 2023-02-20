@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import Games from "../components/Games/Games";
 import {GameAPI} from "../api/GameAPI";
 
-function GameService() {
+function MyGameList() {
     const [games, setGames] = useState([])
 
     useEffect(() => {
@@ -20,4 +20,4 @@ function GameService() {
     )
 }
 
-export default GameService;
+export default MyGameList;
