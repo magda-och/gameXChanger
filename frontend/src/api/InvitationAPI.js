@@ -7,13 +7,25 @@ export const InvitationAPI = {
     getReceived: function (userId) {
         return api.request({
             method: "GET",
-            url: `/friends/requests/received/${userId}`
+            url: `/friends/requests/received/${userId}`,
+            mode: 'cors',
+            headers:{
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": api.baseURL,
+                "Access-Control-Allow-Methods": "GET"
+            }
         });
     },
     getSend: function (userId) {
         return api.request({
             method: "GET",
-            url: `/friends/requests/send/${userId}`
+            url: `/friends/requests/send/${userId}`,
+            mode: 'cors',
+            headers:{
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": api.baseURL,
+                "Access-Control-Allow-Methods": "GET"
+            }
         });
     },
 
@@ -27,7 +39,7 @@ export const InvitationAPI = {
     update: function (id, status) {
         return api.request({
             method: "PATCH",
-            url: `/${id}?requestStatus="+${status}`,
+            url: `/friends/requests/${id}` +"?requestStatus="+`${status}`,
             data: status,
         });
     },

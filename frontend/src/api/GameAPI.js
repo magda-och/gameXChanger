@@ -10,13 +10,13 @@ export const GameAPI = {
     getMyGames: function(userId) {
         return api.request({
             method: "GET",
-            url: `/games/myGames/${userId}/`
+            url: `/games/myGames/${userId}`
         });
     },
     getBorrowedGames: function(userId) {
         return api.request({
             method: "GET",
-            url: `/games/myGames/${userId}/`
+            url: `/games/borrowedGames/${userId}`
         });
     },
     create: function(ownerId, game) {
