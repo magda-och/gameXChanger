@@ -13,6 +13,7 @@ import Invitations from "./pages/Invitations";
 import ProfileLayout from "./components/ProfileLayout/ProfileLayout";
 import Shelf from "./pages/Shelf";
 import Friends from "./pages/Friends";
+import FriendGames from "./components/Games/FriendGames";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,11 @@ const router = createBrowserRouter([
             {path: '/profile/invitations', element: <Invitations/>},
         ],
     },
+
+    {
+        path: '/games',
+        element: <FriendGames/>
+    }
 ]);
 
 function App() {

@@ -21,7 +21,7 @@ function Games(props) {
 
         return (
             <div>
-                <h1 className="text-center">My Games</h1>
+                <h2 className="text-center">Games</h2>
                 <table className="table table-striped">
                     <thead>
                     <tr>
