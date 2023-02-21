@@ -19,7 +19,7 @@ export default function Login() {
         <div>
             <div>
                 <Helmet>
-                    <title> GameXChanger | Registration</title>
+                    <title> GameXChanger | Login</title>
                 </Helmet>
                 <div>
                     <h1></h1>
