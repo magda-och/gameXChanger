@@ -1,8 +1,16 @@
 import React from 'react';
+import {Helmet} from "react-helmet";
 
 function About() {
     return (
-        <h2>This is the about page.</h2>
+        <div>
+            <Helmet>
+                <title> GameXChanger | About</title>
+            </Helmet>
+            <div>
+                <h1>This is about page</h1>
+            </div>
+        </div>
     );
 }
 

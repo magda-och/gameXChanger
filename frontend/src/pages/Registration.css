@@ -34,5 +34,8 @@
     box-shadow: rgba(246, 10, 10, 0.98) 1px 1px 8px 1px;
 }
 
+.grayscaled {
+    color: lightgray;
+}
 
 

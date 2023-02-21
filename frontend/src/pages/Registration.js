@@ -3,6 +3,7 @@ import {useForm} from 'react-hook-form';
 import React, {useRef} from "react";
 import "./Registration.css";
 import {UserAPI} from "../api/UserAPI";
+import {Helmet} from "react-helmet";
 
 export default function Registration() {
 
@@ -38,6 +39,15 @@ export default function Registration() {
     }
 
     return (
+        <div>
+            <div>
+                <Helmet>
+                    <title> GameXChanger | Registration</title>
+                </Helmet>
+                <div>
+                    <h1>GameXChanger</h1>
+                </div>
+            </div>
         <div className="container">
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
@@ -188,6 +198,7 @@ export default function Registration() {
 
                 </div>
             </div>
+        </div>
         </div>
     )
 }
