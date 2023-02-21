@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import classes from './Header.module.css';
 
 function Header() {
@@ -8,11 +8,11 @@ function Header() {
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
                 <div className="container-fluid">
 
-                    <a href={"/"} className="navbar-brand">
+                    <NavLink to="/" className="navbar-brand">
                         <img src="https://cdn-icons-png.flaticon.com/512/3430/3430812.png" width="45" alt=""
                              className="d-inline-block align-middle mr-2"/>
                             <span className="text-uppercase font-weight-bold">GameXChanger</span>
-                    </a>
+                    </NavLink>
 
                     <div className="collapse navbar-collapse" id="navbarExample01">
                         <ul className="navbar-nav me-auto mb- mb-rg-0">
