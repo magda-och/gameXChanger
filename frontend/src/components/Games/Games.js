@@ -1,6 +1,19 @@
 import React from 'react';
+import {GameAPI} from "../../api/GameAPI";
 
 function Games(props) {
+
+    const removeGame = async(id) => {
+        try {
+            const res = await GameAPI.delete(id)
+            console.log('Item successfully deleted.')
+            alert("Game successfully deleted.")
+            window.location.replace('/profile/shelf')
+            return res;
+        } catch (error) {
+            alert(error)
+        }
+    }
 
     const displayGames = (props) => {
         const {games} = props;
@@ -26,8 +39,13 @@ function Games(props) {
                                     <td> {game.id}</td>
                                     <td>{game.name}</td>
                                     <td> {game.visibility}</td>
-                                    <td> {game.status}</td>
+                                    <td> {game.gameStatus}</td>
                                     <td> {game.actual}</td>
+                                    <td>
+                                        <button className="btn btn-outline-secondary"
+                                                onClick={() => removeGame(game.id)}>Delete
+                                        </button>
+                                    </td>
                                 </tr>
                             }
                         )
