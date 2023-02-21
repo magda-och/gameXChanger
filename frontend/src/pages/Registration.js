@@ -4,6 +4,7 @@ import React, {useRef} from "react";
 import "./Registration.css";
 import {UserAPI} from "../api/UserAPI";
 import {Helmet} from "react-helmet";
+import {NavLink} from "react-router-dom";
 
 export default function Registration() {
 
@@ -189,9 +190,9 @@ export default function Registration() {
                         <div className="mt-3">
                             <p className="mb-0  text-center">
                                 Already have an account?{' '}
-                                <a href="{''}" className="text-primary fw-bold">
-                                    Sign In
-                                </a>
+                                <NavLink to="/user/login" className="text-primary fw-bold">
+                                    Log In
+                                </NavLink>
                             </p>
                         </div>
                     </form>
