@@ -6,7 +6,7 @@ function MyGameList() {
     const [games, setGames] = useState([])
 
     useEffect(() => {
-        GameAPI.getAll().then(
+        GameAPI.getMyGames(2).then(
             function (response) {
                 setGames(response.data)
             }

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {FriendAPI} from "../../api/FriendAPI";
+import FriendGames from "../Games/FriendGames";
 
 // konfiguracja - poczytac i usatlić jak trzymamamy url
 // obsługa API - wszystkie metody tutaj
@@ -32,6 +33,12 @@ function FriendsList() {
         }
     }
 
+    const getFriendGames = (id) => {
+        window.location.replace(`/games`);
+        return <FriendGames id = {id}/>
+    };
+
+
     return (
         <div>
             <div>
@@ -55,7 +62,12 @@ function FriendsList() {
                                     <td>{friend.lastName}</td>
                                     <td>{friend.city}</td>
                                     <td>
-                                        <button className="btn btn-danger"
+                                        <button className="btn btn-outline-secondary"
+                                                onClick={() => getFriendGames(friend.id)}>Show Games
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button className="btn btn-outline-secondary"
                                                 onClick={() => removeFriend(friend.id)}>Delete
                                         </button>
                                     </td>

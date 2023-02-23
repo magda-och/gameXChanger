@@ -13,9 +13,7 @@ function Borrowed(props) {
                     <tr>
                         <td> Game id</td>
                         <td> Game name</td>
-                        <td> Game Visibility</td>
-                        <td> Game Status</td>
-                        <td> Actual owner</td>
+                        <td> Borrow from</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -24,9 +22,7 @@ function Borrowed(props) {
                                 return <tr>
                                     <td> {game.id}</td>
                                     <td>{game.name}</td>
-                                    <td> {game.visibility}</td>
-                                    <td> {game.status}</td>
-                                    <td> {game.actual}</td>
+                                    <td> {game.from}</td>
                                 </tr>
                             }
                         )

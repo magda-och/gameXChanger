@@ -23,7 +23,7 @@ export default function AddGame() {
             gameStatus: "AVAILABLE",
             visibility: "PRIVATE",
         }
-        GameAPI.create(2, newGame)
+        GameAPI.create(1, newGame)
             .then(() => {
                 alert("Game successfully added to shelf!")
                 window.location.replace('/profile/shelf')
@@ -53,9 +53,10 @@ export default function AddGame() {
                                 />
                                 {errors.name?.type === 'required' && <p role="alert">Game name is required</p>}
                             </div>
-                            <button type="submit" className="btn btn-outline-secondary">
+                            <button type="submit" className="btn btn-secondary">
                                 Add
                             </button>
+                              <span> </span>
                             <button type="button" className="btn btn-outline-secondary" onClick={closeForm}>Close</button>
                         </form>
                     )}
