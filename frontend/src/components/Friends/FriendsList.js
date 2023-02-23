@@ -34,7 +34,6 @@ function FriendsList() {
     }
 
     const getFriendGames = (id) => {
-        alert("hej");
         window.location.replace(`/games`);
         return <FriendGames id = {id}/>
     };
