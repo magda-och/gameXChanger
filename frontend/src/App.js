@@ -25,7 +25,11 @@ const router = createBrowserRouter([
             {path: '/about', element: <About/>},
             {path: '/user/login', element: <Login/>},
             {path: '/contacts', element: <Contacts/>},
-            {path: '/user/register', element: <Registration/>}
+            {path: '/user/register', element: <Registration/>},
+            {
+                path: '/games',
+                element: <FriendGames/>
+            }
         ],
     },
     {
@@ -39,10 +43,6 @@ const router = createBrowserRouter([
         ],
     },
 
-    {
-        path: '/games',
-        element: <FriendGames/>
-    }
 ]);
 
 function App() {
