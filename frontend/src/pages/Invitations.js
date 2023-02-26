@@ -91,8 +91,8 @@ class Invitations extends React.Component{
                                     <td>{invitation.fromUserId.firstName+ " "+ invitation.fromUserId.lastName}</td>
                                     <td>{invitation.toUserId.firstName+ " "+ invitation.toUserId.lastName}</td>
                                     <td>{invitation.message}</td>
-                                    <td><button className={"btn btn-success " + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"ACCEPTED", e)}>Accept</button></td>
-                                    <td><button className={"btn btn-danger " + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"REJECTED", e)}>Reject</button></td>
+                                    <td><button className={"btn btn-outline-secondary" + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"ACCEPTED", e)}>Accept</button></td>
+                                    <td><button className={"btn btn-secondary " + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"REJECTED", e)}>Reject</button></td>
                                 </tr>
                             }
                         )
@@ -122,7 +122,7 @@ class Invitations extends React.Component{
                                         <td>{invitation.fromUserId.firstName+ " " + invitation.fromUserId.lastName}</td>
                                         <td>{invitation.toUserId.firstName+ " "+ invitation.toUserId.lastName}</td>
                                         <td>{invitation.message}</td>
-                                        <td><button className="btn btn-danger" onClick={(e) => this.cancelInvitation(invitation.requestFriendId, e)}>Cancel</button></td>
+                                        <td><button className="btn btn-secondary" onClick={(e) => this.cancelInvitation(invitation.requestFriendId, e)}>Cancel</button></td>
                                     </tr>
                                 }
                             )

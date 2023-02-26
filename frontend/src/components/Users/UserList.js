@@ -60,7 +60,7 @@ function UserList() {
                                     <td>{user.lastName}</td>
                                     <td>{user.email}</td>
                                     <td>{user.city}</td>
-                                    <td><button className="btn btn-success" onClick={(e) => addInvitation(2, user.id)}>Invite</button></td>
+                                    <td><button className="btn btn-outline-secondary" onClick={(e) => addInvitation(2, user.id)}>Invite</button></td>
                                 </tr>
                             }
                         )
