@@ -10,7 +10,13 @@ export const GameAPI = {
     getMyGames: function(userId) {
         return api.request({
             method: "GET",
-            url: `/games/myGames/${userId}`
+            url: `/games/myGames/${userId}`,
+            mode: 'cors',
+            headers:{
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": api.baseURL,
+                "Access-Control-Allow-Methods": "GET"
+            }
         });
     },
     getBorrowedGames: function(userId) {

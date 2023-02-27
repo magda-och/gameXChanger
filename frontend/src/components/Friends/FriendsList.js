@@ -56,7 +56,7 @@ function FriendsList() {
                     {
                         friends.map(
                             friend => {
-                                return <tr>
+                                return <tr key={friend.id}>
                                     <td>{friend.id}</td>
                                     <td>{friend.firstName}</td>
                                     <td>{friend.lastName}</td>

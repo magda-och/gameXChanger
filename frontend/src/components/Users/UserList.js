@@ -30,15 +30,15 @@ function UserList() {
 
         InvitationAPI.create(invitation)
             .then(() => {
-            alert("Invitation successfully send!")
-            window.location.replace("profile/invitations")
-        })
+                alert("Invitation successfully send!")
+                window.location.replace("profile/invitations")
+            })
     }
 
     return (
         <div>
             <div>
-                <h1 className ="text-center"> All users </h1>
+                <h1 className="text-center"> All users </h1>
                 <table className="table table-striped">
                     <thead>
                     <tr>
@@ -53,15 +53,20 @@ function UserList() {
                     <tbody>
                     {
                         users.map(
-                            user => {
-                                return <tr>
-                                    <td>{user.id}</td>
-                                    <td>{user.firstName}</td>
-                                    <td>{user.lastName}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.city}</td>
-                                    <td><button className="btn btn-success" onClick={(e) => addInvitation(2, user.id)}>Invite</button></td>
-                                </tr>
+                            (user) => {
+                                return (
+                                    <tr key={user.id}>
+                                        <td>{user.id}</td>
+                                        <td>{user.firstName}</td>
+                                        <td>{user.lastName}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.city}</td>
+                                        <td>
+                                            <button className="btn btn-outline-secondary"
+                                                    onClick={(e) => addInvitation(2, user.id)}>Invite
+                                            </button>
+                                        </td>
+                                    </tr>)
                             }
                         )
                     }

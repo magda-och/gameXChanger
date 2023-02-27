@@ -39,7 +39,7 @@ export const InvitationAPI = {
     update: function (id, status) {
         return api.request({
             method: "PATCH",
-            url: `/friends/requests/${id}` +"?requestStatus="+`${status}`,
+            url: `/friends/requests/${id}?requestStatus=${status}`,
             data: status,
         });
     },
