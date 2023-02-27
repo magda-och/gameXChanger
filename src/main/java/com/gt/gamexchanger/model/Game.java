@@ -20,7 +20,7 @@ public class Game {
     private Long id;
     private String name;
    @Enumerated(EnumType.STRING)
-   @Column(name = "Game Status")
+   @Column(name = "gameStatus")
     private GameStatus gameStatus;
     //   @Lob
     //  private Byte[] image;
