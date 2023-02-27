@@ -116,7 +116,7 @@ class Invitations extends React.Component{
                         {
                             this.state.sendInvitations.map(
                                 invitation => {
-                                    return <tr>
+                                    return <tr key={invitation.id}>
                                         <td>{invitation.requestFriendId}</td>
                                         <td>{invitation.requestStatus}</td>
                                         <td>{invitation.fromUserId.firstName+ " " + invitation.fromUserId.lastName}</td>

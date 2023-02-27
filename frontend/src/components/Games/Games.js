@@ -35,7 +35,7 @@ function Games(props) {
                     <tbody>
                     {
                         games.map(game => {
-                                return <tr>
+                                return <tr key={game.id}>
                                     <td> {game.id}</td>
                                     <td>{game.name}</td>
                                     <td> {game.visibility}</td>
