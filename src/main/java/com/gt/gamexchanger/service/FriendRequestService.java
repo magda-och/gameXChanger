@@ -27,22 +27,30 @@ public class FriendRequestService {
     }
 
    public RequestFriendDto addFriendRequest(RequestFriendDto requestFriendDto) {
-        var requestFriend = dtoMapper.toDomainObject(requestFriendDto);
-        friendRequestRepository.save(requestFriend);
-        Optional<User> fromUser= userRepository.findById(requestFriendDto.getFromUserId().getId());
-        Optional<User> toUser= userRepository.findById(requestFriendDto.getToUserId().getId());
-        if(fromUser.isPresent()){
-            List<RequestFriend> sendRequests =fromUser.get().getSendRequests();
-            sendRequests.add(requestFriend);
-            fromUser.get().setSendRequests(sendRequests);
+
+        Optional<RequestFriendDto> requestFriendFinded=getAllRequest()
+                .stream()
+                .filter(requestFriendDto1 -> requestFriendDto1.getFromUserId().getId().equals(requestFriendDto.getFromUserId().getId())
+                        && requestFriendDto1.getToUserId().getId().equals(requestFriendDto.getToUserId().getId())).findFirst();
+        if(requestFriendFinded.isEmpty()){
+            var requestFriend = dtoMapper.toDomainObject(requestFriendDto);
+            friendRequestRepository.save(requestFriend);
+            Optional<User> fromUser= userRepository.findById(requestFriendDto.getFromUserId().getId());
+            Optional<User> toUser= userRepository.findById(requestFriendDto.getToUserId().getId());
+            if(fromUser.isPresent()){
+                List<RequestFriend> sendRequests =fromUser.get().getSendRequests();
+                sendRequests.add(requestFriend);
+                fromUser.get().setSendRequests(sendRequests);
+            }
+            if(toUser.isPresent()){
+                List<RequestFriend> receivedRequests =toUser.get().getReceivedRequests();
+                receivedRequests.add(requestFriend);
+                toUser.get().setReceivedRequests(receivedRequests);
+            }
+            return dtoMapper.toDto(requestFriend);
+        }else{
+            return null;
         }
-        if(toUser.isPresent()){
-            List<RequestFriend> receivedRequests =toUser.get().getReceivedRequests();
-            receivedRequests.add(requestFriend);
-            toUser.get().setReceivedRequests(receivedRequests);
-        }
-        //
-        return dtoMapper.toDto(requestFriend);
     }
     public List<RequestFriendDto> getAllRequest() {
         return friendRequestRepository.getAllRequest().stream().map(dtoMapper::toDto).collect(Collectors.toList());
