@@ -1,6 +1,7 @@
 import {UserAPI} from "../../api/UserAPI";
 import React, {useEffect, useState} from "react";
 import {InvitationAPI} from "../../api/InvitationAPI";
+import classes from "./UserList.module.css";
 
 function UserList() {
 
@@ -53,6 +54,7 @@ function UserList() {
                     {
                         users.map(
                             (user) => {
+                                const visibility = user.id === 2 ? classes.hidden : classes.visible
                                 return (
                                     <tr key={user.id}>
                                         <td>{user.id}</td>
@@ -61,7 +63,7 @@ function UserList() {
                                         <td>{user.email}</td>
                                         <td>{user.city}</td>
                                         <td>
-                                            <button className="btn btn-outline-secondary"
+                                            <button className={"btn btn-outline-secondary " + visibility}
                                                     onClick={(e) => addInvitation(2, user.id)}>Invite
                                             </button>
                                         </td>

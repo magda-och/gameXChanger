@@ -68,7 +68,7 @@ function Friends() {
                                                 state: { friends: friend }
                                             }}
                                         >
-                                            <button>Show games</button>
+                                            <button className="btn btn-outline-secondary">Show games</button>
                                         </Link>
                                     </td>
                                     <td>
