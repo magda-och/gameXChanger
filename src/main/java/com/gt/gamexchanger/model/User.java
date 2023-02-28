@@ -48,7 +48,7 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "toUserId")
     @JsonManagedReference("receivedRequests")
     List<RequestFriend> receivedRequests;
-    @OneToMany
+    @ManyToMany
     @JsonIncludeProperties("id")
     List<User> friends;
 

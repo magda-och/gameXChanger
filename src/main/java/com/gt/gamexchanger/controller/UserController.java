@@ -123,6 +123,11 @@ public class UserController {
         List<UserDto> myFriends = userService.getMyFriends(userId);
         return new ResponseEntity<>(myFriends, HttpStatus.OK);
     }
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable("userId") Long userId){
+        Optional<UserDto> user = userService.getUserById(userId);
+        return new ResponseEntity<>(user.get(), HttpStatus.OK);
+    }
 
     @DeleteMapping("friends/{userId}/{friendId}")
     public ResponseEntity<?> remove(@PathVariable Long friendId, @PathVariable Long userId) {

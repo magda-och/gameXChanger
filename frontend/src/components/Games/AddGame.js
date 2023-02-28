@@ -23,7 +23,7 @@ export default function AddGame() {
             gameStatus: "AVAILABLE",
             visibility: "PRIVATE",
         }
-        GameAPI.create(1, newGame)
+        GameAPI.create(2, newGame)
             .then(() => {
                 alert("Game successfully added to shelf!")
                 window.location.replace('/profile/shelf')

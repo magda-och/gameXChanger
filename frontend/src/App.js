@@ -26,10 +26,7 @@ const router = createBrowserRouter([
             {path: '/user/login', element: <Login/>},
             {path: '/contacts', element: <Contacts/>},
             {path: '/user/register', element: <Registration/>},
-            {
-                path: '/games',
-                element: <FriendGames/>
-            }
+
         ],
     },
     {
@@ -40,6 +37,10 @@ const router = createBrowserRouter([
             {path: '/profile/shelf', element: <Shelf/>},
             {path: '/profile/friends', element: <Friends/>},
             {path: '/profile/invitations', element: <Invitations/>},
+            {
+                path: '/profile/games/:id',
+                element: <FriendGames/>
+            }
         ],
     },
 

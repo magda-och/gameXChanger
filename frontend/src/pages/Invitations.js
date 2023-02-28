@@ -42,6 +42,7 @@ class Invitations extends React.Component{
     cancelInvitation(id, e){
         InvitationAPI.delete(id)
             .then(res => {
+                alert("You deleted invitation")
                 console.log(res);
                 const sendInvitations = this.state.sendInvitations.filter(item => item.requestFriendId !== id);
                 this.setState({ sendInvitations });
@@ -49,6 +50,7 @@ class Invitations extends React.Component{
     }
 
     updateInvitationStatus(id, status, e){
+        console.log("cos");
         InvitationAPI.update(id, status)
             .then(res =>{
                 console.log(res);
@@ -85,14 +87,14 @@ class Invitations extends React.Component{
                         this.state.receivedInvitations.map(
                             invitation => {
                                 const visibility = invitation.requestStatus === "WAITING" ? classes.visible : classes.hidden
-                                return <tr>
+                                return <tr key={invitation.requestFriendId}>
                                     <td>{invitation.requestFriendId}</td>
                                     <td>{invitation.requestStatus}</td>
                                     <td>{invitation.fromUserId.firstName+ " "+ invitation.fromUserId.lastName}</td>
                                     <td>{invitation.toUserId.firstName+ " "+ invitation.toUserId.lastName}</td>
                                     <td>{invitation.message}</td>
-                                    <td><button className={"btn btn-outline-secondary" + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"ACCEPTED", e)}>Accept</button></td>
-                                    <td><button className={"btn btn-secondary " + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"REJECTED", e)}>Reject</button></td>
+                                    <td><button className={"btn btn-success " + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"ACCEPTED", e)}>Accept</button></td>
+                                    <td><button className={"btn btn-danger " + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"REJECTED", e)}>Reject</button></td>
                                 </tr>
                             }
                         )
