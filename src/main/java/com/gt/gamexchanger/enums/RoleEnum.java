@@ -1,6 +1,6 @@
 package com.gt.gamexchanger.enums;
 
 public enum RoleEnum {
-    ADMIN,
-    USER
+    ROLE_ADMIN,
+    ROLE_USER
 }
