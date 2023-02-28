@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,17 +26,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotBlank
-    @Size(max = 20)
     private String firstName;
     @NotBlank
-    @Size(max = 30)
     private String lastName;
     @NotBlank
-    @Size(max = 50)
     @Email
     private String email;
     @NotBlank
-    @Size(max = 120)
     private String password;
     private String city;
     private int phoneNumber;
@@ -58,7 +53,7 @@ public class User {
     List<User> friends;
 
     @ManyToMany(fetch = FetchType.LAZY)
- /*   @JoinTable(	name = "users_roles",
+/*    @JoinTable(	name = "users_roles",
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))*/
     private Set<Role> roles = new HashSet<>();
