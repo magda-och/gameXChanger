@@ -92,6 +92,7 @@ public class FriendRequestService {
         secondUser.getFriends().add(firstUser);
         userRepository.save(firstUser);
         userRepository.save(secondUser);
+        friendRequestRepository.deleteById(requestFriend.getRequestFriendId());
     }
 
     private void rejectFriend(RequestFriend requestFriend) {
