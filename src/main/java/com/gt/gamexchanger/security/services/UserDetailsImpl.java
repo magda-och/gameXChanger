@@ -36,6 +36,7 @@ public class UserDetailsImpl  implements UserDetails {
         this.password = password;
         this.authorities = authorities;
     }
+
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
@@ -51,6 +52,13 @@ public class UserDetailsImpl  implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
+    }
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
