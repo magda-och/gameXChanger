@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import classes from "./Friends.module.css"
 import {FriendAPI} from "../api/FriendAPI";
-import FriendGames from "../components/Games/FriendGames";
 import {Link} from "react-router-dom";
-
+import classes from './Friends.module.css'
+import FriendsSearchingBar from "./FriendsSearchingBar";
 
 function Friends() {
 
@@ -40,6 +39,8 @@ function Friends() {
     };*/
 
     return (
+        <div>
+            <FriendsSearchingBar />
         <div className={classes.friends}>
             <div>
                 <h1 className="text-center "> All Friends </h1>
@@ -83,6 +84,7 @@ function Friends() {
                     </tbody>
                 </table>
             </div>
+        </div>
         </div>
     )
 }

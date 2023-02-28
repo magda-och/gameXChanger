@@ -25,6 +25,7 @@ export default function Registration() {
             email: data.email,
             password: data.password,
             city: modifiedCity,
+            phoneNumber: data.phoneNumber,
         }
         UserAPI.create(newUser)
             .then(() => {
