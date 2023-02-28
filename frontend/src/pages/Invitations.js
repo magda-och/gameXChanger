@@ -23,7 +23,7 @@ class Invitations extends React.Component{
                         message:1
                     }] });
                 this.setState({ sendInvitations:response.data });
-                console.log(this.state)
+                //console.log(this.state)
         });
 
         InvitationAPI.getReceived(2).then(
@@ -63,6 +63,10 @@ class Invitations extends React.Component{
                     (response) => {
                         this.setState({ receivedInvitations:response.data});
                     });
+                InvitationAPI.getSend(2).then(
+                    (response) => {
+                        this.setState({ sendInvitations:response.data});
+                    });
             });
     }
 
@@ -84,7 +88,7 @@ class Invitations extends React.Component{
                     </thead>
                     <tbody>
                     {
-                        this.state.receivedInvitations.map(
+                        this.state.receivedInvitations.map (
                             invitation => {
                                 const visibility = invitation.requestStatus === "WAITING" ? classes.visible : classes.hidden
                                 return <tr key={invitation.requestFriendId}>
