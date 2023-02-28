@@ -1,23 +1,58 @@
 import React, {useEffect, useState} from 'react';
 import {GameAPI} from "../../api/GameAPI";
-
-function FriendGames(id) {
+import {useLocation, useParams} from "react-router-dom";
+import classes from "../Games/FriendGames.module.css";
+import {UserAPI} from "../../api/UserAPI";
+function FriendGames() {
+    const{id} = useParams();
     const [friendGames, setFriendGames] = useState([])
-
+    const [user, setUser] = useState(null)
     useEffect(() => {
-         
+        GameAPI.getMyGames(id).then(
+            function (response) {
+                setFriendGames(response.data)
+            }
+        ).catch(function (error) {
+            console.error(`Error: ${error}`)
+        });
     }, []);
 
+    useEffect(()=>{
+        UserAPI.getById(id).then(
+            (response)=>{
+                setUser(response.data)
+            }
+        ).catch(function (error){
+            console.error(`Error: ${error}`)
+        });
+    },[]);
+
+function show(){
+        if (user != null) {
+            return(
+                <div>
+                <h2>{user.firstName} {user.lastName} Games</h2>
+                <p>Contact to borrow:
+                    {<br/>}Email: {user.email}
+                    {<br/>}Phone number: {user.phoneNumber}
+                    {<br/>}Location: {user.city}
+                </p>
+                </div>
+        )
+        }
+        return <p>email</p>;
+    }
+
     return (
-        <div>
-            <h2 className="text-center">Games</h2>
+        <div className={classes.friendGames}>
+
+            {show()}
             <table className="table table-striped">
                 <thead>
                 <tr>
-                    <td> Game name</td>
-                    <td> Game Visibility</td>
+                    <td> Game Id</td>
+                    <td> Game Name</td>
                     <td> Game Status</td>
-                    <td> Contact</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,9 +61,7 @@ function FriendGames(id) {
                             return <tr key={game.id}>
                                 <td> {game.id}</td>
                                 <td>{game.name}</td>
-                                <td> {game.visibility}</td>
                                 <td> {game.gameStatus}</td>
-                                <td> {game._owner}</td>
                             </tr>
                         }
                     )
