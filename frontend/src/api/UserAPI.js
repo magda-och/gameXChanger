@@ -17,7 +17,7 @@ export const UserAPI = {
     create: function(user) {
         return api.request({
             method: "POST",
-            url: `/user`,
+            url: `/user/auth/register`,
             data: user
         });
     },
@@ -41,6 +41,13 @@ export const UserAPI = {
             method: "GET",
             url: `/user/name?${params}`
         })
+    },
+    login: function (user){
+        return api.request({
+            method: "POST",
+            url: `/user/auth/login`,
+            data: user
+        });
     }
 
 

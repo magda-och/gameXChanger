@@ -1,14 +1,25 @@
 import React, {useState} from 'react';
-import Registration from "./Registration";
 import {Helmet} from "react-helmet";
 import "./Login.css"
 import {NavLink} from "react-router-dom";
+import {UserAPI} from "../api/UserAPI";
 
 
 export default function Login() {
     const [errorMessages, setErrorMessages] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [togglePassword, setTogglePassword] = useState(false);
+    const onSubmit = data => {
+        const newUser = {
+            email: data.email,
+            password: data.password,
+        }
+        UserAPI.login(newUser)
+            .then(() => {
+                alert("User logged!")
+                window.location.replace('/profile')
+            })
+    };
 
     const renderErrorMessage = (name) =>
         name === errorMessages.name && (
@@ -29,7 +40,7 @@ export default function Login() {
                 <div className="row">
                     <div className="col-md-4 offset-md-3 border rounded pb-15 mt-2 shadow">
                         <h2 className="text-center h-25 m-2"> Login! </h2>
-                        <form>
+                        <form onSubmit={onSubmit} className="login-form" id="login-form">
                             <div className="form-label mt-1">
                                 <label> Email address </label>
                                 <input
