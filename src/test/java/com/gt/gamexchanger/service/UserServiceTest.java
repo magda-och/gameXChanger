@@ -1,10 +1,8 @@
 package com.gt.gamexchanger.service;
-
 import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.User;
-import com.gt.gamexchanger.repository.RoleRepository;
 import com.gt.gamexchanger.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,9 +30,6 @@ public class UserServiceTest {
     private UserService userService;
     @Mock
     private UserRepository userRepository;
-
-    @Mock
-    RoleRepository roleRepository;
     @Mock
     private DtoMapper<UserDto, User> dtoMapper;
     private User testedUser;
@@ -44,7 +39,7 @@ public class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        userService = new UserService(userRepository, dtoMapper, roleRepository);
+        userService = new UserService(userRepository, dtoMapper);
 
         //creating testing user
         testedUser = new User();

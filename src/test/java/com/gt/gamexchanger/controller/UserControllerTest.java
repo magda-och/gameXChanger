@@ -1,8 +1,8 @@
 package com.gt.gamexchanger.controller;
 
-
 import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.model.User;
+import com.gt.gamexchanger.security.services.JwtService;
 import com.gt.gamexchanger.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -31,12 +33,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 
 public class UserControllerTest {
-
     @Autowired
     private MockMvc mvc;
-
     @MockBean
     private UserService userService;
+    @MockBean
+    private AuthenticationManager authenticationManager;
+    @MockBean
+    private PasswordEncoder passwordEncoder;
+    @MockBean
+    private JwtService jwtService;
     private UnderTest underTest;
     private User testedUser;
     private UserDto testedUserDto;
@@ -93,7 +99,7 @@ public class UserControllerTest {
 
     @Test
     public void addUser_userAdded_shouldBeSaved() {
-        underTest.addUser(testedUserDto);
+        underTest.registerUser(testedUserDto);
 
         verify(userService, times(1)).addUser(testedUserDto);
     }
@@ -140,7 +146,7 @@ public class UserControllerTest {
 
     class UnderTest extends UserController {
         public UnderTest() {
-            super(userService);
+            super(userService, authenticationManager, passwordEncoder, jwtService);
         }
     }
 }

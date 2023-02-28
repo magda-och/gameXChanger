@@ -1,66 +1,41 @@
 package com.gt.gamexchanger.service;
 
-import com.gt.gamexchanger.enums.RoleEnum;
+import com.gt.gamexchanger.enums.Role;
 import com.gt.gamexchanger.exception.NoDataFoundException;
 import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.mapper.DtoMapper;
-import com.gt.gamexchanger.model.Role;
 import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.dto.UserDto;
-import com.gt.gamexchanger.repository.RoleRepository;
+
 import com.gt.gamexchanger.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final DtoMapper<UserDto, User> dtoMapper;
 
-    final RoleRepository roleRepository;
-
-    public UserService(UserRepository userRepository, DtoMapper<UserDto, User> dtoMapper, RoleRepository roleRepository) {
+/*    public UserService(UserRepository userRepository, DtoMapper<UserDto, User> dtoMapper) {
         this.userRepository = userRepository;
         this.dtoMapper = dtoMapper;
-        this.roleRepository=roleRepository;
-    }
+    }*/
 
     public UserDto addUser(UserDto userDto) {
 
         if (areFieldsInRegistrationFilledCorrectly(userDto)) {
             User user = dtoMapper.toDomainObject(userDto);
 
-            Set<Role> roles = user.getRoles();
+           if (user.getRole() == null) {
+               user.setRole(Role.USER);
+            }
 
-            if (roles.isEmpty()) {
-                Role userRole = new Role(); /*roleRepository.findByName(RoleEnum.ROLE_USER)
-                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));*/
-                userRole.setName(RoleEnum.ROLE_USER);
-                roleRepository.save(userRole);
-                roles.add(roleRepository.findByName(RoleEnum.ROLE_USER).orElseThrow(() -> new RuntimeException("Error: Role is not found.")));
-            } /*else {
-                roles.forEach(role -> {
-                    switch (role) {
-                        case "admin":
-                            Role adminRole = roleRepository.findByName(RoleEnum.ROLE_ADMIN)
-                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                            roles.add(adminRole);
-
-                            break;
-                        default:
-                            Role userRole = roleRepository.findByName(RoleEnum.ROLE_USER)
-                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                            roles.add(userRole);
-                    }
-                });
-            }*/
-
-            user.setRoles(roles);
             userRepository.save(user);
             return dtoMapper.toDto(user);
         } else {

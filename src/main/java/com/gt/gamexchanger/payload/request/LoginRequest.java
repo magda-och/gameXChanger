@@ -1,15 +1,14 @@
 package com.gt.gamexchanger.payload.request;
 
-import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoginRequest {
-    @NotBlank
+
     private String password;
 
-    @NotBlank
     private String email;
 }

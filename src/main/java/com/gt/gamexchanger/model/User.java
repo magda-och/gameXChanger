@@ -1,17 +1,13 @@
 package com.gt.gamexchanger.model;
-
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gt.gamexchanger.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,14 +21,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
+
     private String firstName;
-    @NotBlank
+
     private String lastName;
-    @NotBlank
+
     @Email
     private String email;
-    @NotBlank
+
     private String password;
     private String city;
     private int phoneNumber;
@@ -51,10 +47,8 @@ public class User {
     @ManyToMany
     @JsonIncludeProperties("id")
     List<User> friends;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-/*    @JoinTable(	name = "users_roles",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "roles_id"))*/
-    private Set<Role> roles = new HashSet<>();
+
 }
