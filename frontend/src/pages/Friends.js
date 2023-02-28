@@ -1,13 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import classes from "./Friends.module.css"
 import {FriendAPI} from "../api/FriendAPI";
-import FriendGames from "../components/Games/FriendGames";
 import {Link} from "react-router-dom";
-
-import React from 'react';
-import classes from '../components/Friends/Friends.module.css'
-import FriendsList from "../components/Friends/FriendsList";
-import FriendsSearchingBar from "../components/Friends/FriendsSearchingBar";
+import classes from './Friends.module.css'
+import FriendsSearchingBar from "./FriendsSearchingBar";
 
 function Friends() {
 
@@ -89,6 +84,7 @@ function Friends() {
                     </tbody>
                 </table>
             </div>
+        </div>
         </div>
     )
 }

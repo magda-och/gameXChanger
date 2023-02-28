@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import {UserAPI} from "../../api/UserAPI";
-import {InvitationAPI} from "../../api/InvitationAPI";
+import React, { useState} from "react";
+import {UserAPI} from "../api/UserAPI";
+import {InvitationAPI} from "../api/InvitationAPI";
 import "./Friends.module.css"
 import classes from "./Friends.module.css";
 
