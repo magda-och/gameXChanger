@@ -31,7 +31,6 @@ function UserList() {
         InvitationAPI.create(invitation)
             .then(() => {
                 alert("Invitation successfully send!")
-                window.location.replace("profile/invitations")
             })
     }
 
