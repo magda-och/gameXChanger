@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {FriendAPI} from "../../api/FriendAPI";
 import FriendGames from "../Games/FriendGames";
+import classes from "./Friends.module.css"
 
 // konfiguracja - poczytac i usatlić jak trzymamamy url
 // obsługa API - wszystkie metody tutaj
@@ -41,15 +42,16 @@ function FriendsList() {
 
     return (
         <div>
-            <div>
-                <h1 className="text-center "> All Friends </h1>
+            <div className={classes.friends}>
+                <h1 className="text-center"> All Friends </h1>
                 <table className="table table-striped">
                     <thead>
                     <tr>
-                        <td> Friend id</td>
-                        <td> Friend first name</td>
-                        <td> Friend last name</td>
-                        <td> Friend city</td>
+                        <td> Id</td>
+                        <td> First name</td>
+                        <td> Last name</td>
+                        <td> City</td>
+                        <td> Phone number </td>
                     </tr>
                     </thead>
                     <tbody>
@@ -61,6 +63,7 @@ function FriendsList() {
                                     <td>{friend.firstName}</td>
                                     <td>{friend.lastName}</td>
                                     <td>{friend.city}</td>
+                                    <td>{friend.phoneNumber}</td>
                                     <td>
                                         <button className="btn btn-outline-secondary"
                                                 onClick={() => getFriendGames(friend.id)}>Show Games

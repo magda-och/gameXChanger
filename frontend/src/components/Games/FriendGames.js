@@ -5,15 +5,7 @@ function FriendGames(id) {
     const [friendGames, setFriendGames] = useState([])
 
     useEffect(() => {
-        GameAPI.getMyGames(id).then(
-            function (response) {
-                alert("hej")
-                setFriendGames(response.data)
-                window.location.replace(`/games`)
-            }
-        ).catch(function (error) {
-            console.error(`Error: ${error}`)
-        });
+         
     }, []);
 
     return (

@@ -36,5 +36,12 @@ export const UserAPI = {
         });
     },
 
+    findUsers: function (params) {
+        return api.request({
+            method: "GET",
+            url: `/user/name?${params}`
+        })
+    }
+
 
 }
