@@ -42,11 +42,11 @@ export const UserAPI = {
             url: `/user/name?${params}`
         })
     },
-    login: function (user){
+    login: function (loginRequest){
         return api.request({
             method: "POST",
             url: `/user/auth/login`,
-            data: user
+            data: loginRequest
         });
     }
 

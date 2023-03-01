@@ -1,6 +1,6 @@
+import React from "react";
 import {useState} from "react";
 import {useForm} from 'react-hook-form';
-import React, {useRef} from "react";
 import "./Registration.css";
 import {UserAPI} from "../api/UserAPI";
 import {Helmet} from "react-helmet";
@@ -10,7 +10,7 @@ export default function Registration() {
 
     const [togglePassword, setTogglePassword] = useState(false);
 
-    const {register, watch, handleSubmit,  getValues, formState: {errors}} =
+    const {register, handleSubmit, formState: {errors}} =
         useForm({mode: "onBlur"});
 
 
