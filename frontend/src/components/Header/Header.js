@@ -1,8 +1,12 @@
 import React from 'react';
 import {Link, NavLink} from "react-router-dom";
 import classes from './Header.module.css';
+import AuthenticationService from "../../services/AuthenticationService";
 
 function Header() {
+
+        const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
+
     return (
         <header className={classes.header}>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -32,11 +36,13 @@ function Header() {
                         </ul>
 
                         <ul className="navbar-nav ms-auto d-flex flex-row">
-                            <li className="nav-item active">
+                            {!isUserLoggedIn && <li className="nav-item active">
                                 <Link className="nav-link" to={"/user/login"}>Log in</Link>
-                            </li>
+                            </li>}
+                            {isUserLoggedIn && <li className="nav-item active">
+                                <Link className="nav-link" to={"/"} onClick={AuthenticationService.logout} >Log out</Link>
+                            </li>}
                         </ul>
-
                     </div>
                 </div>
             </nav>
