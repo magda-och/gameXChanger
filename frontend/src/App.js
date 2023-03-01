@@ -4,8 +4,8 @@ import {
     RouterProvider
 } from "react-router-dom";
 import MainLayout from "./components/MainLayout/MainLayout";
-import Home from "./pages/Home";
-import About from "./pages/About";
+import Home from "./pages/home/Home";
+import About from "./pages/aboutUs/About";
 import Contacts from "./pages/Contacts";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
