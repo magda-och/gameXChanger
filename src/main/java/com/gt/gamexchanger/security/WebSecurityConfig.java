@@ -1,5 +1,6 @@
 package com.gt.gamexchanger.security;
 
+import com.gt.gamexchanger.security.jwt.AuthEntryPointJwt;
 import com.gt.gamexchanger.security.jwt.AuthTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +20,7 @@ public class WebSecurityConfig {
     private final AuthTokenFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
-
+    private final AuthEntryPointJwt authEntryPointJwt;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -35,7 +36,8 @@ public class WebSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                         .and()
                 .authenticationProvider(authenticationProvider)
-                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(authEntryPointJwt);
 
         return http.build();
     }
