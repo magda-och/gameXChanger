@@ -1,46 +1,69 @@
 import React from 'react';
-import classes from "./About.css";
 import kasiaImage from './jaaaaa (1).jpg';
-import agaImage from './aga.jpg';
-
-const images = [
-    {
-        id: 1,
-        src: kasiaImage,
-        alt: 'Obrazek 1',
-        description: 'Opis obrazka 1',
-    },
-    {
-        id: 2,
-        src: agaImage,
-        alt: 'brace 2',
-        description: 'Opis obrazka 2',
-    },
-    {
-        id: 3,
-        src: kasiaImage,
-        alt: 'Obrazek 3',
-        description: 'Opis obrazka 3',
-    },
-    {
-        id: 4,
-        src: agaImage,
-        alt: 'Obrazek 4',
-        description: 'Opis obrazka 4',
-    },
-];
+import "./About.css";
 
 function About() {
     return (
         <div className="image-grid">
-            {images.map((image, index) => (
-                <div key={index} className="image-container">
-                    <img src={image.src} alt={image.alt} style={{height: "300px"}}/>
-                    <div className="image-description">{image.description}</div>
+            <div className="containter">
+                <div className="row" align="left">
+                    <h3>How did our story begin?</h3>
                 </div>
-            ))}
+                <div className="row mt-3" align="left">
+                    <p> At the end of 2022, while attending the Java Academy,
+                        the four of us teamed up to create a unique board game exchange site.
+                        After several months of hard work, we managed to create a fully functional application.</p>
+                </div>
+                <div className="row mt-3" align="left">
+                    <h3>Something more about our team...</h3>
+                </div>
+                <div className="row mt-3" align="left">
+
+                    <div className="col-md-1">
+                        <img id="photoKasia" src={kasiaImage} alt="Kasia"/>
+                    </div>
+
+                    <div className="col-md-1" align="left">
+                        <h3>Kasia</h3>
+                        <p>Text about kasia</p>
+                        <p>text</p>
+                        <p>text</p>
+                    </div>
+                    <div className="col-md-1">
+                        <img id="photoKasia" src={kasiaImage} alt="Agas"/>
+                    </div>
+                    <div className="col-md-1">
+                        <h3> Agnieszka</h3>
+                        <p>Text about kasia</p>
+                        <p>text</p>
+                        <p>text</p>
+                    </div>
+                    <div className="row mt-5" align="left">
+                        <div className="col-md-1">
+                            <img id="photoKasia" src={kasiaImage} alt="Kasia"/>
+                        </div>
+                        <div className="col-md-1" align="left">
+                            <h3>Magda</h3>
+                            <p>Text about kasia</p>
+                            <p>text</p>
+                            <p>text</p>
+                        </div>
+                        <div className="col-md-1">
+                            <img id="photoKasia" src={kasiaImage} alt="Kasia"/>
+                        </div>
+                        <div className="col-md-1" align="left">
+                            <h3>Dominika</h3>
+                            <p>Text about kasia</p>
+                            <p>text</p>
+                            <p>text</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-    );
+    )
+        ;
 }
 
 export default About;
