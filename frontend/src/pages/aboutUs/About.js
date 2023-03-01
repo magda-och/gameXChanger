@@ -19,36 +19,36 @@ function About() {
                 </div>
                 <div className="row mt-3" align="left">
 
-                    <div className="col-md-1">
+                    <div className="col-md-3">
                         <img id="photoKasia" src={kasiaImage} alt="Kasia"/>
                     </div>
 
-                    <div className="col-md-1" align="left">
+                    <div className="col-md-3" align="left">
                         <h3>Kasia</h3>
                         <p>Text about kasia</p>
                         <p>text</p>
                         <p>text</p>
                     </div>
-                    <div className="col-md-1">
+                    <div className="col-md-3">
                         <img id="photoKasia" src={kasiaImage} alt="Agas"/>
                     </div>
-                    <div className="col-md-1">
+                    <div className="col-md-3">
                         <h3> Agnieszka</h3>
                         <p>Text about kasia</p>
                         <p>text</p>
                         <p>text</p>
                     </div>
                     <div className="row mt-5" align="left">
-                        <div className="col-md-1">
+                        <div className="col-md-3">
                             <img id="photoKasia" src={kasiaImage} alt="Kasia"/>
                         </div>
-                        <div className="col-md-1" align="left">
+                        <div className="col-md-3" align="left">
                             <h3>Magda</h3>
                             <p>Text about kasia</p>
                             <p>text</p>
                             <p>text</p>
                         </div>
-                        <div className="col-md-1">
+                        <div className="col-md-3">
                             <img id="photoKasia" src={kasiaImage} alt="Kasia"/>
                         </div>
                         <div className="col-md-1" align="left">
