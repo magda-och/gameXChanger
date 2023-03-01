@@ -2,14 +2,14 @@ import {useEffect, useState} from "react";
 
 import {GameAPI} from "../api/GameAPI";
 // import Games from "../components/Games/Games";
-import Games2 from "../components/Games/Games2";
+import Games from "../components/Games/Games";
 
 
 function MyGameList() {
     const [games, setGames] = useState([])
 
     useEffect(() => {
-        GameAPI.getMyGames(1).then(
+        GameAPI.getMyGames(2).then(
             function (response) {
                 setGames(response.data)
             }
@@ -19,7 +19,7 @@ function MyGameList() {
     }, []);
 
     return (
-        <Games2 games = {games}/>
+        <Games games = {games}/>
       //  <Games games = {games}/>
     )
 }

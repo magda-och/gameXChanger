@@ -32,11 +32,16 @@ export const GameAPI = {
             data: game
         });
     },
-    update: function(gameId, game) {
+    borrowGame: function(gameId, userId) {
         return api.request({
-            method: "PUT",
-            url: `/games/${gameId}`,
-            data: game,
+            method: "PATCH",
+            url: `games/borrowGame/${gameId}/${userId}`,
+        });
+    },
+    giveBack: function (id, userId){
+        return api.request({
+            method: "PATCH",
+           url: `games/giveBackGame/${id}/${userId}`,
         });
     },
 
