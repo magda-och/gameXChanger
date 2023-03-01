@@ -1,9 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {GameAPI} from "../../api/GameAPI";
+// import Select from "react-select";
+
+
 
 function Games(props) {
 
-    const removeGame = async(id) => {
+    const [value, setValue] = useState("AVAILABLE");
+
+    const handleStatus = (e) => {
+        setValue(e.target.value);
+    };
+
+
+
+    const removeGame = async (id) => {
         try {
             const res = await GameAPI.delete(id)
             console.log('Item successfully deleted.')
@@ -39,7 +50,11 @@ function Games(props) {
                                     <td> {game.id}</td>
                                     <td>{game.name}</td>
                                     <td> {game.visibility}</td>
-                                    <td> {game.gameStatus}</td>
+                                    <td> <select value={value} onChange={handleStatus}>
+                                        <option value="AVAILABLE">AVAILABLE</option>
+                                        <option value="LENT">LENT</option>
+                                    </select>
+                                  </td>
                                     <td> {game.actual}</td>
                                     <td>
                                         <button className="btn btn-outline-secondary"
