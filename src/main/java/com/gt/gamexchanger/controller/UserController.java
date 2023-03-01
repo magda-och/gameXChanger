@@ -63,6 +63,7 @@ public class UserController {
                 Role.USER);
         var jwtToken = jwtService.generateToken(userToRegister);
         userService.addUser(userToRegister);
+        System.out.println(AuthenticationResponse.builder().token(jwtToken).build().getToken());
 
         return ResponseEntity.ok(AuthenticationResponse.builder().token(jwtToken).build());
     }
