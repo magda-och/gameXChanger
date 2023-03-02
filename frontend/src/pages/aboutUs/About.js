@@ -1,6 +1,7 @@
 import React from 'react';
 import kasiaImage from './jaaaaa (1).jpg';
 import "./About.css";
+import dominikaImage from './img_1_1677745215179.jpg'
 
 function About() {
     return (
@@ -42,16 +43,16 @@ function About() {
                         <div className="col-md-3">
                             <img id="photoKasia" src={kasiaImage} alt="Kasia"/>
                         </div>
-                        <div className="col-md-3" align="left">
+                        <div className="col-md-3" >
                             <h3>Magda</h3>
                             <p>Text about kasia</p>
                             <p>text</p>
                             <p>text</p>
                         </div>
                         <div className="col-md-3">
-                            <img id="photoKasia" src={kasiaImage} alt="Kasia"/>
+                            <img id="photoDominika" src={dominikaImage} alt="Dominika"/>
                         </div>
-                        <div className="col-md-1" align="left">
+                        <div className="col-md-3" >
                             <h3>Dominika</h3>
                             <p>Text about kasia</p>
                             <p>text</p>
