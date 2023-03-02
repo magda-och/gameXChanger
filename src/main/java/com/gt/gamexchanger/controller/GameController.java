@@ -84,11 +84,15 @@ public class GameController {
         return gameService.getAllBorrowedGame(userId);
     }
 
-    @PatchMapping("/borrowGame/{gameId}") // dodać do borrowed games
+    @PatchMapping("/borrowGame/{gameId}/{userId}")
     public void borrowGame(@PathVariable("gameId") Long gameId,
-                           @RequestBody String email) { // jeden agument w
-        // parametrze lub json,
-        // ale jedna konwencja dla wszystkich kontrollerów
-        gameService.borrowGame(gameId, email);
+                           @PathVariable Long userId) {
+        gameService.borrowGame(gameId, userId);
+    }
+    @PatchMapping("/giveBackGame/{gameId}/{userId}")
+    public void giveBackGame(@PathVariable("gameId") Long gameId,
+                             @PathVariable("userId") Long userId) {
+
+        gameService.giveBackGame(gameId, userId);
     }
 }

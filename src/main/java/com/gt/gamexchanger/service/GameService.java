@@ -38,7 +38,7 @@ public class GameService {
             game.setActualUser(owner);
             game.setGameStatus(GameStatus.AVAILABLE);
             gameRepository.save(game);
-            return (GameDto) gameDtoMapper.toDto(game);
+            return gameDtoMapper.toDto(game);
         } else {
             throw new NoExistingUser();
         }
@@ -120,14 +120,18 @@ public class GameService {
                 .collect(Collectors.toList());
     }
 
-    public void borrowGame(Long gameId, String email) {
+    public void borrowGame(Long gameId, Long userId) {
         Optional<Game> gameOP = gameRepository.findById(gameId);
-        Optional<User> userOP = userRepository.findUserByEmail(email);
+        Optional<User> userOP = userRepository.findById(userId);
         User user;
         Game game;
-        if (gameOP.isPresent() && userOP.isPresent()) {
-             game = gameOP.get();
-             user = userOP.get();
+        if (gameOP.isEmpty()) {
+            throw new NoGameExists();
+        } else if (userOP.isEmpty()) {
+            throw new NoExistingUser();
+        } else {
+            game = gameOP.get();
+            user = userOP.get();
             game.setActualUser(user);
             game.setGameStatus(GameStatus.LENT);
             List<Game> games = user.getBorrowedGames();
@@ -135,11 +139,28 @@ public class GameService {
             user.setBorrowedGames(games);
             userRepository.save(user);
             gameRepository.save(game);
-
-        } else {
-            throw new NoGameExists();
         }
+    }
 
-
+    public void giveBackGame(Long gameId, Long userId) {
+        Optional<Game> gameOP = gameRepository.findById(gameId);
+        Optional<User> userOP = userRepository.findById(userId);
+        User user;
+        Game game;
+        if (gameOP.isEmpty()) {
+            throw new NoGameExists();
+        } else if (userOP.isEmpty()) {
+            throw new NoExistingUser();
+        } else {
+            game = gameOP.get();
+            user = userOP.get();
+            game.setActualUser(game.getOwner());
+            game.setGameStatus(GameStatus.AVAILABLE);
+            List<Game> games = user.getBorrowedGames();
+            games.remove(game);
+            user.setBorrowedGames(games);
+            userRepository.save(user);
+            gameRepository.save(game);
+        }
     }
 }

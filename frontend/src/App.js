@@ -15,6 +15,7 @@ import Shelf from "./pages/Shelf";
 import Friends from "./pages/Friends";
 import Registration from "./pages/Registration";
 import FriendGames from "./components/Games/FriendGames";
+import LendGame from "./components/Games/LendGame";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
         children: [
             {path: '/profile', element: <Profile/>},
             {path: '/profile/shelf', element: <Shelf/>},
+            {
+                path: 'profile/lend/:id',
+                element: <LendGame/>
+            },
             {path: '/profile/friends', element: <Friends/>},
             {path: '/profile/invitations', element: <Invitations/>},
             {
