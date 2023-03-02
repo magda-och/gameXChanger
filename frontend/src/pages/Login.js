@@ -30,7 +30,7 @@ export default function Login() {
                 .then((response) => {
                     alert("response code: " + response.status)
                     alert("response data: " + response.data.token)
-                    //AuthenticationService.registerJwtSuccessfulLogin(email, setToken(response.data.token))
+                    AuthenticationService.registerJwtSuccessfulLogin(email, setToken(response.data.token))
                     window.location.replace('/profile')
                 }).catch((reason) => {
                     alert("Dadas"+ reason.status)
