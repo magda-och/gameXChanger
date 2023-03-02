@@ -3,7 +3,7 @@ import {UserAPI} from "../../api/UserAPI";
 import {InvitationAPI} from "../../api/InvitationAPI";
 import "./Friends.module.css"
 import classes from "./Friends.module.css";
-import {currentId} from "../components/Users/UserDetails";
+import {currentId} from "../Users/UserDetails";
 
 export default function FriendsSearchingBar() {
     const [state, setstate] = useState({
@@ -13,7 +13,7 @@ export default function FriendsSearchingBar() {
 
     let users;
 
-    UserAPI.getNotFriends(2).then(
+    UserAPI.getNotFriends(currentId).then(
         response => {
             const data = response.data;
             users = Object.values(data)

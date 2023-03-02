@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {GameAPI} from "../../api/GameAPI";
-import {Link} from "react-router-dom";
+import {currentId} from "../Users/UserDetails";
 
 
 function Games(props) {
@@ -29,7 +29,7 @@ function Games(props) {
     }
     function updateInvitationStatus(id, status, e){
         console.log("cos");
-        GameAPI.update(id, status, 2)
+        GameAPI.update(id, status, currentId)
             .then(res =>{
                 console.log("cos2")
                 console.log(res);

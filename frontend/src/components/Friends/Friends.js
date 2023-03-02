@@ -3,11 +3,11 @@ import {FriendAPI} from "../../api/FriendAPI";
 import {Link} from "react-router-dom";
 import classes from './Friends.module.css'
 import FriendsSearchingBar from "./FriendsSearchingBar";
-import {currentId} from "../components/Users/UserDetails";
+import {currentId} from "../Users/UserDetails"
 
 function Friends() {
 
-    const [friends, setFriends] = useState([])
+    const [friends, setFriends] = useState([]);
 
     const userId = currentId;
 
@@ -19,7 +19,7 @@ function Friends() {
         ).catch(function (error) {
             console.error(`Error: ${error}`)
         });
-    }, []);
+    }, [userId]);
 
     const removeFriend = async (id) => {
         try {

@@ -3,7 +3,6 @@ import {GameAPI} from "../../api/GameAPI";
 import {useLocation, useParams} from "react-router-dom";
 import classes from "../Games/FriendGames.module.css";
 import {UserAPI} from "../../api/UserAPI";
-import {currentId} from "../Users/UserDetails";
 function FriendGames() {
     const{id} = useParams();
     const [friendGames, setFriendGames] = useState([])
@@ -19,7 +18,7 @@ function FriendGames() {
     }, []);
 
     useEffect(()=>{
-        UserAPI.getById(currentId).then(
+        UserAPI.getById(id).then(
             (response)=>{
                 setUser(response.data)
             }

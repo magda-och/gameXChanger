@@ -1,10 +1,11 @@
 import {GameAPI} from "../../api/GameAPI";
 import {useForm} from "react-hook-form";
 import React, {useState} from "react";
+import {currentId} from "../Users/UserDetails";
 
 export default function AddGame() {
 
-    const {register, watch, handleSubmit, getValues, formState: {errors}} =
+    const {register, handleSubmit, formState: {errors}} =
         useForm({mode: "onBlur"});
 
     const [showForm, setShowForm] = useState(undefined);
@@ -23,7 +24,7 @@ export default function AddGame() {
             gameStatus: "AVAILABLE",
             visibility: "PRIVATE",
         }
-        GameAPI.create(2, newGame)
+        GameAPI.create(currentId, newGame)
             .then(() => {
                 alert("Game successfully added to shelf!")
                 window.location.replace('/profile/shelf')
