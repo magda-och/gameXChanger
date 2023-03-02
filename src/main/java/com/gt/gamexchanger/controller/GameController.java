@@ -1,6 +1,8 @@
 package com.gt.gamexchanger.controller;
 
 import com.gt.gamexchanger.dto.GameDto;
+import com.gt.gamexchanger.enums.GameStatus;
+import com.gt.gamexchanger.enums.RequestStatus;
 import com.gt.gamexchanger.model.Game;
 import com.gt.gamexchanger.service.GameService;
 import org.springframework.http.HttpStatus;
@@ -66,8 +68,10 @@ public class GameController {
     @PatchMapping("/{gameId}")
     public void updateGame(@PathVariable(
             "gameId") Long gameId,
-                           @RequestBody GameDto gameDto) {
-        gameService.updateGame(gameId, gameDto);
+                           @RequestParam("gameStatus") GameStatus gameStatus,
+                           @RequestParam("ownerId") Long ownerId) {
+        System.out.println("cos");
+        gameService.updateGame(gameId, gameStatus,ownerId);
     }
 
     @GetMapping("/myGames/{userId}")
@@ -80,11 +84,15 @@ public class GameController {
         return gameService.getAllBorrowedGame(userId);
     }
 
-    @PatchMapping("/borrowGame/{gameId}") // dodać do borrowed games
+    @PatchMapping("/borrowGame/{gameId}/{userId}")
     public void borrowGame(@PathVariable("gameId") Long gameId,
-                           @RequestBody String email) { // jeden agument w
-        // parametrze lub json,
-        // ale jedna konwencja dla wszystkich kontrollerów
-        gameService.borrowGame(gameId, email);
+                           @PathVariable Long userId) {
+        gameService.borrowGame(gameId, userId);
+    }
+    @PatchMapping("/giveBackGame/{gameId}/{userId}")
+    public void giveBackGame(@PathVariable("gameId") Long gameId,
+                             @PathVariable("userId") Long userId) {
+
+        gameService.giveBackGame(gameId, userId);
     }
 }

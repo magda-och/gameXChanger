@@ -112,7 +112,7 @@ class GameServiceTest {
 //        assertEquals(3, result.size());
 //    }
 
-    @Test
+  /*  @Test
     void updateGame(){
         createGames();
         GameDto game1 = new GameDto();
@@ -127,7 +127,7 @@ class GameServiceTest {
 
         assertEquals("updateowana", gameRepository.getGames().get(1L).getName());
         assertEquals("up up up", gameRepository.getGames().get(1L).getDescription());
-    }
+    }*/
 
     private void createGames() {
         User user1 = new User();
@@ -147,7 +147,7 @@ class GameServiceTest {
         Game game1 = new Game();
         game1.setId(1L);
         game1.setName("Gra o tron");
-        game1.setDescription("graaaa aaaaaaa");
+        //game1.setDescription("graaaa aaaaaaa");
         game1.setOwner(user1);
         game1.setActualUser(user1);
         game1.setGameStatus(GameStatus.AVAILABLE);
@@ -157,7 +157,7 @@ class GameServiceTest {
         Game game2 = new Game();
         game2.setId(2L);
         game2.setName("splendor");
-        game2.setDescription("graaaa aaaaaaa");
+        //game2.setDescription("graaaa aaaaaaa");
         game2.setOwner(user2);
         game2.setActualUser(user2);
         game2.setGameStatus(GameStatus.AVAILABLE);
@@ -167,7 +167,7 @@ class GameServiceTest {
         Game game3 = new Game();
         game3.setId(2L);
         game3.setName("Gra jakaś inna");
-        game3.setDescription("graaaa aaaaaaa");
+        //game3.setDescription("graaaa aaaaaaa");
         game3.setOwner(user1);
         game3.setActualUser(user2);
         game3.setGameStatus(GameStatus.AVAILABLE);

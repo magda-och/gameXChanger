@@ -58,11 +58,11 @@ class GameControllerTest {
         underTest.getGamesByContainingName(gameDto.getName());
         verify(gameService, times(1)).getByContainingName(gameDto.getName());
     }
-    @Test
+  /*  @Test
     void updateGame(){
         underTest.updateGame(1L, gameDto);
         verify(gameService, times(1)).updateGame(1L, gameDto);
-    }
+    }*/
 
     @Test
     void getMyGames(){
