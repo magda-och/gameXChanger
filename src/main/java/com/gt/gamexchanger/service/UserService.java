@@ -8,6 +8,7 @@ import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -106,7 +107,7 @@ public class UserService {
 
     public List<UserDto> getMyFriends(Long userId) {
         var userOptional = userRepository.findById(userId);
-        if(userOptional.isEmpty()){
+        if (userOptional.isEmpty()) {
             throw new NoExistingUser();
         }
         List<User> myFriends = userOptional.get().getFriends();
@@ -118,7 +119,7 @@ public class UserService {
     public void deleteFriend(Long userId, Long friendId) {
         var userOptional = userRepository.findById(userId);
         var friendOptional = userRepository.findById(friendId);
-        if(userOptional.isEmpty() || friendOptional.isEmpty()){
+        if (userOptional.isEmpty() || friendOptional.isEmpty()) {
             throw new NoExistingUser();
         }
         userOptional.get().getFriends().remove(friendOptional.get());
@@ -126,7 +127,22 @@ public class UserService {
         userRepository.save(userOptional.get());
         userRepository.save(friendOptional.get());
     }
+
+    public List<UserDto> getUsersWhoAreNotMyFriends(Long userId) {
+        List<UserDto> myFriends = getMyFriends(userId);
+        List<UserDto> allUsers = getAllUsers();
+        List<UserDto> notMyFriends = new ArrayList<>();
+
+        for (UserDto userDto : allUsers) {
+            if (!(myFriends.contains(userDto)) && (userDto.getId() != userId)) {
+                notMyFriends.add(userDto);
+            }
+        }
+
+        return notMyFriends;
+    }
 }
+
 
 
 

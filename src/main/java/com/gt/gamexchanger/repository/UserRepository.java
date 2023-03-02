@@ -26,4 +26,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findUserByEmail(String email);
 
+    @Query("SELECT user.friends FROM users user")
+    List<User> findUserFriends(Long userId);
+
 }
