@@ -1,4 +1,6 @@
 import {api} from "./configurationAPI";
+import AuthenticationService from "../services/AuthenticationService";
+
 
 export const FriendAPI = {
     getAllFriends: function (userId) {
@@ -7,9 +9,7 @@ export const FriendAPI = {
             url: `/user/friends/${userId}`,
             mode: 'cors',
             headers:{
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": api.baseURL,
-                "Access-Control-Allow-Methods": "GET"
+                'Authorization': AuthenticationService.getHeader()
             }
         });
     },
@@ -18,6 +18,9 @@ export const FriendAPI = {
         return api.request({
             method: "DELETE",
             url: `user/friends/${userId}/${friendId}`,
+            headers:{
+                'Authorization': AuthenticationService.getHeader()
+            }
         });
     },
 }
