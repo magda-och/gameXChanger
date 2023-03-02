@@ -12,6 +12,7 @@ import com.gt.gamexchanger.repository.GameRepository;
 import com.gt.gamexchanger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,6 @@ public class GameService {
     private final GameRepository gameRepository;
     private final DtoMapper<GameDto, Game> gameDtoMapper;
     private final UserRepository userRepository;
-
 
     public GameService(GameRepository gameRepository, GameDtoMapper gameDtoMapper, UserRepository userRepository) {
         this.gameRepository = gameRepository;
@@ -163,5 +163,14 @@ public class GameService {
             userRepository.save(user);
             gameRepository.save(game);
         }
+    }
+
+    public List<Game> getMyFriendsGames(Long userId){
+        List<User> friends = userRepository.findUserFriends(userId);
+        List<Game> friendsGames = new ArrayList<>();
+        for (User friend : friends){
+            friendsGames.addAll(friend.getMyGames());
+        }
+        return  friendsGames;
     }
 }

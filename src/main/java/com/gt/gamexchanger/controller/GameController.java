@@ -95,4 +95,9 @@ public class GameController {
 
         gameService.giveBackGame(gameId, userId);
     }
+
+    @GetMapping("/myfriends/{userId}")
+    public List<Game> getMyFriendsGames(@PathVariable("userId") Long userId) {
+        return gameService.getMyFriendsGames(userId);
+    }
 }

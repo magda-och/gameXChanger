@@ -36,12 +36,18 @@ export const UserAPI = {
         });
     },
 
-    findUsers: function (params) {
+    getNotFriends: function (userId) {
         return api.request({
             method: "GET",
-            url: `/user/name?${params}`
-        })
-    }
+            url: `/user/notfriends/${userId}`,
+            mode: 'cors',
+            headers:{
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": api.baseURL,
+                "Access-Control-Allow-Methods": "GET"
+            }
+        });
+    },
 
 
 }

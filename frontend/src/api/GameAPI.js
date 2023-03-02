@@ -47,4 +47,15 @@ export const GameAPI = {
         });
     },
 
+    getMyFriendsGames: function (userId){
+        return api.request({
+            method: "GET",
+            url: `/games/myfriends/${userId}`,
+            mode: 'cors',
+            headers:{
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Methods": "GET"
+            }
+        });
+    },
 }
