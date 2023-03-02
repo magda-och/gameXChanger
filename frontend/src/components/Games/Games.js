@@ -17,18 +17,19 @@ function Games(props) {
             alert(error)
         }
     }
-    function printButtonToLent(id,status){
+    function printButtonToLent(id_,status){
+        var id = id_
         if(status==="AVAILABLE"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateInvitationStatus(id,"LENT", e)}>LENT</button>
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"LENT", e)}>LENT</button>
             )
         }else{
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateInvitationStatus(id,"AVAILABLE", e)}>RETURN</button>
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>RETURN</button>
             )
         }
     }
-    function updateInvitationStatus(id, status, e){
+    function updateGameStatus(id, status, e){
         console.log("cos");
         if(status==="AVAILABLE") {
             GameAPI.update(id, status, currentId)
@@ -41,34 +42,19 @@ function Games(props) {
                         alert("You dont lent game")
                     }
                     window.location.replace('/profile/shelf');
-                    /*GameAPI.getMyGames(2).then(
-                        (response) => {
-                            this.setState({ ga:response.data});
-                        });
-                    InvitationAPI.getSend(2).then(
-                        (response) => {
-                            this.setState({ sendInvitations:response.data});
-                        });*/
+
                 });
         }else{
-            GameAPI.update(id, status, currentId)
+            GameAPI.update(id, status, 2)
                 .then(res => {
-                    console.log("cos2")
+                    console.log("cos3")
                     console.log(res);
                     if (status === "LENT") {
-                        alert("You lent game!")
+                        alert("You return game!")
                     } else {
-                        alert("You dont lent game")
+                        alert("You dont return game")
                     }
                     window.location.replace('/profile/shelf');
-                    /*GameAPI.getMyGames(2).then(
-                        (response) => {
-                            this.setState({ ga:response.data});
-                        });
-                    InvitationAPI.getSend(2).then(
-                        (response) => {
-                            this.setState({ sendInvitations:response.data});
-                        });*/
                 });
         }
     }
@@ -145,3 +131,11 @@ function Games(props) {
 }
 
 export default Games;
+/*GameAPI.getMyGames(2).then(
+            (response) => {
+                this.setState({ ga:response.data});
+            });
+        InvitationAPI.getSend(2).then(
+            (response) => {
+                this.setState({ sendInvitations:response.data});
+            });*/
