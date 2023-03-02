@@ -71,11 +71,15 @@ public class GameService {
         return false;
     }
 
-    public void updateGame(Long gameId, GameDto gameDto) {
+    public void updateGame(Long gameId, GameStatus gameStatus, Long ownerId) {
         Optional<Game> gameToUpdate = getGameById(gameId);
         if (gameToUpdate.isPresent()) {
-            var gameToSafe = gameToUpdate.get();
-            updateGameFields(gameToSafe, gameDto);
+            gameToUpdate.get().setGameStatus(gameStatus);
+            Optional<User> newOwner=userRepository.findById(ownerId);
+            gameToUpdate.get().setActualUser(newOwner.get());
+            gameRepository.save(gameToUpdate.get());
+           /* var gameToSafe = gameToUpdate.get();
+            updateGameFields(gameToSafe, gameDto);*/
         } else {
             throw new NoGameExists();
         }
