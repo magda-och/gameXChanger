@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 
 import {GameAPI} from "../api/GameAPI";
-// import Games from "../components/Games/Games";
 import Games from "../components/Games/Games";
+
 
 
 function MyGameList() {
@@ -20,7 +20,6 @@ function MyGameList() {
 
     return (
         <Games games = {games}/>
-      //  <Games games = {games}/>
     )
 }
 

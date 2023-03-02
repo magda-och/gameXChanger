@@ -1,18 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {GameAPI} from "../../api/GameAPI";
-// import classes from "*.module.css";
-import LendGameFunction from "./LendGame";
-
-// import classes from '*.module.css';
+import {Link} from "react-router-dom";
 
 function Games(props) {
-    const [ setSelectedOption] = useState('');
-    const handleOptionChange = (event) => setSelectedOption(event.target.value);
-    const lendGame = async (id, option) => {
+
+    const removeGame = async(id) => {
         try {
-            const res = await GameAPI.borrowGame(id, option)//, visibility)
-            console.log('Item successfully updated.')
-            alert("Game successfully updated.")
+            const res = await GameAPI.delete(id)
+            console.log('Item successfully deleted.')
+            alert("Game successfully deleted.")
             window.location.replace('/profile/shelf')
             return res;
         } catch (error) {
@@ -30,16 +26,27 @@ function Games(props) {
             alert(error)
         }
     }
-
-    const removeGame = async (id) => {
-        try {
-            const res = await GameAPI.delete(id)
-            console.log('Item successfully deleted.')
-            alert("Game successfully deleted.")
-            window.location.replace('/profile/shelf')
-            return res;
-        } catch (error) {
-            alert(error)
+    function printButtonToLent(game){
+        if(game.gameStatus==="AVAILABLE"){
+            return (
+                <Link
+                    to={{
+                        pathname: `/profile/lend/${game.id}`,
+                        state: { game: game.id }
+                    }}
+                >
+                    <button className="btn btn-outline-secondary">LENT</button>
+                </Link>
+            )
+        } else if(game.gameStatus === "LENT"){
+            return(
+                <div>{game.actualUserDto.firstName + " " + game.actualUserDto.lastName}
+                    <button
+                        className="btn btn-outline-secondary"
+                        onClick={() => giveBackGame(game.id, game.actualUserDto.id)}>
+                        given back
+                    </button>
+                </div>)
         }
     }
 
@@ -47,64 +54,28 @@ function Games(props) {
     const displayGames = (props) => {
         const {games} = props;
 
-        function showInput(game) {
-            if (game.gameStatus === 'AVAILABLE') {
-                return (
-                    <td>
-                        <LendGameFunction/>
-                        {/*<button*/}
-                        {/*    className="btn btn-outline-secondary"*/}
-                        {/*    onClick={LendGameFunction(game.id)}>*/}
-                        {/*    /!* wywołaj metode popup i przekaż gameId *!/*/}
-                        {/*    /!* zamiast lendGame a tam dopiero lend game i przekaż gameId i UserId*!/*/}
-                        {/*    Lend*/}
-                        {/*</button>*/}
-                    </td>
-                )
-            } else if (game.gameStatus === 'LENT') {
-                return (
-                    <td>{game.actualUserDto.firstName + " " + game.actualUserDto.lastName}
-                        <button
-                            className="btn btn-outline-secondary"
-                            onClick={() => giveBackGame(game.id, game.actualUserDto.id)}>
-                            given back
-                        </button>
-                    </td>
-                )
-            }
-        }
-
         return (
             <div>
-                <h2 className="text-center">Games</h2>
-                <table className="table table-striped">
-                    <thead>
-                    <tr>
-                        <td>Game name</td>
-                        <td>Game Status</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {games.map(game => {
-                        return (
-                            <tr key={game.id}>
-                                <td>{game.name}</td>
-                                <td>{game.gameStatus}</td>
-                                {showInput(game)}
-                                <td>
-                                    <button className="btn btn-outline-secondary"
-                                            onClick={() => removeGame(game.id)}>Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        );
-                    })}
-                    </tbody>
-                </table>
+                <h2 className="text-center">My Games</h2>
+                <div>
+                    <div >
+                        {
+                            games.map(game => {
+                                    return <div class="col-md-12 container" style={{width:"150px", float:"left",height:"150px",background:"gray",margin:"10px"}}>
+                                        <p>{game.name}</p>
+                                        <p> {game.gameStatus}</p>
+                                        {printButtonToLent(game)}
+                                        <button className="btn btn-danger"
+                                                onClick={() => removeGame(game.id)}>Delete
+                                        </button>
+                                    </div>
+                                }
+                            )
+                        }
+                    </div>
+                </div>
             </div>
-        );
+        )
 
     }
     return (
@@ -115,3 +86,5 @@ function Games(props) {
 }
 
 export default Games;
+
+

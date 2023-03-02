@@ -12,7 +12,7 @@ function Shelf() {
       <div className={classes.games}>
           <AddGame/>
           <MyGameList/>
-          <BorrowedGameList/>
+          {/*<BorrowedGameList/>*/}
       </div>
     );
 }
