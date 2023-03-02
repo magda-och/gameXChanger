@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Invitations.module.css"
 import {InvitationAPI} from "../api/InvitationAPI";
+import {currentId} from "../components/Users/UserDetails";
 
 class Invitations extends React.Component{
     constructor(props) {
@@ -12,7 +13,7 @@ class Invitations extends React.Component{
     }
 
     componentDidMount() {
-        InvitationAPI.getSend(2).then(
+        InvitationAPI.getSend(currentId).then(
             (response) => {
                 //this.state.invitations = response.data
                 this.setState({ sendInvitations: [{
@@ -26,7 +27,7 @@ class Invitations extends React.Component{
                 //console.log(this.state)
         });
 
-        InvitationAPI.getReceived(2).then(
+        InvitationAPI.getReceived(currentId).then(
             (response) => {
                 this.setState({ receivedInvitations: [{
                         requestFriendId: 1,
@@ -59,11 +60,11 @@ class Invitations extends React.Component{
                 } else {
                     alert("You reject user")
                 }
-                InvitationAPI.getReceived(2).then(
+                InvitationAPI.getReceived(currentId).then(
                     (response) => {
                         this.setState({ receivedInvitations:response.data});
                     });
-                InvitationAPI.getSend(2).then(
+                InvitationAPI.getSend(currentId).then(
                     (response) => {
                         this.setState({ sendInvitations:response.data});
                     });

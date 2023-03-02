@@ -3,12 +3,13 @@ import {FriendAPI} from "../api/FriendAPI";
 import {Link} from "react-router-dom";
 import classes from './Friends.module.css'
 import FriendsSearchingBar from "./FriendsSearchingBar";
+import {currentId} from "../components/Users/UserDetails";
 
 function Friends() {
 
     const [friends, setFriends] = useState([])
 
-    const userId = 2;
+    const userId = currentId;
 
     useEffect(() => {
         FriendAPI.getAllFriends(userId).then(
@@ -22,7 +23,7 @@ function Friends() {
 
     const removeFriend = async (id) => {
         try {
-            const res = await FriendAPI.delete(2, id)
+            const res = await FriendAPI.delete(userId, id)
             console.log('Item successfully deleted.')
             alert("Friend successfully deleted.")
             window.location.replace('/profile/friends')

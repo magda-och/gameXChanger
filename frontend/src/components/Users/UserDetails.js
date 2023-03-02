@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {UserAPI} from "../../api/UserAPI";
 import AuthenticationService from "../../services/AuthenticationService";
 
+export let currentId;
+
 function UserDetailsPage({currentUser}) {
 
     const [user, setUser] = useState([])
@@ -17,13 +19,18 @@ function UserDetailsPage({currentUser}) {
             });
     }, []);
 
-    return (
-        <>
-            <h1>Hello {user.fi}!</h1>
-            <p>{currentUser}</p>
-            <p>{user.id}</p>
+    currentId = user.id
 
-        </>
+    return (
+        <d>
+            <h1>Hello {user.firstName}!</h1>
+            <p></p>
+            <p>{user.firstName}</p>
+            <p>{user.lastName}</p>
+            <p>{user.email}</p>
+            <p>{user.city}</p>
+            <p>{user.phoneNumber}</p>
+        </d>
     );
 }
 
