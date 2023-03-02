@@ -4,7 +4,7 @@ import { notification } from "antd"
 export const api = axios.create({
     baseURL: `http://localhost:3100`,
 })
-
+/*
 const errorHandler = (error) => {
     const statusCode = error.response?.status
 
@@ -25,4 +25,4 @@ const errorHandler = (error) => {
 
 api.interceptors.response.use(undefined, (error) => {
     return errorHandler(error)
-})
+})*/
