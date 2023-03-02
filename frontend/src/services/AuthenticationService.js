@@ -1,16 +1,16 @@
-import axios from 'axios'
+import {api} from "../api/configurationAPI";
 
-export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
+
+const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
+const HEADER_SESSION= 'Authorization:'
+
 
 class AuthenticationService {
 
- /*   executeJwtAuthenticationService(reqBody) {
-        alert(1);
-        return UserAPI.login(reqBody);
-    }*/
 
     registerJwtSuccessfulLogin(email, token) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, email)
+        sessionStorage.setItem(HEADER_SESSION, this.createJWTToken(token))
         this.setupAxiosInterceptors(this.createJWTToken(token))
     }
 
@@ -29,6 +29,11 @@ class AuthenticationService {
 
     }
 
+    getHeader(){
+        let header = sessionStorage.getItem(HEADER_SESSION)
+        if (header === null) return ''
+        return header
+    }
     getLoggedInUserName() {
         let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
         if (user === null) return ''
@@ -36,7 +41,7 @@ class AuthenticationService {
     }
 
     setupAxiosInterceptors(token) {
-        axios.interceptors.request.use(
+        api.interceptors.request.use(
             (config) => {
                 if (this.isUserLoggedIn()) {
                     config.headers.authorization = token
