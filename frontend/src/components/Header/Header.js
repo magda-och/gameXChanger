@@ -10,7 +10,7 @@ function Header() {
                 <div className="container-fluid">
 
                     <NavLink to="/" className="navbar-brand">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3430/3430812.png" width="75" alt=""
+                        <img src="https://cdn-icons-png.flaticon.com/512/3430/3430812.png" width="40" alt=""
                              className="d-inline-block align-middle mr-2"/>
                             <span className="text-uppercase font-weight-bold" id="title">GameXChanger</span>
                     </NavLink>
