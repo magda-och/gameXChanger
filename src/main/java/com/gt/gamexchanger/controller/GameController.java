@@ -1,6 +1,8 @@
 package com.gt.gamexchanger.controller;
 
 import com.gt.gamexchanger.dto.GameDto;
+import com.gt.gamexchanger.enums.GameStatus;
+import com.gt.gamexchanger.enums.RequestStatus;
 import com.gt.gamexchanger.model.Game;
 import com.gt.gamexchanger.service.GameService;
 import org.springframework.http.HttpStatus;
@@ -66,8 +68,10 @@ public class GameController {
     @PatchMapping("/{gameId}")
     public void updateGame(@PathVariable(
             "gameId") Long gameId,
-                           @RequestBody GameDto gameDto) {
-        gameService.updateGame(gameId, gameDto);
+                           @RequestParam("gameStatus") GameStatus gameStatus,
+                           @RequestParam("ownerId") Long ownerId) {
+        System.out.println("cos");
+        gameService.updateGame(gameId, gameStatus,ownerId);
     }
 
     @GetMapping("/myGames/{userId}")
