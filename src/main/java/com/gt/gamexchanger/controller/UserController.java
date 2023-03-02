@@ -61,6 +61,7 @@ public class UserController {
                 signUpRequest.getCity(),
                 signUpRequest.getPhoneNumber(),
                 Role.USER);
+
         var jwtToken = jwtService.generateToken(userToRegister);
         userService.addUser(userToRegister);
         System.out.println(AuthenticationResponse.builder().token(jwtToken).build().getToken());
@@ -131,5 +132,11 @@ public class UserController {
         catch (EmptyResultDataAccessException e){
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/me/{userEmail}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable String userEmail){
+        Optional<UserDto> user = userService.findUserByEmail(userEmail);
+        return new ResponseEntity<>(user.orElseThrow(), HttpStatus.OK);
     }
 }

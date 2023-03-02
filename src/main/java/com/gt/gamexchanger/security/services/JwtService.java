@@ -1,5 +1,7 @@
 package com.gt.gamexchanger.security.services;
 
+import com.gt.gamexchanger.dto.UserDto;
+import com.gt.gamexchanger.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -26,7 +28,9 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(), userDetails);
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", ((UserDto)userDetails).getRole());
+        return generateToken(extraClaims, userDetails);
     }
 
     public String generateToken(
@@ -37,7 +41,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60))
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -59,7 +63,8 @@ public class JwtService {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
-                .build().parseClaimsJwt(token)
+                .build()
+                .parseClaimsJws(token)
                 .getBody();
     }
 
