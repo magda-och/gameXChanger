@@ -101,4 +101,9 @@ public class UserController {
     private boolean wrongPassword(UserDto user, UserDto userDto) {
         return !user.getPassword().equals(userDto.getPassword());
     }
+
+    @GetMapping("/notfriends/{userId}")
+    public List<UserDto> getNotMyFriends(@PathVariable ("userId") Long userId){
+        return userService.getUsersWhoAreNotMyFriends(userId);
+    }
 }
