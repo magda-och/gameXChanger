@@ -37,11 +37,11 @@ export const GameAPI = {
             headers:{'Authorization': AuthenticationService.getHeader()}
         });
     },
-    update: function(gameId, game) {
+    update: function(gameId, status, ownerId) {
         return api.request({
-            method: "PUT",
-            url: `/games/${gameId}`,
-            data: game,
+            method: "PATCH",
+            url: `/games/${gameId}?gameStatus=${status}&ownerId=${ownerId}`,
+            data: status, ownerId,
             headers:{'Authorization': AuthenticationService.getHeader()}
         });
     },

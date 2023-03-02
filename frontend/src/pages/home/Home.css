@@ -16,35 +16,44 @@
 /*    flex-direction: column;*/
 /*    align-items: center;*/
 /*}*/
+
 .image-home {
     align-content: center;
-    margin-top: 100px;
-    margin-left: 40px;
-    width: 100%;
-    left: 50px;
+    margin-left: -50%;
+    width: 150%;
 }
 
 .container {
     margin-top: 10%;
 }
 
-.left-arrow {
+#left-arrow {
     position: absolute;
-    left: 250px;
-    top: 50%;
+    left: 2%;
+    top: 60%;
+    border-radius: 12px;
+    border: none;
+    font-size: large;
 }
 
-.right-arrow {
+#right-arrow {
     position: absolute;
-    right: 200px;
-    top: 50%;
+    right:5%;
+    top: 60%;
+    border-radius: 12px;
+    font-size: large;
+    border: none;
 }
+
+
 
 #description {
     position: absolute;
     top: 35%;
     right: 15%;
+    font-size: 25px;
 }
+
 /*}*/
 /*.image-description {*/
 /*    position: center;*/
@@ -55,3 +64,4 @@
 /*    padding: 10px;*/
 /*    text-align: left;*/
 /*}*/
+
