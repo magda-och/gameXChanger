@@ -32,11 +32,11 @@ export const GameAPI = {
             data: game
         });
     },
-    update: function(gameId, game) {
+    update: function(gameId, status, ownerId) {
         return api.request({
-            method: "PUT",
-            url: `/games/${gameId}`,
-            data: game,
+            method: "PATCH",
+            url: `/games/${gameId}?gameStatus=${status}&ownerId=${ownerId}`,
+            data: status, ownerId
         });
     },
 
