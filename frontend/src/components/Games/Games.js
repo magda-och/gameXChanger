@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {GameAPI} from "../../api/GameAPI";
+import {Link} from "react-router-dom";
 import {currentId} from "../Users/UserDetails";
 
 
@@ -19,35 +20,57 @@ function Games(props) {
     function printButtonToLent(id,status){
         if(status==="AVAILABLE"){
             return (
-                <button className="btn btn-primary" onClick={(e) => updateInvitationStatus(id,"LENT", e)}>LENT</button>
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateInvitationStatus(id,"LENT", e)}>LENT</button>
             )
         }else{
             return (
-                <button onClick={(e) => updateInvitationStatus(id,"AVAILABLE", e)}>RETURN</button>
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateInvitationStatus(id,"AVAILABLE", e)}>RETURN</button>
             )
         }
     }
     function updateInvitationStatus(id, status, e){
         console.log("cos");
-        GameAPI.update(id, status, currentId)
-            .then(res =>{
-                console.log("cos2")
-                console.log(res);
-                if(status==="LENT"){
-                    alert("You lent game!")
-                } else {
-                    alert("You dont lent game")
-                }
-                window.location.replace('/profile/shelf');
-                /*GameAPI.getMyGames(2).then(
-                    (response) => {
-                        this.setState({ ga:response.data});
-                    });
-                InvitationAPI.getSend(2).then(
-                    (response) => {
-                        this.setState({ sendInvitations:response.data});
-                    });*/
-            });
+        if(status==="AVAILABLE") {
+            GameAPI.update(id, status, currentId)
+                .then(res => {
+                    console.log("cos2")
+                    console.log(res);
+                    if (status === "LENT") {
+                        alert("You lent game!")
+                    } else {
+                        alert("You dont lent game")
+                    }
+                    window.location.replace('/profile/shelf');
+                    /*GameAPI.getMyGames(2).then(
+                        (response) => {
+                            this.setState({ ga:response.data});
+                        });
+                    InvitationAPI.getSend(2).then(
+                        (response) => {
+                            this.setState({ sendInvitations:response.data});
+                        });*/
+                });
+        }else{
+            GameAPI.update(id, status, currentId)
+                .then(res => {
+                    console.log("cos2")
+                    console.log(res);
+                    if (status === "LENT") {
+                        alert("You lent game!")
+                    } else {
+                        alert("You dont lent game")
+                    }
+                    window.location.replace('/profile/shelf');
+                    /*GameAPI.getMyGames(2).then(
+                        (response) => {
+                            this.setState({ ga:response.data});
+                        });
+                    InvitationAPI.getSend(2).then(
+                        (response) => {
+                            this.setState({ sendInvitations:response.data});
+                        });*/
+                });
+        }
     }
     const giveBackGame = async (id, userId) => {
         try {
@@ -95,12 +118,12 @@ function Games(props) {
                         <div >
                             {
                                 games.map(game => {
-                                        return <div className="col-md-12 container" style={{width:"150px", float:"left",height:"150px",background:"#FFADBC",margin:"10px"}}>
+                                        return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#FFADBC",margin:"10px",borderRadius:"12px"}}>
                                             <p>{game.name}</p>
                                             <p> {game.gameStatus}</p>
                                             {printButtonToLent(game.id,game.gameStatus)}
                                             {/*{printButtonToLent(game)}*/}
-                                                <button className="btn btn-danger"
+                                                <button className="btn btn-danger" style={{background:"rgb(151, 92, 141)", border:"none"}}
                                                         onClick={() => removeGame(game.id)}><span
                                                     className="bi bi-trash"></span>
                                                 </button>

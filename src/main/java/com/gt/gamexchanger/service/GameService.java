@@ -71,12 +71,13 @@ public class GameService {
         return false;
     }
 
-    public void updateGame(Long gameId, GameStatus gameStatus, Long ownerId) {
+    public void updateGame(Long gameId, GameStatus gameStatus, Long actualUserId) {
         Optional<Game> gameToUpdate = getGameById(gameId);
+        System.out.println(gameToUpdate.get().getId());
         if (gameToUpdate.isPresent()) {
             gameToUpdate.get().setGameStatus(gameStatus);
-            Optional<User> newOwner=userRepository.findById(ownerId);
-            gameToUpdate.get().setActualUser(newOwner.get());
+            Optional<User> newActualUser=userRepository.findById(actualUserId);
+            gameToUpdate.get().setActualUser(newActualUser.get());
             gameRepository.save(gameToUpdate.get());
            /* var gameToSafe = gameToUpdate.get();
             updateGameFields(gameToSafe, gameDto);*/
