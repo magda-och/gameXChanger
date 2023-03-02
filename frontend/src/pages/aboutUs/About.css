@@ -1,0 +1,39 @@
+.image-grid {
+    display: flex;
+    flex-wrap:wrap ;
+
+}
+
+.image-container-1{
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.image-description {
+    position: absolute;
+    top: 50%;
+    right: 100px;
+    /*transform: translateY(-50%);*/
+    background-color: #61dafb;
+    padding: 10px;
+
+}
+
+.col-md-1 {
+    flex: auto;
+}
+
+#photoKasia {
+    width: 90%;
+}
+
+#photoAga{
+    width: 80%;
+}
+
+#firstCol {
+    width: 10px;
+}
