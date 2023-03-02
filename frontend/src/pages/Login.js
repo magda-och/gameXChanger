@@ -28,21 +28,17 @@ export default function Login() {
             alert(loginRequest.email)
             UserAPI.login(loginRequest)
                 .then((response) => {
-                    alert("response code: " + response.status)
-                    alert("response data: " + response.data.token)
-                    AuthenticationService.registerJwtSuccessfulLogin(email, setToken(response.data.token))
+                    setToken(response.data.token)
+                    AuthenticationService.registerJwtSuccessfulLogin(email, response.data.token)
                     window.location.replace('/profile')
                 }).catch((reason) => {
                     alert("Dadas"+ reason.status)
-                // this.setState({showSuccessMessage: false})
-                // this.setState({hasLoginFailed: true})
             })
         } catch (error) {
             alert(error);
             console.error(error);
         }
-
-    };
+    }
 
 
     const renderErrorMessage = (name) =>
