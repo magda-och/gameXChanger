@@ -41,10 +41,10 @@ export const UserAPI = {
         });
     },
 
-    findUsers: function (params) {
+    getNotFriends: function (userId) {
         return api.request({
             method: "GET",
-            url: `/user/name?${params}`,
+            url: `/user/notfriends/${userId}`,
             headers:{'Authorization': AuthenticationService.getHeader()}
         })
     },

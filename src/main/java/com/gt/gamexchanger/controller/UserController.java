@@ -140,4 +140,9 @@ public class UserController {
         Optional<UserDto> user = userService.findUserByEmail(userEmail);
         return new ResponseEntity<>(user.orElseThrow(), HttpStatus.OK);
     }
+
+    @GetMapping("/notfriends/{userId}")
+    public List<UserDto> getNotMyFriends(@PathVariable ("userId") Long userId){
+        return userService.getUsersWhoAreNotMyFriends(userId);
+    }
 }

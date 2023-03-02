@@ -12,7 +12,7 @@ import Profile from "./pages/Profile";
 import Invitations from "./pages/Invitations";
 import ProfileLayout from "./components/ProfileLayout/ProfileLayout";
 import Shelf from "./pages/Shelf";
-import Friends from "./pages/Friends";
+import Friends from "./components/Friends/Friends";
 import Registration from "./pages/Registration";
 import FriendGames from "./components/Games/FriendGames";
 import LendGame from "./components/Games/LendGame";

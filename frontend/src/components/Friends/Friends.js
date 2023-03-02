@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FriendAPI} from "../api/FriendAPI";
+import {FriendAPI} from "../../api/FriendAPI";
 import {Link} from "react-router-dom";
 import classes from './Friends.module.css'
 import FriendsSearchingBar from "./FriendsSearchingBar";
