@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 
 function LeftSidebar (){
 const navigate = useNavigate();
-    return <SideNav style={{'backgroundColor': '#144272' }}
+    return <SideNav style={{'backgroundColor': '#975C8D' }}
     onSelect={selected=> {
     console.log(selected)
         navigate('/'+ selected)
@@ -14,7 +14,7 @@ const navigate = useNavigate();
     className = {classes.leftSidebar}
     >
     <SideNav.Toggle />
-    <SideNav.Nav  defaultSelected = "profile" style={{'backgroundColor': '#144272'}}>
+    <SideNav.Nav  defaultSelected = "profile" style={{'backgroundColor': '#975C8D'}}>
         <NavItem eventKey={"profile/shelf"} id = "nav-id" >
             <NavIcon>  <i className='fa fa-fw fa-solid fa-gamepad' style={{fontSize: "2em", color: "white"}}></i> </NavIcon>
             <NavText style = {{ fontSize : "1.3em", fontFamily:'Arial Narrow', color: "white"}}>My shelf</NavText>

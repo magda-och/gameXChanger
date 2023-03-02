@@ -95,7 +95,7 @@ function Games(props) {
                         <div >
                             {
                                 games.map(game => {
-                                        return <div className="col-md-12 container" style={{width:"150px", float:"left",height:"150px",background:"#ADD8E6",margin:"10px"}}>
+                                        return <div className="col-md-12 container" style={{width:"150px", float:"left",height:"150px",background:"#FFADBC",margin:"10px"}}>
                                             <p>{game.name}</p>
                                             <p> {game.gameStatus}</p>
                                             {printButtonToLent(game.id,game.gameStatus)}

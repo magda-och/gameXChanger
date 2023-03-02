@@ -19,7 +19,6 @@
 
 .image-home {
     align-content: center;
-    margin-top: 140px;
     margin-left: -50%;
     width: 150%;
 }
@@ -30,9 +29,10 @@
 
 #left-arrow {
     position: absolute;
-    left: 5%;
+    left: 2%;
     top: 60%;
     border-radius: 12px;
+    border: none;
 }
 
 #right-arrow {
@@ -41,12 +41,10 @@
     top: 60%;
     border-radius: 12px;
     font-size: large;
+    border: none;
 }
 
-#right-arrow:hover {
-    background-color: #3287d2; /* Green */
-    color: white;
-}
+
 
 #description {
     position: absolute;

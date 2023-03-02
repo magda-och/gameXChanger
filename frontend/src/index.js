@@ -8,6 +8,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+root.style = {"background-color": "#FCE2DB"}
 root.render(
   <React.StrictMode>
       <App />

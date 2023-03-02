@@ -54,7 +54,7 @@ const Home = () => {
         <div className="container h-75" id="main-container">
             <div className="row" align="center">
                 <div className="col-md-2">
-                    <button id="left-arrow" className="btn btn-primary btn-lg" onClick={previousImage}>{'<'}</button>
+                    <button id="left-arrow" className="btn btn-primary btn-lg" style={{"background-color" : "#80489C"}} onClick={previousImage}>{'<'}</button>
                 </div>
                 <div className="col-md-5">
                     <img className="image-home" src={images[currentImageIndex].src}
@@ -64,7 +64,7 @@ const Home = () => {
                     {images[currentImageIndex].description}
                 </div>
                 <div className="col-md-2">
-                    <button id="right-arrow" className="btn btn-primary btn-lg" onClick={nextImage}>{'>'}</button>
+                    <button id="right-arrow" className="btn btn-primary btn-lg" style={{"background-color" : "#80489C"}} onClick={nextImage}>{'>'}</button>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@ import './Header.module.css'
 function Header() {
     return (
         <header className={classes.header}>
-            <nav className="navbar navbar-expand-lg navbar-dark navbar-brand fixed-top" style={{"background-color" : "#0A2647", "width" : "100%", "height" : "9%"}}>
+            <nav className="navbar navbar-expand-lg navbar-dark navbar-brand fixed-top" style={{"background-color" : "#863A6F", "width" : "100%", "height" : "9%"}}>
                 <div className="container-fluid">
 
                     <NavLink to="/" className="navbar-brand">
