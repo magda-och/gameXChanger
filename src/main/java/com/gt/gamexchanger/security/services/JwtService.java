@@ -1,7 +1,6 @@
 package com.gt.gamexchanger.security.services;
 
 import com.gt.gamexchanger.dto.UserDto;
-import com.gt.gamexchanger.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -18,7 +17,7 @@ import java.util.function.Function;
 public class JwtService {
     private static final String SECRET_KEY = "2646294A404E635266556A586E327235753878214125442A472D4B6150645367";
 
-    public String extractUsername(String token) {
+    public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -41,13 +40,13 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*24)) //magic number
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails){
-        final String username = extractUsername(token);
+        final String username = extractEmail(token);
         return (username.equals(userDetails.getUsername()))&& !isTokenExpired(token);
     }
 

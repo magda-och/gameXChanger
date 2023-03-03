@@ -12,7 +12,7 @@ class AuthenticationService {
     registerJwtSuccessfulLogin(email, token) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, email)
         sessionStorage.setItem(HEADER_SESSION, this.createJWTToken(token))
-        this.setupAxiosInterceptors(this.createJWTToken(token))
+        api.setupAxiosInterceptors(this.createJWTToken(token))
     }
 
     createJWTToken(token) {

@@ -98,7 +98,7 @@ public class UserController {
         return ResponseEntity.ok("Password changed!");
     }
 
-    @PostMapping("/auth/login")
+    @PostMapping("/auth/login") //do authentication controller
     public ResponseEntity<AuthenticationResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -112,7 +112,7 @@ public class UserController {
         var jwtToken = jwtService.generateToken(user);
         return ResponseEntity.ok(AuthenticationResponse.builder().token(jwtToken).build());
     }
-    @GetMapping("/friends/{userId}")
+    @GetMapping("/friends/{userId}") //id/friends
     public ResponseEntity<List<UserDto>> getFriends(@PathVariable("userId") Long userId){
         List<UserDto> myFriends = userService.getMyFriends(userId);
         return new ResponseEntity<>(myFriends, HttpStatus.OK);
