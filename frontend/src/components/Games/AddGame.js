@@ -27,7 +27,12 @@ export default function AddGame() {
         GameAPI.create(currentId, newGame)
             .then(() => {
                 alert("Game successfully added to shelf!")
-                window.location.replace('/profile/shelf')
+                //var lastId = "#" + currentId;
+                //window.location.replace("/profile/shelf" + lastId);
+                //window.location.reload();
+                window.history.pushState("/profile/shelf", "", "/profile/shelf");
+                window.location.reload();
+                //window.location.replace('/profile/shelf')
             })
     };
 

@@ -45,7 +45,7 @@ function Games(props) {
 
                 });
         }else{
-            GameAPI.update(id, status, 2)
+            GameAPI.update(id, status, 1)
                 .then(res => {
                     console.log("cos3")
                     console.log(res);
@@ -97,8 +97,9 @@ function Games(props) {
     const displayGames = (props) => {
         const {games} = props;
 
+
         return (
-            <div>
+            <div style={{resize:"both", overflow:"auto"}}>
                 <h2 className="text-center">My Games</h2>
                 <div>
                         <div >
