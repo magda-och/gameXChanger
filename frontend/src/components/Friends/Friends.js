@@ -70,11 +70,11 @@ function Friends() {
                                                 state: { friends: friend }
                                             }}
                                         >
-                                            <button className="btn btn-outline-secondary">Show games</button>
+                                            <button style={{background:"rgb(134, 58, 111)", border:"none"}} className="btn btn-outline-secondary">Show games</button>
                                         </Link>
                                     </td>
                                     <td>
-                                        <button className="btn btn-outline-secondary"
+                                        <button style={{background:"rgb(151, 92, 141)", border:"none", color:"white"}} className="btn btn-outline-secondary"
                                                 onClick={() => removeFriend(friend.id)}>Delete
                                         </button>
                                     </td>
