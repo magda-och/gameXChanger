@@ -38,9 +38,9 @@ export default function AddGame() {
 
     return (
         <div className="text-center m-4" id="myForm">
-            <div className="row">
-                <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-                    <button type="button" className="btn btn-outline-secondary" onClick={openForm}> Add game</button>
+            <div className="row" >
+                <div style={{background:"rgb(255, 173, 188)"}} className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
+                    <button style={{background:"rgb(134, 58, 111)", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={openForm}> Add game</button>
 
                     {showForm && (
                         <form className="add-game" id="add-game" onSubmit={handleSubmit(onSubmit)}>
@@ -59,11 +59,11 @@ export default function AddGame() {
                                 />
                                 {errors.name?.type === 'required' && <p role="alert">Game name is required</p>}
                             </div>
-                            <button type="submit" className="btn btn-secondary">
+                            <button style={{background:"rgb(134, 58, 111)", border:"none"}} type="submit" className="btn btn-secondary">
                                 Add
                             </button>
                               <span> </span>
-                            <button type="button" className="btn btn-outline-secondary" onClick={closeForm}>Close</button>
+                            <button style={{background:"rgb(151, 92, 141)", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={closeForm}>Close</button>
                         </form>
                     )}
                 </div>
