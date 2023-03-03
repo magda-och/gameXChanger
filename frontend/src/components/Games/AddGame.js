@@ -1,6 +1,7 @@
 import {GameAPI} from "../../api/GameAPI";
 import {useForm} from "react-hook-form";
 import React, {useState} from "react";
+import AuthenticationService from "../../services/AuthenticationService";
 
 export default function AddGame() {
 
@@ -24,10 +25,10 @@ export default function AddGame() {
             gameStatus: "AVAILABLE",
             visibility: "PRIVATE",
         }
-        GameAPI.create(sessionStorage.getItem("id"), newGame)
+        GameAPI.create(AuthenticationService.getLoggedInUserID(), newGame)
             .then(() => {
                 alert("Game successfully added to shelf!")
-                GameAPI.getMyGames(sessionStorage.getItem("id")).then(
+                GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
                     function (response) {
                         setGames(response.data)
                     }

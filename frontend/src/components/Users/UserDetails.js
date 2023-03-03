@@ -20,7 +20,7 @@ function UserDetailsPage() {
     }, []);
 
     currentId = user.id
-    sessionStorage.setItem("id", user.id);
+   /* sessionStorage.setItem("id", user.id);*/
 
     return (
         <d>

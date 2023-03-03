@@ -1,9 +1,10 @@
 import {api} from "../api/configurationAPI";
+import {UserAPI} from "../api/UserAPI";
 
 
 const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 const HEADER_SESSION= 'Authorization:'
-/*const USER_ID_SESSION= 'id'*/
+const USER_ID_SESSION= 'id'
 
 class AuthenticationService {
 
@@ -40,11 +41,21 @@ class AuthenticationService {
         return user
     }
 
-  /*  getLoggedInUserID() {
+    setUserId(){
+        UserAPI.getByEmail(this.getLoggedInUserName()).then(
+            function (response) {
+                sessionStorage.setItem(USER_ID_SESSION, response.data)
+            }
+        ).catch(function (error) {
+            console.error(`Error: ${error}`)
+        });
+    }
+
+    getLoggedInUserID() {
         let id = sessionStorage.getItem(USER_ID_SESSION)
         if (id === null) return ''
         return id
-    }*/
+    }
 
     setupAxiosInterceptors(token) {
         api.interceptors.request.use(

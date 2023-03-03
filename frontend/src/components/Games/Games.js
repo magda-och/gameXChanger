@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {GameAPI} from "../../api/GameAPI";
 import {currentId} from "../Users/UserDetails";
+import AuthenticationService from "../../services/AuthenticationService";
 
 
 function Games(props) {
@@ -32,7 +33,7 @@ function Games(props) {
             )
         }else{
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>RETURN</button>
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>RETURNED</button>
             )
         }
     }
@@ -44,22 +45,36 @@ function Games(props) {
                     console.log("cos2")
                     console.log(res);
                     if (status === "LENT") {
-                        alert("You lent game!")
+                        alert("Game is return!")
                     } else {
-                        alert("You dont lent game")
+                       /* alert("You dont lent game")*/
                     }
+                    GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
+                        function (response) {
+                            setGames(response.data)
+                        }
+                    ).catch(function (error) {
+                        console.error(`Error: ${error}`)
+                    });
                     window.location.replace('/profile/shelf');
                 });
         }else{
-            GameAPI.update(id, status, 1)
+            GameAPI.update(id, status, currentId)
                 .then(res => {
                     console.log("cos3")
                     console.log(res);
                     if (status === "LENT") {
-                        alert("You return game!")
+                        alert("Game is lent!")
                     } else {
-                        alert("You dont return game")
+                        /*alert("You dont return game")*/
                     }
+                    GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
+                        function (response) {
+                            setGames(response.data)
+                        }
+                    ).catch(function (error) {
+                        console.error(`Error: ${error}`)
+                    });
                     window.location.replace('/profile/shelf');
                 });
         }

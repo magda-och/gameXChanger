@@ -48,7 +48,6 @@ function Friends() {
                 <table className="table table-striped">
                     <thead>
                     <tr>
-                        <td> Friend id</td>
                         <td> Friend first name</td>
                         <td> Friend last name</td>
                         <td> Friend city</td>
@@ -59,7 +58,6 @@ function Friends() {
                         friends.map(
                             friend => {
                                 return <tr key={friend.id}>
-                                    <td>{friend.id}</td>
                                     <td>{friend.firstName}</td>
                                     <td>{friend.lastName}</td>
                                     <td>{friend.city}</td>

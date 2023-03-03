@@ -25,14 +25,13 @@ export default function Login() {
     function loginClicked() {
 
         try {
-            alert(loginRequest.email)
             UserAPI.login(loginRequest)
                 .then((response) => {
                     setToken(response.data.token)
                     AuthenticationService.registerJwtSuccessfulLogin(email, response.data.token)
                     window.location.replace('/profile')
-                }).catch((reason) => {
-                    alert("Dadas"+ reason.status)
+                }).catch(() => {
+                    alert("Wrong password!")
             })
         } catch (error) {
             alert(error);
