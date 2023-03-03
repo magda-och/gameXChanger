@@ -1,10 +1,13 @@
 import {GameAPI} from "../../api/GameAPI";
 import {useForm} from "react-hook-form";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {currentId} from "../Users/UserDetails";
+import {useNavigate} from "react-router-dom";
+import {UserAPI} from "../../api/UserAPI";
 
 export default function AddGame() {
-
+    const[user, setUser]=useState(null)
+    const navigate = useNavigate();
     const {register, handleSubmit, formState: {errors}} =
         useForm({mode: "onBlur"});
 
@@ -16,6 +19,16 @@ export default function AddGame() {
     const closeForm = () =>{
         setShowForm(false)
     }
+ function getUser(){
+       return  UserAPI.getById(currentId).then(
+            (response)=>{
+                setUser(Object.values(response.data))
+            }
+        ).catch(function (error){
+            console.error(`Error: ${error}`)
+        });
+    }
+
 
     const onSubmit = data => {
         const newGame = {
@@ -23,6 +36,7 @@ export default function AddGame() {
             description: "fajna gra",
             gameStatus: "AVAILABLE",
             visibility: "PRIVATE",
+            owner: getUser()
         }
         GameAPI.create(currentId, newGame)
             .then(() => {
@@ -32,6 +46,8 @@ export default function AddGame() {
                 //window.location.reload();
                 window.history.pushState("/profile/shelf", "", "/profile/shelf");
                 window.location.reload();
+
+                navigate("/profile/shelf")
                 //window.location.replace('/profile/shelf')
             })
     };
