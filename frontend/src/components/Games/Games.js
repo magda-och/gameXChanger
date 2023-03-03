@@ -42,7 +42,6 @@ function Games(props) {
                         alert("You dont lent game")
                     }
                     window.location.replace('/profile/shelf');
-
                 });
         }else{
             GameAPI.update(id, status, 1)
