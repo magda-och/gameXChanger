@@ -98,7 +98,7 @@ export default function Login() {
                             <div className="mt-4">
                                 <p className="mb-9 text-center">
                                     Don't you have an account yet? Register!{' '}
-                                    <NavLink to="/user/register" className="text-primary fw-bold">
+                                    <NavLink to="/register" className="text-primary fw-bold">
                                         Sign In
                                     </NavLink>
                                 </p>

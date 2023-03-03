@@ -30,7 +30,7 @@ export default function Registration() {
         UserAPI.create(newUser)
             .then(() => {
                 alert("User created!")
-                window.location.replace('/profile')
+                window.location.replace('/login')
             })
     };
 

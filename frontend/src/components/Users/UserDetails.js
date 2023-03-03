@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import {UserAPI} from "../../api/UserAPI";
 import AuthenticationService from "../../services/AuthenticationService";
 
-export let currentId;
+export let currentId
 
-function UserDetailsPage({currentUser}) {
+function UserDetailsPage() {
 
     const [user, setUser] = useState([])
 
@@ -20,6 +20,7 @@ function UserDetailsPage({currentUser}) {
     }, []);
 
     currentId = user.id
+    sessionStorage.setItem("id", user.id);
 
     return (
         <d>

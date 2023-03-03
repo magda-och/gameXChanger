@@ -1,17 +1,24 @@
 import React, {useState} from 'react';
 import {GameAPI} from "../../api/GameAPI";
-import {Link} from "react-router-dom";
 import {currentId} from "../Users/UserDetails";
 
 
 function Games(props) {
+    const [games, setGames] = useState([])
 
     const removeGame = async(id) => {
         try {
             const res = await GameAPI.delete(id)
             console.log('Item successfully deleted.')
             alert("Game successfully deleted.")
-            window.location.replace('/profile/shelf')
+
+            GameAPI.getMyGames(currentId).then(
+                function (response) {
+                    setGames(response.data)
+                }
+            ).catch(function (error) {
+                console.error(`Error: ${error}`)
+            });
             return res;
         } catch (error) {
             alert(error)

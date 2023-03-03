@@ -3,7 +3,7 @@ import {api} from "../api/configurationAPI";
 
 const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 const HEADER_SESSION= 'Authorization:'
-
+/*const USER_ID_SESSION= 'id'*/
 
 class AuthenticationService {
 
@@ -39,6 +39,12 @@ class AuthenticationService {
         if (user === null) return ''
         return user
     }
+
+  /*  getLoggedInUserID() {
+        let id = sessionStorage.getItem(USER_ID_SESSION)
+        if (id === null) return ''
+        return id
+    }*/
 
     setupAxiosInterceptors(token) {
         api.interceptors.request.use(

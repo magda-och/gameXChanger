@@ -38,7 +38,7 @@ function Header() {
 
                         <ul className="navbar-nav ms-auto d-flex flex-row">
                             {!isUserLoggedIn && <li className="nav-item active">
-                                <Link className="nav-link" to={"/user/login"}>Log in</Link>
+                                <Link className="nav-link" to={"/login"}>Log in</Link>
                             </li>}
                             {isUserLoggedIn && <li className="nav-item active">
                                 <Link className="nav-link" to={"/"} onClick={AuthenticationService.logout} >Log out</Link>

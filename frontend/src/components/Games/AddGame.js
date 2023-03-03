@@ -1,7 +1,6 @@
 import {GameAPI} from "../../api/GameAPI";
 import {useForm} from "react-hook-form";
 import React, {useState} from "react";
-import {currentId} from "../Users/UserDetails";
 
 export default function AddGame() {
 
@@ -9,6 +8,7 @@ export default function AddGame() {
         useForm({mode: "onBlur"});
 
     const [showForm, setShowForm] = useState(undefined);
+    const [games, setGames] = useState([])
     const openForm = () => {
         setShowForm(true);
     }
@@ -24,15 +24,16 @@ export default function AddGame() {
             gameStatus: "AVAILABLE",
             visibility: "PRIVATE",
         }
-        GameAPI.create(currentId, newGame)
+        GameAPI.create(sessionStorage.getItem("id"), newGame)
             .then(() => {
                 alert("Game successfully added to shelf!")
-                //var lastId = "#" + currentId;
-                //window.location.replace("/profile/shelf" + lastId);
-                //window.location.reload();
-                window.history.pushState("/profile/shelf", "", "/profile/shelf");
-                window.location.reload();
-                //window.location.replace('/profile/shelf')
+                GameAPI.getMyGames(sessionStorage.getItem("id")).then(
+                    function (response) {
+                        setGames(response.data)
+                    }
+                ).catch(function (error) {
+                    console.error(`Error: ${error}`)
+                });
             })
     };
 
