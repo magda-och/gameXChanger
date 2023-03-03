@@ -50,7 +50,6 @@ function show(){
             <table className="table table-striped">
                 <thead>
                 <tr>
-                    <td> Game Id</td>
                     <td> Game Name</td>
                     <td> Game Status</td>
                 </tr>
@@ -59,7 +58,6 @@ function show(){
                 {
                     friendGames.map(game => {
                             return <tr key={game.id}>
-                                <td> {game.id}</td>
                                 <td>{game.name}</td>
                                 <td> {game.gameStatus}</td>
                             </tr>

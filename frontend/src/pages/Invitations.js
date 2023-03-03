@@ -79,7 +79,6 @@ class Invitations extends React.Component{
                 <table className="table table-striped">
                     <thead>
                     <tr>
-                        <td> Invitation id</td>
                         <td> Invitation state</td>
                         <td> Invitation from</td>
                         <td> Invitation to</td>
@@ -93,7 +92,6 @@ class Invitations extends React.Component{
                             invitation => {
                                 const visibility = invitation.requestStatus === "WAITING" ? classes.visible : classes.hidden
                                 return <tr key={invitation.requestFriendId}>
-                                    <td>{invitation.requestFriendId}</td>
                                     <td>{invitation.requestStatus}</td>
                                     <td>{invitation.fromUserId.firstName+ " "+ invitation.fromUserId.lastName}</td>
                                     <td>{invitation.toUserId.firstName+ " "+ invitation.toUserId.lastName}</td>
@@ -112,7 +110,6 @@ class Invitations extends React.Component{
                     <table className="table table-striped">
                         <thead>
                         <tr>
-                            <td> Invitation id</td>
                             <td> Invitation state</td>
                             <td> Invitation from</td>
                             <td> Invitation to</td>
@@ -124,7 +121,6 @@ class Invitations extends React.Component{
                             this.state.sendInvitations.map(
                                 invitation => {
                                     return <tr key={invitation.id}>
-                                        <td>{invitation.requestFriendId}</td>
                                         <td>{invitation.requestStatus}</td>
                                         <td>{invitation.fromUserId.firstName+ " " + invitation.fromUserId.lastName}</td>
                                         <td>{invitation.toUserId.firstName+ " "+ invitation.toUserId.lastName}</td>

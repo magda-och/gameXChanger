@@ -68,7 +68,7 @@ function Friends() {
                                                 state: { friends: friend }
                                             }}
                                         >
-                                            <button style={{background:"rgb(134, 58, 111)", border:"none"}} className="btn btn-outline-secondary">Show games</button>
+                                            <button style={{background:"rgb(134, 58, 111)", border:"none", color:"white"}} className="btn btn-outline-secondary">Show games</button>
                                         </Link>
                                     </td>
                                     <td>
