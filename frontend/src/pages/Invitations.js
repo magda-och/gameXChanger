@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Invitations.module.css"
 import {InvitationAPI} from "../api/InvitationAPI";
+import {currentId} from "../components/Users/UserDetails";
 
 class Invitations extends React.Component{
     constructor(props) {
@@ -12,7 +13,7 @@ class Invitations extends React.Component{
     }
 
     componentDidMount() {
-        InvitationAPI.getSend(2).then(
+        InvitationAPI.getSend(currentId).then(
             (response) => {
                 //this.state.invitations = response.data
                 this.setState({ sendInvitations: [{
@@ -26,7 +27,7 @@ class Invitations extends React.Component{
                 //console.log(this.state)
         });
 
-        InvitationAPI.getReceived(2).then(
+        InvitationAPI.getReceived(currentId).then(
             (response) => {
                 this.setState({ receivedInvitations: [{
                         requestFriendId: 1,
@@ -59,11 +60,11 @@ class Invitations extends React.Component{
                 } else {
                     alert("You reject user")
                 }
-                InvitationAPI.getReceived(2).then(
+                InvitationAPI.getReceived(currentId).then(
                     (response) => {
                         this.setState({ receivedInvitations:response.data});
                     });
-                InvitationAPI.getSend(2).then(
+                InvitationAPI.getSend(currentId).then(
                     (response) => {
                         this.setState({ sendInvitations:response.data});
                     });
@@ -78,7 +79,6 @@ class Invitations extends React.Component{
                 <table className="table table-striped">
                     <thead>
                     <tr>
-                        <td> Invitation id</td>
                         <td> Invitation state</td>
                         <td> Invitation from</td>
                         <td> Invitation to</td>
@@ -92,13 +92,12 @@ class Invitations extends React.Component{
                             invitation => {
                                 const visibility = invitation.requestStatus === "WAITING" ? classes.visible : classes.hidden
                                 return <tr key={invitation.requestFriendId}>
-                                    <td>{invitation.requestFriendId}</td>
                                     <td>{invitation.requestStatus}</td>
                                     <td>{invitation.fromUserId.firstName+ " "+ invitation.fromUserId.lastName}</td>
                                     <td>{invitation.toUserId.firstName+ " "+ invitation.toUserId.lastName}</td>
                                     <td>{invitation.message}</td>
-                                    <td><button className={"btn btn-success " + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"ACCEPTED", e)}>Accept</button></td>
-                                    <td><button className={"btn btn-danger " + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"REJECTED", e)}>Reject</button></td>
+                                    <td><button style={{background:"rgb(134, 58, 111)", border:"none", color:"white"}} className={"btn btn-success " + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"ACCEPTED", e)}>Accept</button></td>
+                                    <td><button style={{background:"rgb(151, 92, 141)", border:"none", color:"white"}} className={"btn btn-danger " + visibility} onClick={(e) => this.updateInvitationStatus(invitation.requestFriendId,"REJECTED", e)}>Reject</button></td>
                                 </tr>
                             }
                         )
@@ -111,7 +110,6 @@ class Invitations extends React.Component{
                     <table className="table table-striped">
                         <thead>
                         <tr>
-                            <td> Invitation id</td>
                             <td> Invitation state</td>
                             <td> Invitation from</td>
                             <td> Invitation to</td>
@@ -123,12 +121,11 @@ class Invitations extends React.Component{
                             this.state.sendInvitations.map(
                                 invitation => {
                                     return <tr key={invitation.id}>
-                                        <td>{invitation.requestFriendId}</td>
                                         <td>{invitation.requestStatus}</td>
                                         <td>{invitation.fromUserId.firstName+ " " + invitation.fromUserId.lastName}</td>
                                         <td>{invitation.toUserId.firstName+ " "+ invitation.toUserId.lastName}</td>
                                         <td>{invitation.message}</td>
-                                        <td><button className="btn btn-secondary" onClick={(e) => this.cancelInvitation(invitation.requestFriendId, e)}>Cancel</button></td>
+                                        <td><button style={{background:"rgb(151, 92, 141)", border:"none", color:"white"}}  className="btn btn-secondary" onClick={(e) => this.cancelInvitation(invitation.requestFriendId, e)}>Cancel</button></td>
                                     </tr>
                                 }
                             )

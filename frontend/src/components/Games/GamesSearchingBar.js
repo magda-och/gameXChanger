@@ -2,6 +2,7 @@ import React, { useState} from "react";
 import {GameAPI} from "../../api/GameAPI";
 import classes from "../../pages/Shelf.module.css"
 import "../../pages/Shelf.module.css"
+import {currentId} from "../Users/UserDetails";
 
 export default function GamesSearchingBar() {
     const [state, setstate] = useState({
@@ -11,7 +12,7 @@ export default function GamesSearchingBar() {
 
     let games;
 
-   GameAPI.getMyFriendsGames(2).then(
+   GameAPI.getMyFriendsGames(currentId).then(
         response => {
             const data = response.data;
             games = Object.values(data)

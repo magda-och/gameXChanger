@@ -1,5 +1,4 @@
 package com.gt.gamexchanger.service;
-
 import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.mapper.DtoMapper;

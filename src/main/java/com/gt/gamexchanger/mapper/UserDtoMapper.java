@@ -12,10 +12,9 @@ public class UserDtoMapper implements DtoMapper<UserDto, User> {
         if (user == null) {
             return null;
         }
-        UserDto userDto = new UserDto(user.getId(), user.getFirstName(), user.getLastName(),
-                user.getEmail(), user.getPassword(), user.getCity(), user.getPhoneNumber());
 
-        return userDto;
+        return new UserDto(user.getId(), user.getFirstName(), user.getLastName(),
+                user.getEmail(), user.getPassword(), user.getCity(), user.getPhoneNumber(), user.getRole());
     }
 
     @Override

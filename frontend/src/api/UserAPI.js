@@ -1,23 +1,26 @@
 import {api} from "./configurationAPI";
+import AuthenticationService from "../services/AuthenticationService";
 
 
 export const UserAPI = {
     getAll: function() {
         return api.request({
             method: "GET",
-            url: `/user`
+            url: `/user`,
+            headers:{'Authorization': AuthenticationService.getHeader()}
         });
     },
     getById: function(userId) {
         return api.request({
             method: "GET",
-            url: `/user/${userId}`
+            url: `/user/${userId}`,
+            headers:{'Authorization': AuthenticationService.getHeader()}
         });
     },
     create: function(user) {
         return api.request({
             method: "POST",
-            url: `/user`,
+            url: `/user/auth/register`,
             data: user
         });
     },
@@ -26,6 +29,7 @@ export const UserAPI = {
             method: "PUT",
             url: `/user/${userId}`,
             data: user,
+            headers:{'Authorization': AuthenticationService.getHeader()}
         });
     },
 
@@ -33,6 +37,7 @@ export const UserAPI = {
         return api.request({
             method: "DELETE",
             url: `/user/${userId}`,
+            headers:{'Authorization': AuthenticationService.getHeader()}
         });
     },
 
@@ -40,14 +45,22 @@ export const UserAPI = {
         return api.request({
             method: "GET",
             url: `/user/notfriends/${userId}`,
-            mode: 'cors',
-            headers:{
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": api.baseURL,
-                "Access-Control-Allow-Methods": "GET"
-            }
+            headers:{'Authorization': AuthenticationService.getHeader()}
+        })
+    },
+    login: function (loginRequest){
+        return api.request({
+            method: "POST",
+            url: `/user/auth/login`,
+            data: loginRequest
         });
     },
-
+    getByEmail: function(userEmail) {
+        return api.request({
+            method: "GET",
+            url: `/user/me/${userEmail}`,
+            headers:{'Authorization': AuthenticationService.getHeader()}
+        });
+    }
 
 }

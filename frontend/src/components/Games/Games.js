@@ -1,73 +1,81 @@
 import React, {useState} from 'react';
 import {GameAPI} from "../../api/GameAPI";
-import {Link} from "react-router-dom";
+import {currentId} from "../Users/UserDetails";
+import AuthenticationService from "../../services/AuthenticationService";
 
 
 function Games(props) {
+    const [games, setGames] = useState([])
 
     const removeGame = async(id) => {
         try {
             const res = await GameAPI.delete(id)
             console.log('Item successfully deleted.')
             alert("Game successfully deleted.")
-            window.location.replace('/profile/shelf')
+
+            GameAPI.getMyGames(currentId).then(
+                function (response) {
+                    setGames(response.data)
+                }
+            ).catch(function (error) {
+                console.error(`Error: ${error}`)
+            });
             return res;
         } catch (error) {
             alert(error)
         }
     }
-    function printButtonToLent(id,status){
+    function printButtonToLent(id_,status){
+        var id = id_
         if(status==="AVAILABLE"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateInvitationStatus(id,"LENT", e)}>LENT</button>
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"LENT", e)}>LENT</button>
             )
         }else{
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateInvitationStatus(id,"AVAILABLE", e)}>RETURN</button>
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>RETURNED</button>
             )
         }
     }
-    function updateInvitationStatus(id, status, e){
+    function updateGameStatus(id, status, e){
         console.log("cos");
         if(status==="AVAILABLE") {
-            GameAPI.update(id, status, 1)
+            GameAPI.update(id, status, currentId)
                 .then(res => {
                     console.log("cos2")
                     console.log(res);
                     if (status === "LENT") {
-                        alert("You lent game!")
+                        alert("Game is return!")
                     } else {
-                        alert("You dont lent game")
+                       /* alert("You dont lent game")*/
                     }
+                    GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
+                        function (response) {
+                            setGames(response.data)
+                        }
+                    ).catch(function (error) {
+                        console.error(`Error: ${error}`)
+                    });
                     window.location.replace('/profile/shelf');
-                    /*GameAPI.getMyGames(2).then(
-                        (response) => {
-                            this.setState({ ga:response.data});
-                        });
-                    InvitationAPI.getSend(2).then(
-                        (response) => {
-                            this.setState({ sendInvitations:response.data});
-                        });*/
                 });
         }else{
-            GameAPI.update(id, status, 2)
+            GameAPI.update(id, status, currentId)
                 .then(res => {
-                    console.log("cos2")
+                    console.log("cos3")
                     console.log(res);
                     if (status === "LENT") {
-                        alert("You lent game!")
+                        alert("Game is lent!")
                     } else {
-                        alert("You dont lent game")
+                        /*alert("You dont return game")*/
                     }
+                    GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
+                        function (response) {
+                            setGames(response.data)
+                        }
+                    ).catch(function (error) {
+                        console.error(`Error: ${error}`)
+                    });
                     window.location.replace('/profile/shelf');
-                    /*GameAPI.getMyGames(2).then(
-                        (response) => {
-                            this.setState({ ga:response.data});
-                        });
-                    InvitationAPI.getSend(2).then(
-                        (response) => {
-                            this.setState({ sendInvitations:response.data});
-                        });*/
                 });
         }
     }
@@ -110,8 +118,9 @@ function Games(props) {
     const displayGames = (props) => {
         const {games} = props;
 
+
         return (
-            <div>
+            <div style={{resize:"both", overflow:"auto"}}>
                 <h2 className="text-center">My Games</h2>
                 <div>
                         <div >
@@ -144,3 +153,11 @@ function Games(props) {
 }
 
 export default Games;
+/*GameAPI.getMyGames(2).then(
+            (response) => {
+                this.setState({ ga:response.data});
+            });
+        InvitationAPI.getSend(2).then(
+            (response) => {
+                this.setState({ sendInvitations:response.data});
+            });*/

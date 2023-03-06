@@ -1,14 +1,44 @@
 import React, {useState} from 'react';
-import Registration from "./Registration";
 import {Helmet} from "react-helmet";
 import "./Login.css"
 import {NavLink} from "react-router-dom";
+import AuthenticationService from "../services/AuthenticationService";
+import {UserAPI} from "../api/UserAPI";
+import {useForm} from "react-hook-form";
 
 
 export default function Login() {
+    const [token, setToken] = useState("");
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const [errorMessages, setErrorMessages] = useState({});
-    const [isSubmitted, setIsSubmitted] = useState(false);
     const [togglePassword, setTogglePassword] = useState(false);
+
+    const {handleSubmit, formState: {errors}} =
+        useForm({mode: "onBlur"});
+
+    const loginRequest = {
+        email: email,
+        password: password,
+    };
+
+    function loginClicked() {
+
+        try {
+            UserAPI.login(loginRequest)
+                .then((response) => {
+                    setToken(response.data.token)
+                    AuthenticationService.registerJwtSuccessfulLogin(email, response.data.token)
+                    window.location.replace('/profile')
+                }).catch(() => {
+                    alert("Wrong password!")
+            })
+        } catch (error) {
+            alert(error);
+            console.error(error);
+        }
+    }
+
 
     const renderErrorMessage = (name) =>
         name === errorMessages.name && (
@@ -21,15 +51,12 @@ export default function Login() {
                 <Helmet>
                     <title> GameXChanger | Login</title>
                 </Helmet>
-                <div>
-                    <h1></h1>
-                </div>
             </div>
             <div className="container mt-5 p-4">
                 <div className="row">
                     <div className="col-md-4 offset-md-3 border rounded pb-15 mt-2 shadow">
                         <h2 className="text-center h-25 m-2"> Login! </h2>
-                        <form>
+                        <form onSubmit={handleSubmit(loginClicked)} className="login-form" id="login-form">
                             <div className="form-label mt-1">
                                 <label> Email address </label>
                                 <input
@@ -37,7 +64,9 @@ export default function Login() {
                                     type="email"
                                     placeholder="Enter your email address"
                                     name="email" required
-                                    id="email" />
+                                    id="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}/>
                                 {renderErrorMessage("email")}
                             </div>
                             <div className="form-label">
@@ -56,6 +85,8 @@ export default function Login() {
                                         placeholder="Enter your password"
                                         name="password"
                                         id="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
                                     />
                                     {renderErrorMessage("pass")}
                                 </div>
@@ -66,7 +97,7 @@ export default function Login() {
                             <div className="mt-4">
                                 <p className="mb-9 text-center">
                                     Don't you have an account yet? Register!{' '}
-                                    <NavLink to="/user/register" className="text-primary fw-bold">
+                                    <NavLink to="/register" className="text-primary fw-bold">
                                         Sign In
                                     </NavLink>
                                 </p>
@@ -76,4 +107,5 @@ export default function Login() {
                 </div>
             </div>
         </div>
-            )};
+    )
+}

@@ -3,6 +3,7 @@ import {UserAPI} from "../../api/UserAPI";
 import {InvitationAPI} from "../../api/InvitationAPI";
 import "./Friends.module.css"
 import classes from "./Friends.module.css";
+import {currentId} from "../Users/UserDetails";
 
 export default function FriendsSearchingBar() {
     const [state, setstate] = useState({
@@ -12,7 +13,7 @@ export default function FriendsSearchingBar() {
 
     let users;
 
-    UserAPI.getNotFriends(2).then(
+    UserAPI.getNotFriends(currentId).then(
         response => {
             const data = response.data;
             users = Object.values(data)
@@ -71,7 +72,7 @@ export default function FriendsSearchingBar() {
                                 <td id="1"> {user.lastName}&nbsp;&nbsp;</td>
                                 <td id="1">
                                     <button id="invitation-btn" className="btn btn-outline-secondary"
-                                            onClick={() => addInvitation(2, user.id)}>Send invitation
+                                            onClick={() => addInvitation(currentId, user.id)}>Send invitation
                                     </button>
                                 </td>
                             </li>

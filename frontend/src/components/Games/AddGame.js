@@ -1,13 +1,18 @@
 import {GameAPI} from "../../api/GameAPI";
 import {useForm} from "react-hook-form";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {currentId} from "../Users/UserDetails";
+import {useNavigate} from "react-router-dom";
+import {UserAPI} from "../../api/UserAPI";
 
 export default function AddGame() {
-
-    const {register, watch, handleSubmit, getValues, formState: {errors}} =
+    const[user, setUser]=useState(null)
+    const navigate = useNavigate();
+    const {register, handleSubmit, formState: {errors}} =
         useForm({mode: "onBlur"});
 
     const [showForm, setShowForm] = useState(undefined);
+    const [games, setGames] = useState([])
     const openForm = () => {
         setShowForm(true);
     }
@@ -15,6 +20,16 @@ export default function AddGame() {
     const closeForm = () =>{
         setShowForm(false)
     }
+ function getUser(){
+       return  UserAPI.getById(currentId).then(
+            (response)=>{
+                setUser(Object.values(response.data))
+            }
+        ).catch(function (error){
+            console.error(`Error: ${error}`)
+        });
+    }
+
 
     const onSubmit = data => {
         const newGame = {
@@ -22,19 +37,30 @@ export default function AddGame() {
             description: "fajna gra",
             gameStatus: "AVAILABLE",
             visibility: "PRIVATE",
+            owner: getUser()
         }
-        GameAPI.create(2, newGame)
+        GameAPI.create(currentId, newGame)
             .then(() => {
                 alert("Game successfully added to shelf!")
-                window.location.replace('/profile/shelf')
+                //var lastId = "#" + currentId;
+                //window.location.replace("/profile/shelf" + lastId);
+                //window.location.reload();
+
+                GameAPI.getMyGames(currentId).then(
+                    function (response) {
+                        setGames(response.data)
+                    }
+                ).catch(function (error) {
+                    console.error(`Error: ${error}`)
+                });
             })
     };
 
     return (
         <div className="text-center m-4" id="myForm">
-            <div className="row">
-                <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-                    <button type="button" className="btn btn-outline-secondary" onClick={openForm}> Add game</button>
+            <div className="row" >
+                <div style={{background:"rgb(255, 173, 188)"}} className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
+                    <button style={{background:"rgb(134, 58, 111)", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={openForm}> Add game</button>
 
                     {showForm && (
                         <form className="add-game" id="add-game" onSubmit={handleSubmit(onSubmit)}>
@@ -53,11 +79,11 @@ export default function AddGame() {
                                 />
                                 {errors.name?.type === 'required' && <p role="alert">Game name is required</p>}
                             </div>
-                            <button type="submit" className="btn btn-secondary">
+                            <button style={{background:"rgb(134, 58, 111)", border:"none"}} type="submit" className="btn btn-secondary">
                                 Add
                             </button>
                               <span> </span>
-                            <button type="button" className="btn btn-outline-secondary" onClick={closeForm}>Close</button>
+                            <button style={{background:"rgb(151, 92, 141)", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={closeForm}>Close</button>
                         </form>
                     )}
                 </div>

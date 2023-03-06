@@ -2,6 +2,7 @@ import {UserAPI} from "../../api/UserAPI";
 import React, {useEffect, useState} from "react";
 import {InvitationAPI} from "../../api/InvitationAPI";
 import classes from "./UserList.module.css";
+import {currentId} from "./UserDetails";
 
 function UserList() {
 
@@ -64,7 +65,7 @@ function UserList() {
                                         <td>{user.city}</td>
                                         <td>
                                             <button className={"btn btn-outline-secondary " + visibility}
-                                                    onClick={(e) => addInvitation(2, user.id)}>Invite
+                                                    onClick={(e) => addInvitation(currentId, user.id)}>Invite
                                             </button>
                                         </td>
                                     </tr>)

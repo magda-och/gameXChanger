@@ -3,12 +3,13 @@ import {FriendAPI} from "../../api/FriendAPI";
 import {Link} from "react-router-dom";
 import classes from './Friends.module.css'
 import FriendsSearchingBar from "./FriendsSearchingBar";
+import {currentId} from "../Users/UserDetails"
 
 function Friends() {
 
-    const [friends, setFriends] = useState([])
+    const [friends, setFriends] = useState([]);
 
-    const userId = 2;
+    const userId = currentId;
 
     useEffect(() => {
         FriendAPI.getAllFriends(userId).then(
@@ -18,11 +19,11 @@ function Friends() {
         ).catch(function (error) {
             console.error(`Error: ${error}`)
         });
-    }, []);
+    }, [userId]);
 
     const removeFriend = async (id) => {
         try {
-            const res = await FriendAPI.delete(2, id)
+            const res = await FriendAPI.delete(userId, id)
             console.log('Item successfully deleted.')
             alert("Friend successfully deleted.")
             window.location.replace('/profile/friends')
@@ -47,7 +48,6 @@ function Friends() {
                 <table className="table table-striped">
                     <thead>
                     <tr>
-                        <td> Friend id</td>
                         <td> Friend first name</td>
                         <td> Friend last name</td>
                         <td> Friend city</td>
@@ -58,7 +58,6 @@ function Friends() {
                         friends.map(
                             friend => {
                                 return <tr key={friend.id}>
-                                    <td>{friend.id}</td>
                                     <td>{friend.firstName}</td>
                                     <td>{friend.lastName}</td>
                                     <td>{friend.city}</td>
@@ -69,11 +68,11 @@ function Friends() {
                                                 state: { friends: friend }
                                             }}
                                         >
-                                            <button className="btn btn-outline-secondary">Show games</button>
+                                            <button style={{background:"rgb(134, 58, 111)", border:"none", color:"white"}} className="btn btn-outline-secondary">Show games</button>
                                         </Link>
                                     </td>
                                     <td>
-                                        <button className="btn btn-outline-secondary"
+                                        <button style={{background:"rgb(151, 92, 141)", border:"none", color:"white"}} className="btn btn-outline-secondary"
                                                 onClick={() => removeFriend(friend.id)}>Delete
                                         </button>
                                     </td>

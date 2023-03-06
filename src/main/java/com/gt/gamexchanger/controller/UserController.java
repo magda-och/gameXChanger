@@ -1,11 +1,18 @@
 package com.gt.gamexchanger.controller;
-
 import com.gt.gamexchanger.dto.UserDto;
+import com.gt.gamexchanger.enums.Role;
+import com.gt.gamexchanger.payload.request.LoginRequest;
+import com.gt.gamexchanger.payload.response.AuthenticationResponse;
+import com.gt.gamexchanger.security.services.JwtService;
 import com.gt.gamexchanger.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,15 +21,21 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    // todo add user- only with unique email
     private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    @Autowired
-    public UserController(UserService userService) {
+/*    @Autowired
+    public UserController(UserService userService, AuthenticationManager authenticationManager, JwtService jwtService, PasswordEncoder passwordEncoder) {
+        this.authenticationManager = authenticationManager;
         this.userService = userService;
-    }
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
+    }*/
 
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping
@@ -31,10 +44,29 @@ public class UserController {
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
-    @PostMapping
-    public ResponseEntity<?> addUser(@RequestBody UserDto userDto) {
-        userService.addUser(userDto);
-        return ResponseEntity.ok("User created!");
+    @PostMapping("/auth/register")
+    public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody UserDto signUpRequest) {
+
+        if (userService.findUserByEmail(signUpRequest.getEmail()).isPresent()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new AuthenticationResponse("Error: Email is already in use!"));
+        }
+
+        UserDto userToRegister = new UserDto(
+                signUpRequest.getFirstName(),
+                signUpRequest.getLastName(),
+                signUpRequest.getEmail(),
+                passwordEncoder.encode(signUpRequest.getPassword()),
+                signUpRequest.getCity(),
+                signUpRequest.getPhoneNumber(),
+                Role.USER);
+
+        var jwtToken = jwtService.generateToken(userToRegister);
+        userService.addUser(userToRegister);
+        System.out.println(AuthenticationResponse.builder().token(jwtToken).build().getToken());
+
+        return ResponseEntity.ok(AuthenticationResponse.builder().token(jwtToken).build());
     }
 
     @ResponseStatus(code = HttpStatus.OK)
@@ -66,16 +98,21 @@ public class UserController {
         return ResponseEntity.ok("Password changed!");
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserDto userDto) {
-        Optional<UserDto> user = userService.findUserByEmail(userDto.getEmail());
+    @PostMapping("/auth/login") //do authentication controller
+    public ResponseEntity<AuthenticationResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getEmail(),
+                        loginRequest.getPassword()
+                )
+        );
+        var user = userService.findUserByEmail(loginRequest.getEmail())
+                .orElseThrow();
 
-        if (user.isEmpty() || wrongPassword(user.get(), userDto)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        return ResponseEntity.ok().build();
+        var jwtToken = jwtService.generateToken(user);
+        return ResponseEntity.ok(AuthenticationResponse.builder().token(jwtToken).build());
     }
-    @GetMapping("/friends/{userId}")
+    @GetMapping("/friends/{userId}") //id/friends
     public ResponseEntity<List<UserDto>> getFriends(@PathVariable("userId") Long userId){
         List<UserDto> myFriends = userService.getMyFriends(userId);
         return new ResponseEntity<>(myFriends, HttpStatus.OK);
@@ -83,7 +120,7 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("userId") Long userId){
         Optional<UserDto> user = userService.getUserById(userId);
-        return new ResponseEntity<>(user.get(), HttpStatus.OK);
+        return new ResponseEntity<>(user.orElseThrow(), HttpStatus.OK);
     }
 
     @DeleteMapping("friends/{userId}/{friendId}")
@@ -98,8 +135,10 @@ public class UserController {
         }
     }
 
-    private boolean wrongPassword(UserDto user, UserDto userDto) {
-        return !user.getPassword().equals(userDto.getPassword());
+    @GetMapping("/me/{userEmail}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable String userEmail){
+        Optional<UserDto> user = userService.findUserByEmail(userEmail);
+        return new ResponseEntity<>(user.orElseThrow(), HttpStatus.OK);
     }
 
     @GetMapping("/notfriends/{userId}")

@@ -1,11 +1,14 @@
 package com.gt.gamexchanger.service;
 
+import com.gt.gamexchanger.enums.Role;
 import com.gt.gamexchanger.exception.NoDataFoundException;
 import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.dto.UserDto;
+
 import com.gt.gamexchanger.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,18 +18,25 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final DtoMapper<UserDto, User> dtoMapper;
 
-    public UserService(UserRepository userRepository, DtoMapper<UserDto, User> dtoMapper) {
+/*    public UserService(UserRepository userRepository, DtoMapper<UserDto, User> dtoMapper) {
         this.userRepository = userRepository;
         this.dtoMapper = dtoMapper;
-    }
+    }*/
 
     public UserDto addUser(UserDto userDto) {
+
         if (areFieldsInRegistrationFilledCorrectly(userDto)) {
             User user = dtoMapper.toDomainObject(userDto);
+
+           if (user.getRole() == null) {
+               user.setRole(Role.USER);
+            }
+
             userRepository.save(user);
             return dtoMapper.toDto(user);
         } else {
@@ -35,11 +45,8 @@ public class UserService {
     }
 
     public boolean areFieldsInRegistrationFilledCorrectly(UserDto userDto) {
-        if ((userDto.getFirstName() == null) || (userDto.getLastName() == null)
-                || (userDto.getEmail() == null) || (userDto.getPassword() == null)) {
-            return false;
-        }
-        return true;
+        return (userDto.getFirstName() != null) && (userDto.getLastName() != null)
+                && (userDto.getEmail() != null) && (userDto.getPassword() != null);
     }
 
     public List<UserDto> getAllUsers() {
