@@ -3,8 +3,8 @@ import {Helmet} from "react-helmet";
 import "./Login.css"
 import {NavLink} from "react-router-dom";
 import AuthenticationService from "../services/AuthenticationService";
-import {UserAPI} from "../api/UserAPI";
 import {useForm} from "react-hook-form";
+import {AuthAPI} from "../api/AuthAPI";
 
 
 export default function Login() {
@@ -25,7 +25,7 @@ export default function Login() {
     function loginClicked() {
 
         try {
-            UserAPI.login(loginRequest)
+            AuthAPI.login(loginRequest)
                 .then((response) => {
                     setToken(response.data.token)
                     AuthenticationService.registerJwtSuccessfulLogin(email, response.data.token)

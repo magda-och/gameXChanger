@@ -17,13 +17,7 @@ export const UserAPI = {
             headers:{'Authorization': AuthenticationService.getHeader()}
         });
     },
-    create: function(user) {
-        return api.request({
-            method: "POST",
-            url: `/user/auth/register`,
-            data: user
-        });
-    },
+
     update: function(userId, user) {
         return api.request({
             method: "PUT",
@@ -48,13 +42,7 @@ export const UserAPI = {
             headers:{'Authorization': AuthenticationService.getHeader()}
         })
     },
-    login: function (loginRequest){
-        return api.request({
-            method: "POST",
-            url: `/user/auth/login`,
-            data: loginRequest
-        });
-    },
+
     getByEmail: function(userEmail) {
         return api.request({
             method: "GET",

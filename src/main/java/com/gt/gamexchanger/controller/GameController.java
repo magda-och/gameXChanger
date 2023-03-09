@@ -2,9 +2,9 @@ package com.gt.gamexchanger.controller;
 
 import com.gt.gamexchanger.dto.GameDto;
 import com.gt.gamexchanger.enums.GameStatus;
-import com.gt.gamexchanger.enums.RequestStatus;
 import com.gt.gamexchanger.model.Game;
 import com.gt.gamexchanger.service.GameService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +14,11 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/games")
+@RequiredArgsConstructor
 public class GameController {
 
     private final GameService gameService;
 
-    public GameController(GameService gameService) {
-        this.gameService = gameService;
-    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{ownerId}")

@@ -2,9 +2,9 @@ import React from "react";
 import {useState} from "react";
 import {useForm} from 'react-hook-form';
 import "./Registration.css";
-import {UserAPI} from "../api/UserAPI";
 import {Helmet} from "react-helmet";
 import {NavLink} from "react-router-dom";
+import {AuthAPI} from "../api/AuthAPI";
 
 export default function Registration() {
 
@@ -27,7 +27,7 @@ export default function Registration() {
             city: modifiedCity,
             phoneNumber: data.phoneNumber,
         }
-        UserAPI.create(newUser)
+        AuthAPI.create(newUser)
             .then(() => {
                 alert("User created!")
                 window.location.replace('/login')
