@@ -38,11 +38,11 @@ public class UserControllerTest {
     @MockBean
     private UserService userService;
     @MockBean
-    private AuthenticationManager authenticationManager;
+/*    private AuthenticationManager authenticationManager;
     @MockBean
     private PasswordEncoder passwordEncoder;
     @MockBean
-    private JwtService jwtService;
+    private JwtService jwtService;*/
     private UnderTest underTest;
     private User testedUser;
     private UserDto testedUserDto;
@@ -97,12 +97,12 @@ public class UserControllerTest {
 
     }
 
-    @Test
+/*    @Test
     public void addUser_userAdded_shouldBeSaved() {
         underTest.registerUser(testedUserDto);
 
         verify(userService, times(1)).addUser(testedUserDto);
-    }
+    }*/
 
     @Test
     public void getAllUsers() {
@@ -146,7 +146,7 @@ public class UserControllerTest {
 
     class UnderTest extends UserController {
         public UnderTest() {
-            super(userService, authenticationManager, passwordEncoder, jwtService);
+            super(userService);
         }
     }
 }

@@ -12,7 +12,7 @@ class AuthenticationService {
     registerJwtSuccessfulLogin(email, token) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, email)
         sessionStorage.setItem(HEADER_SESSION, this.createJWTToken(token))
-        this.setupAxiosInterceptors(this.createJWTToken(token))
+      /*  this.setupAxiosInterceptors(this.createJWTToken(token))*/
     }
 
     createJWTToken(token) {
@@ -41,7 +41,7 @@ class AuthenticationService {
         return user
     }
 
-    setUserId(){
+ /*   setUserId(){
         UserAPI.getByEmail(this.getLoggedInUserName()).then(
             function (response) {
                 sessionStorage.setItem(USER_ID_SESSION, response.data)
@@ -49,7 +49,7 @@ class AuthenticationService {
         ).catch(function (error) {
             console.error(`Error: ${error}`)
         });
-    }
+    }*/
 
     getLoggedInUserID() {
         let id = sessionStorage.getItem(USER_ID_SESSION)
@@ -57,7 +57,7 @@ class AuthenticationService {
         return id
     }
 
-    setupAxiosInterceptors(token) {
+   /* setupAxiosInterceptors(token) {
         api.interceptors.request.use(
             (config) => {
                 if (this.isUserLoggedIn()) {
@@ -66,7 +66,7 @@ class AuthenticationService {
                 return config
             }
         )
-    }
+    }*/
 }
 
 export default new AuthenticationService()

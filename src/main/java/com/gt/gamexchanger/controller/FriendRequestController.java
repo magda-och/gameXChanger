@@ -3,7 +3,7 @@ package com.gt.gamexchanger.controller;
 import com.gt.gamexchanger.dto.RequestFriendDto;
 import com.gt.gamexchanger.enums.RequestStatus;
 import com.gt.gamexchanger.service.FriendRequestService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +12,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/friends/requests")
+@RequiredArgsConstructor
 public class FriendRequestController {
+
     private final FriendRequestService friendRequestService;
 
-    @Autowired
-    public FriendRequestController(FriendRequestService friendRequestService) {
-        this.friendRequestService = friendRequestService;
-    }
     @GetMapping
     public List<RequestFriendDto> getAllRequests() {
         return  friendRequestService.getAllRequest();
