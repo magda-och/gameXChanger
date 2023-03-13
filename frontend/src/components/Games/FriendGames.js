@@ -48,21 +48,27 @@ function show(){
         var id = id_
         if(status==="AVAILABLE"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"RESERVATION", e)}>LENT</button>
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"RESERVATION", e)}>RESERVATION</button>
             )
         }else if("RESERVATION"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>RETURNED</button>
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>CANCEL</button>
             )
         }else if("LENT"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"RETURNING", e)}>RETURNED</button>
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"RETURNING", e)}>RETURN</button>
             )
         }
     }
+    function printUserName(game,gameStatus){
+    if(gameStatus==="RESERVATION")
+    return (
+        <p>by+{game.ownerID.id}</p>
+    )
+    }
     function updateGameStatus(id, status, e){
         console.log("cos");
-        if(status==="AVAILABLE") {
+        if(status==="RESERVATION") {
             GameAPI.update(id, status, currentId)
                 .then(res => {
                     console.log("cos2")
@@ -97,6 +103,7 @@ function show(){
                                 return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#FFADBC",margin:"10px",borderRadius:"12px"}}>
                                     <p>{game.name}</p>
                                     <p> {game.gameStatus}</p>
+                                    {printUserName(game,game.gameStatus)}
                                     {printButtonToReservation(game.id,game.gameStatus)}
                                     {/*{printButtonToLent(game)}*/}
                                 </div>

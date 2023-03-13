@@ -29,7 +29,10 @@ function Games(props) {
         var id = id_
         if(status==="RESERVATION"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"LENT", e)}>LENT</button>
+                <div>
+            <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"LENT", e)}>LENT</button>
+            <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>REJECT</button>
+                </div>
             )
         }else if(status==="RETURNING"){
             return (
@@ -49,16 +52,16 @@ function Games(props) {
                     } else {
                        /* alert("You dont lent game")*/
                     }
-                    GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
+                 /*   GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
                         function (response) {
                             setGames(response.data)
                         }
                     ).catch(function (error) {
                         console.error(`Error: ${error}`)
-                    });
+                    });*/
                     window.location.replace('/profile/shelf');
                 });
-        }else{
+        }else if("LENT"){
             GameAPI.update(id, status, currentId)
                 .then(res => {
                     console.log("cos3")
@@ -68,13 +71,13 @@ function Games(props) {
                     } else {
                         /*alert("You dont return game")*/
                     }
-                    GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
+                   /* GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
                         function (response) {
                             setGames(response.data)
                         }
                     ).catch(function (error) {
                         console.error(`Error: ${error}`)
-                    });
+                    });*/
                     window.location.replace('/profile/shelf');
                 });
         }

@@ -14,7 +14,7 @@ function Shelf() {
           <AddGame/>
           <MyGameList/>
          {/* <BorrowedGameList/>*/}
-          {/*<GamesSearchingBar />*/}
+          {<GamesSearchingBar />}
       </div>
     );
 }
