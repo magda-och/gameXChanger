@@ -3,6 +3,8 @@ import {GameAPI} from "../../api/GameAPI";
 import {useLocation, useParams} from "react-router-dom";
 import classes from "../Games/FriendGames.module.css";
 import {UserAPI} from "../../api/UserAPI";
+import {currentId} from "../Users/UserDetails";
+import AuthenticationService from "../../services/AuthenticationService";
 function FriendGames() {
     const{id} = useParams();
     const [friendGames, setFriendGames] = useState([])
@@ -42,12 +44,64 @@ function show(){
         }
         return <p>email</p>;
     }
-
+    function printButtonToLent(id_,status){
+        var id = id_
+        if(status==="AVAILABLE"){
+            return (
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"LENT", e)}>LENT</button>
+            )
+        }else{
+            return (
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>RETURNED</button>
+            )
+        }
+    }
+    function updateGameStatus(id, status, e){
+        console.log("cos");
+        if(status==="AVAILABLE") {
+            GameAPI.update(id, status, currentId)
+                .then(res => {
+                    console.log("cos2")
+                    console.log(res);
+                    if (status === "LENT") {
+                        alert("Game is return!")
+                    } else {
+                        /* alert("You dont lent game")*/
+                    }
+                });
+        }else{
+            GameAPI.update(id, status, currentId)
+                .then(res => {
+                    console.log("cos3")
+                    console.log(res);
+                    if (status === "LENT") {
+                        alert("Game is lent!")
+                    } else {
+                        /*alert("You dont return game")*/
+                    }
+                });
+        }
+    }
     return (
         <div className={classes.friendGames}>
 
             {show()}
-            <table className="table table-striped">
+            <div>
+                <div >
+                    {
+                        friendGames.map(game => {
+                                return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#FFADBC",margin:"10px",borderRadius:"12px"}}>
+                                    <p>{game.name}</p>
+                                    <p> {game.gameStatus}</p>
+                                    {printButtonToLent(game.id,game.gameStatus)}
+                                    {/*{printButtonToLent(game)}*/}
+                                </div>
+                            }
+                        )
+                    }
+                </div>
+            </div>
+            {/*<table className="table table-striped">
                 <thead>
                 <tr>
                     <td> Game Name</td>
@@ -65,7 +119,7 @@ function show(){
                     )
                 }
                 </tbody>
-            </table>
+            </table>*/}
         </div>
     )
 }
