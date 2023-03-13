@@ -27,11 +27,11 @@ function Games(props) {
     }
     function printButtonToLent(id_,status){
         var id = id_
-        if(status==="AVAILABLE"){
+        if(status==="RESERVATION"){
             return (
                 <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"LENT", e)}>LENT</button>
             )
-        }else{
+        }else if(status==="RETURNING"){
             return (
                 <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>RETURNED</button>
             )

@@ -44,15 +44,19 @@ function show(){
         }
         return <p>email</p>;
     }
-    function printButtonToLent(id_,status){
+    function printButtonToReservation(id_,status){
         var id = id_
         if(status==="AVAILABLE"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"LENT", e)}>LENT</button>
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"RESERVATION", e)}>LENT</button>
             )
-        }else{
+        }else if("RESERVATION"){
             return (
                 <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>RETURNED</button>
+            )
+        }else if("LENT"){
+            return (
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"RETURNING", e)}>RETURNED</button>
             )
         }
     }
@@ -93,7 +97,7 @@ function show(){
                                 return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#FFADBC",margin:"10px",borderRadius:"12px"}}>
                                     <p>{game.name}</p>
                                     <p> {game.gameStatus}</p>
-                                    {printButtonToLent(game.id,game.gameStatus)}
+                                    {printButtonToReservation(game.id,game.gameStatus)}
                                     {/*{printButtonToLent(game)}*/}
                                 </div>
                             }
