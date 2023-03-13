@@ -1,11 +1,71 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {GameAPI} from "../../api/GameAPI";
 import {currentId} from "../Users/UserDetails";
-import AuthenticationService from "../../services/AuthenticationService";
+import {useNavigate} from "react-router-dom";
+import {useForm} from "react-hook-form";
+import {UserAPI} from "../../api/UserAPI";
 
 
 function Games(props) {
-    const [games, setGames] = useState([])
+    const [shelf, setGames] = useState([])
+    const[user, setUser]=useState(null)
+    const navigate = useNavigate();
+    const {register, handleSubmit, formState: {errors}} =
+        useForm({mode: "onBlur"});
+
+    const [showForm, setShowForm] = useState(undefined);
+
+    useEffect(() =>{
+        GameAPI.getMyGames(currentId).then(
+            function (response) {
+                setGames(response.data)
+            }
+        ).catch(function (error) {
+            console.error(`Error: ${error}`)
+        });
+    }, []);
+    const openForm = () => {
+        setShowForm(true);
+    }
+
+    const closeForm = () =>{
+        setShowForm(false)
+    }
+    function getUser(){
+        return  UserAPI.getById(currentId).then(
+            (response)=>{
+                setUser(Object.values(response.data))
+            }
+        ).catch(function (error){
+            console.error(`Error: ${error}`)
+        });
+    }
+
+
+    const onSubmit = data => {
+        const newGame = {
+            name: data.name,
+            description: "fajna gra",
+            gameStatus: "AVAILABLE",
+            visibility: "PRIVATE",
+            owner: getUser()
+        }
+        GameAPI.create(currentId, newGame)
+            .then(() => {
+                alert("Game successfully added to shelf!")
+                //var lastId = "#" + currentId;
+                //window.location.replace("/profile/shelf" + lastId);
+                //window.location.reload();
+
+                GameAPI.getMyGames(currentId).then(
+                    function (response) {
+                        setGames(response.data)
+                    }
+                ).catch(function (error) {
+                    console.error(`Error: ${error}`)
+                });
+            })
+    };
 
     const removeGame = async(id) => {
         try {
@@ -52,14 +112,13 @@ function Games(props) {
                     } else {
                        /* alert("You dont lent game")*/
                     }
-                 /*   GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
+                    GameAPI.getMyGames(currentId).then(
                         function (response) {
                             setGames(response.data)
                         }
                     ).catch(function (error) {
                         console.error(`Error: ${error}`)
-                    });*/
-                    window.location.replace('/profile/shelf');
+                    });
                 });
         }else if("LENT"){
             GameAPI.update(id, status, currentId)
@@ -71,18 +130,17 @@ function Games(props) {
                     } else {
                         /*alert("You dont return game")*/
                     }
-                   /* GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
+                    GameAPI.getMyGames(currentId).then(
                         function (response) {
                             setGames(response.data)
                         }
                     ).catch(function (error) {
                         console.error(`Error: ${error}`)
-                    });*/
-                    window.location.replace('/profile/shelf');
+                    });
                 });
         }
     }
-    const giveBackGame = async (id, userId) => {
+/*    const giveBackGame = async (id, userId) => {
         try {
             const res = await GameAPI.giveBack(id, userId)//, visibility)
             console.log('Item successfully updated.')
@@ -92,7 +150,7 @@ function Games(props) {
         } catch (error) {
             alert(error)
         }
-    }
+    }*/
     // function printButtonToLent(game){
     //     if(game.gameStatus==="AVAILABLE"){
     //         return (
@@ -118,39 +176,71 @@ function Games(props) {
     // }
 
 
-    const displayGames = (props) => {
-        const {games} = props;
-
+    const displayGames = () => {
 
         return (
-            <div style={{resize:"both", overflow:"auto"}}>
-                <h2 className="text-center">My Games</h2>
-                <div>
-                        <div >
-                            {
-                                games.map(game => {
-                                        return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#FFADBC",margin:"10px",borderRadius:"12px"}}>
-                                            <p>{game.name}</p>
-                                            <p> {game.gameStatus}</p>
-                                            {printButtonToLent(game.id,game.gameStatus)}
-                                            {/*{printButtonToLent(game)}*/}
-                                                <button className="btn btn-danger" style={{background:"rgb(151, 92, 141)", border:"none"}}
-                                                        onClick={() => removeGame(game.id)}><span
-                                                    className="bi bi-trash"></span>
-                                                </button>
-                                        </div>
-                                    }
-                                )
-                            }
+            <div>
+                <div className="text-center m-4" id="myForm">
+                    <div className="row" >
+                        <div style={{background:"rgb(255, 173, 188)"}} className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
+                            <button style={{background:"rgb(134, 58, 111)", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={openForm}> Add game</button>
+
+                            {showForm && (
+                                <form className="add-game" id="add-game" onSubmit={handleSubmit(onSubmit)}>
+                                    <div className="mb-3">
+                                        <label htmlFor="name" className="form-label">
+
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Enter name of game you want to add"
+                                            name="name"
+                                            id="name"
+                                            {...register("name", {required: true})}
+                                            aria-invalid={errors.name ? "true" : "false"}
+                                        />
+                                        {errors.name?.type === 'required' && <p role="alert">Game name is required</p>}
+                                    </div>
+                                    <button style={{background:"rgb(134, 58, 111)", border:"none"}} type="submit" className="btn btn-secondary">
+                                        Add
+                                    </button>
+                                    <span> </span>
+                                    <button style={{background:"rgb(151, 92, 141)", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={closeForm}>Close</button>
+                                </form>
+                            )}
                         </div>
-            </div>
+                    </div>
+                </div>
+                <div style={{resize:"both", overflow:"auto"}}>
+                    <h2 className="text-center">My Games</h2>
+                    <div className="shelf">
+                            <div>
+                                {
+                                    shelf.map(game => {
+                                            return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#FFADBC",margin:"10px",borderRadius:"12px"}}>
+                                                <p>{game.name}</p>
+                                                <p> {game.gameStatus}</p>
+                                                {printButtonToLent(game.id,game.gameStatus)}
+                                                {/*{printButtonToLent(game)}*/}
+                                                    <button className="btn btn-danger" style={{background:"rgb(151, 92, 141)", border:"none"}}
+                                                            onClick={() => removeGame(game.id)}><span
+                                                        className="bi bi-trash"></span>
+                                                    </button>
+                                            </div>
+                                        }
+                                    )
+                                }
+                            </div>
+                </div>
+                </div>
             </div>
         )
 
     }
     return (
         <>
-            {displayGames(props)}
+            {displayGames()}
         </>
     );
 }
