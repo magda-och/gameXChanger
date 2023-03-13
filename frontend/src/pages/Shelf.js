@@ -11,7 +11,6 @@ import GamesSearchingBar from "../components/Games/GamesSearchingBar";
 function Shelf() {
     return (
       <div className={classes.games}>
-          <AddGame/>
           <MyGameList/>
          {/* <BorrowedGameList/>*/}
           {/*<GamesSearchingBar />*/}
