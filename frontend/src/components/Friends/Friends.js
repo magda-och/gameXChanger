@@ -33,17 +33,19 @@ function Friends() {
         }
     }
 
-   /* const getFriendGames = (id) => {
-        alert("wchodze do game friend")
-        window.location.replace(`/profile/games/${id}`);
-        return <FriendGames id = {id}/>
-    };*/
+    /* const getFriendGames = (id) => {
+         alert("wchodze do game friend")
+         window.location.replace(`/profile/games/${id}`);
+         return <FriendGames id = {id}/>
+     };*/
 
     return (
         <div>
-            <FriendsSearchingBar />
-        <div className={classes.friends}>
-            <div>
+            <div className="col-md-5">
+                <FriendsSearchingBar/>
+            </div>
+
+            <div className="row-cols-3">
                 <h1 className="text-center "> All Friends </h1>
                 <table className="table table-striped">
                     <thead>
@@ -65,14 +67,26 @@ function Friends() {
                                         <Link
                                             to={{
                                                 pathname: `/profile/games/${friend.id}`,
-                                                state: { friends: friend }
+                                                state: {friends: friend}
                                             }}
                                         >
-                                            <button style={{background:"rgb(134, 58, 111)", border:"none", color:"white"}} className="btn btn-outline-secondary">Show games</button>
+                                            <button
+                                                style={{
+                                                    background: "rgb(134, 58, 111)",
+                                                    border: "none",
+                                                    color: "white"
+                                                }}
+                                                className="btn btn-outline-secondary">Show games
+                                            </button>
                                         </Link>
                                     </td>
                                     <td>
-                                        <button style={{background:"rgb(151, 92, 141)", border:"none", color:"white"}} className="btn btn-outline-secondary"
+                                        <button style={{
+                                            background: "rgb(151, 92, 141)",
+                                            border: "none",
+                                            color: "white"
+                                        }}
+                                                className="btn btn-outline-secondary"
                                                 onClick={() => removeFriend(friend.id)}>Delete
                                         </button>
                                     </td>
@@ -84,7 +98,8 @@ function Friends() {
                 </table>
             </div>
         </div>
-        </div>
+
+
     )
 }
 

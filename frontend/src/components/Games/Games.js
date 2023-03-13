@@ -177,7 +177,7 @@ function Games(props) {
             <div>
                 <div className="text-center m-4" id="myForm">
                     <div className="row" >
-                        <div style={{background:"rgb(255, 173, 188)"}} className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
+                        <div style={{background:"#D8BFD8"}} className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
                             <button style={{background:"rgb(134, 58, 111)", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={openForm}> Add game</button>
 
                             {showForm && (
@@ -213,7 +213,7 @@ function Games(props) {
                             <div>
                                 {
                                     shelf.map(game => {
-                                            return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#FFADBC",margin:"10px",borderRadius:"12px"}}>
+                                            return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#D8BFD8",margin:"10px",borderRadius:"12px"}}>
                                                 <p>{game.name}</p>
                                                 <p> {game.gameStatus}</p>
                                                 {printButtonToLent(game.id,game.gameStatus)}
