@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from "./Shelf.module.css";
-import MyGameList from "../services/MyGameList";
-import BorrowedGameList from "../services/BorrowedGamesList";
+import MyGameList from "../components/Games/MyGameList";
+import BorrowedGameList from "../components/Games/BorrowedGamesList";
 import GamesSearchingBar from "../components/Games/GamesSearchingBar";
 
 

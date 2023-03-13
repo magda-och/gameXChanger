@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
-import Games from "../components/Games/Games";
-import {GameAPI} from "../api/GameAPI";
-import {currentId} from "../components/Users/UserDetails";
+import Games from "./Games";
+import {GameAPI} from "../../api/GameAPI";
+import {currentId} from "../Users/UserDetails";
 
 function MyGameList() {
     const [games, setGames] = useState([])
