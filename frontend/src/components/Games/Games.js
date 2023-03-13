@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {GameAPI} from "../../api/GameAPI";
 import {currentId} from "../Users/UserDetails";
-import AuthenticationService from "../../services/AuthenticationService";
 import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {UserAPI} from "../../api/UserAPI";
@@ -100,14 +99,13 @@ function Games(props) {
                     } else {
                        /* alert("You dont lent game")*/
                     }
-                    GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
+                    GameAPI.getMyGames(currentId).then(
                         function (response) {
                             setGames(response.data)
                         }
                     ).catch(function (error) {
                         console.error(`Error: ${error}`)
                     });
-                    window.location.replace('/profile/shelf');
                 });
         }else{
             GameAPI.update(id, status, currentId)
@@ -119,14 +117,13 @@ function Games(props) {
                     } else {
                         /*alert("You dont return game")*/
                     }
-                    GameAPI.getMyGames(AuthenticationService.getLoggedInUserID()).then(
+                    GameAPI.getMyGames(currentId).then(
                         function (response) {
                             setGames(response.data)
                         }
                     ).catch(function (error) {
                         console.error(`Error: ${error}`)
                     });
-                    window.location.replace('/profile/shelf');
                 });
         }
     }
