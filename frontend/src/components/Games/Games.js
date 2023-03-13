@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {GameAPI} from "../../api/GameAPI";
 import {currentId} from "../Users/UserDetails";
 import {useNavigate} from "react-router-dom";
@@ -14,6 +14,16 @@ function Games(props) {
         useForm({mode: "onBlur"});
 
     const [showForm, setShowForm] = useState(undefined);
+
+    useEffect(() =>{
+        GameAPI.getMyGames(currentId).then(
+            function (response) {
+                setGames(response.data)
+            }
+        ).catch(function (error) {
+            console.error(`Error: ${error}`)
+        });
+    }, []);
     const openForm = () => {
         setShowForm(true);
     }
@@ -127,7 +137,7 @@ function Games(props) {
                 });
         }
     }
-    const giveBackGame = async (id, userId) => {
+/*    const giveBackGame = async (id, userId) => {
         try {
             const res = await GameAPI.giveBack(id, userId)//, visibility)
             console.log('Item successfully updated.')
@@ -137,7 +147,7 @@ function Games(props) {
         } catch (error) {
             alert(error)
         }
-    }
+    }*/
     // function printButtonToLent(game){
     //     if(game.gameStatus==="AVAILABLE"){
     //         return (
@@ -164,14 +174,6 @@ function Games(props) {
 
 
     const displayGames = () => {
-
-        GameAPI.getMyGames(currentId).then(
-            function (response) {
-                setGames(response.data)
-            }
-        ).catch(function (error) {
-            console.error(`Error: ${error}`)
-        });
 
         return (
             <div>
