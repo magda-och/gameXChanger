@@ -25,12 +25,12 @@ function UserDetailsPage() {
     return (
         <d>
             <h1>Hello {user.firstName}!</h1>
-            <p></p>
-            <p>{user.firstName}</p>
-            <p>{user.lastName}</p>
-            <p>{user.email}</p>
-            <p>{user.city}</p>
-            <p>{user.phoneNumber}</p>
+            <p>Your personal data: </p>
+            <p>first name: {user.firstName}</p>
+            <p>last name: {user.lastName}</p>
+            <p>e-mail: {user.email}</p>
+            <p>city: {user.city}</p>
+            <p>phone number: {user.phoneNumber}</p>
         </d>
     );
 }
