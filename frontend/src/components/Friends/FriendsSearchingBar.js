@@ -35,7 +35,7 @@ export default function FriendsSearchingBar() {
         InvitationAPI.create(invitation)
             .then(() => {
                 alert("Invitation successfully send!")
-                window.location.replace("invitations")
+                //window.location.replace("invitations")
             })
     }
 
