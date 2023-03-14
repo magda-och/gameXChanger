@@ -19,6 +19,7 @@ function Games(props) {
         GameAPI.getMyGames(currentId).then(
             function (response) {
                 setGames(response.data)
+                console.log(response.data)
             }
         ).catch(function (error) {
             console.error(`Error: ${error}`)
@@ -48,7 +49,8 @@ function Games(props) {
             description: "fajna gra",
             gameStatus: "AVAILABLE",
             visibility: "PRIVATE",
-            owner: getUser()
+            ownerDto: getUser(),
+            actualUserDto:getUser()
         }
         GameAPI.create(currentId, newGame)
             .then(() => {
@@ -87,11 +89,14 @@ function Games(props) {
     }
     function printButtonToLent(id_,status){
         var id = id_
-        if(status==="AVAILABLE"){
+        if(status==="RESERVATION"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"LENT", e)}>LENT</button>
+                <div>
+            <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"LENT", e)}>LENT</button>
+            <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>REJECT</button>
+                </div>
             )
-        }else{
+        }else if(status==="RETURNING"){
             return (
                 <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>RETURNED</button>
             )
@@ -117,7 +122,7 @@ function Games(props) {
                         console.error(`Error: ${error}`)
                     });
                 });
-        }else{
+        }else if("LENT"){
             GameAPI.update(id, status, currentId)
                 .then(res => {
                     console.log("cos3")
