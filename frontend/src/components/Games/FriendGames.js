@@ -69,15 +69,15 @@ function show(){
         var game = game_
         if(status==="AVAILABLE"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(game,"RESERVATION", e)}>RESERVATION</button>
+                <button className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}} onClick={(e) => updateGameStatus(game,"RESERVATION", e)}>RESERVATION</button>
             )
         }else if(status==="RESERVATION"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(game,"AVAILABLE", e)}>CANCEL</button>
+                <button className="btn btn-primary" style={{background:"#443C68",margin: "6%", border:"none"}} onClick={(e) => updateGameStatus(game,"AVAILABLE", e)}>CANCEL</button>
             )
         }else if(status==="LENT"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(game,"RETURNING", e)}>RETURN</button>
+                <button className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}} onClick={(e) => updateGameStatus(game,"RETURNING", e)}>RETURN</button>
             )
         }
     }
@@ -148,7 +148,7 @@ function show(){
                 <div >
                     {
                         friendGames.map(game => {
-                                return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#FFADBC",margin:"10px",borderRadius:"12px"}}>
+                                return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#cfcbf1",margin:"10px",borderRadius:"12px"}}>
                                     <p style={{margin:0}}>{game.name}</p>
                                     <p style={{margin:0}}> {game.gameStatus}</p>
 
