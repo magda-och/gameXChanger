@@ -282,10 +282,10 @@ function Games(props) {
                         </div>
                     </div>
                 </div>
-                <div style={{resize:"both", overflow:"auto"}}>
+                <div style={{overflow:"auto"}}>
                     <h2 className="text-center">My Games</h2>
                     <div className="shelf">
-                            <div>
+                            <div style={{marginLeft: "5%"}}>
                                 {
                                     shelf.map(game => {
 
@@ -302,10 +302,10 @@ function Games(props) {
                             </div>
                 </div>
                 </div>
-                <div style={{resize:"both", overflow:"auto"}}>
+                <div style={{overflow:"auto"}}>
                     <h2 className="text-center">My Borrowed Games</h2>
                     <div className="shelf">
-                        <div>
+                        <div style={{marginLeft: "5%"}}>
                             {
                                 borrowedGames.map(game => {
 
