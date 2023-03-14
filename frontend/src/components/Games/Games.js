@@ -290,8 +290,8 @@ function Games(props) {
                                     shelf.map(game => {
 
                                             return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#cfcbf1",margin:"10px",borderRadius:"12px"}}>
-                                                <p style={{margin:0}}>{game.name}</p>
-                                                <p style={{margin:0}}> {game.gameStatus}</p>
+                                                <p style={{margin:0, fontFamily: "Arial"}}>{game.name}</p>
+                                                <p style={{margin:0, fontFamily: "Arial"}}> {game.gameStatus}</p>
                                                 {printUserName(game,game.gameStatus)}
                                                 {printButtonToLent(game,game.gameStatus)}
                                                 {printDeleteButton(game.id, game.gameStatus)}
