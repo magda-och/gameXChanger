@@ -7,6 +7,8 @@ import AuthenticationService from "../../services/AuthenticationService";
 function Header() {
 
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
+        const userRole = AuthenticationService.getLoggedInUserRole();
+
 
     return (
         <header className={classes.header}>
@@ -30,7 +32,7 @@ function Header() {
                             {isUserLoggedIn && <li className="nav-item active">
                                 <Link className="nav-link" to={"/profile"}>Profile</Link>
                             </li>}
-                            {isUserLoggedIn && <li className="nav-item active">
+                            {isUserLoggedIn && userRole === "ADMIN" && <li className="nav-item active">
                                 <Link className="nav-link" to={"/profile/admin"}>Admin Page</Link>
                             </li>}
 

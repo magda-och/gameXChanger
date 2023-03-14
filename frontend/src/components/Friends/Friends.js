@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {FriendAPI} from "../../api/FriendAPI";
 import {Link} from "react-router-dom";
-import classes from './Friends.module.css'
 import FriendsSearchingBar from "./FriendsSearchingBar";
-import {currentId} from "../Users/UserDetails"
+import AuthenticationService from "../../services/AuthenticationService";
 
 function Friends() {
 
     const [friends, setFriends] = useState([]);
 
-    const userId = currentId;
+   const userId = AuthenticationService.getLoggedInUserID()
 
     useEffect(() => {
         FriendAPI.getAllFriends(userId).then(
