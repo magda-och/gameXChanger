@@ -48,6 +48,7 @@ export default function GamesSearchingBar() {
                         return <li key={game.id}>
                             <td id="1">{game.name}&nbsp;</td>
                             <td id="1"> {game.gameStatus}&nbsp;&nbsp;</td>
+                            <td id="1"> {game.owner}</td>
                         </li>
                     }))}
                 </ul>

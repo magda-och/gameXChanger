@@ -31,10 +31,10 @@ function Games(props) {
     const closeForm = () =>{
         setShowForm(false)
     }
-    function getUser(){
+    function getUserName(){
         return  UserAPI.getById(currentId).then(
             (response)=>{
-                setUser(Object.values(response.data))
+                setUser(Object.values(response.data.firstName))
             }
         ).catch(function (error){
             console.error(`Error: ${error}`)
@@ -48,7 +48,7 @@ function Games(props) {
             description: "fajna gra",
             gameStatus: "AVAILABLE",
             visibility: "PRIVATE",
-            owner: getUser()
+            owner: getUserName()
         }
         GameAPI.create(currentId, newGame)
             .then(() => {
@@ -89,11 +89,11 @@ function Games(props) {
         var id = id_
         if(status==="AVAILABLE"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"LENT", e)}>LENT</button>
+                <button className="btn btn-primary" style={{background:"#443C68", border:"none"}} onClick={(e) => updateGameStatus(id,"LENT", e)}>LENT</button>
             )
         }else{
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>RETURNED</button>
+                <button className="btn btn-primary" style={{background:"#443C68", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>RETURNED</button>
             )
         }
     }
@@ -179,8 +179,8 @@ function Games(props) {
             <div>
                 <div className="text-center m-4" id="myForm">
                     <div className="row" >
-                        <div style={{background:"#D8BFD8"}} className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-                            <button style={{background:"rgb(134, 58, 111)", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={openForm}> Add game</button>
+                        <div style={{background:"#F0EEED"}} className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
+                            <button style={{background:"#443C68", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={openForm}> Add game</button>
 
                             {showForm && (
                                 <form className="add-game" id="add-game" onSubmit={handleSubmit(onSubmit)}>
@@ -199,11 +199,11 @@ function Games(props) {
                                         />
                                         {errors.name?.type === 'required' && <p role="alert">Game name is required</p>}
                                     </div>
-                                    <button style={{background:"rgb(134, 58, 111)", border:"none"}} type="submit" className="btn btn-secondary">
+                                    <button style={{background:"#443C68", border:"none"}} type="submit" className="btn btn-secondary">
                                         Add
                                     </button>
                                     <span> </span>
-                                    <button style={{background:"rgb(151, 92, 141)", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={closeForm}>Close</button>
+                                    <button style={{background:"#443C68", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={closeForm}>Close</button>
                                 </form>
                             )}
                         </div>
@@ -215,7 +215,7 @@ function Games(props) {
                             <div>
                                 {
                                     shelf.map(game => {
-                                            return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#D8BFD8",margin:"10px",borderRadius:"12px"}}>
+                                            return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#cfcbf1",margin:"10px",borderRadius:"12px"}}>
                                                 <p>{game.name}</p>
                                                 <p> {game.gameStatus}</p>
                                                 {printButtonToLent(game.id,game.gameStatus)}

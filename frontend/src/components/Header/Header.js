@@ -10,7 +10,7 @@ function Header() {
 
     return (
         <header className={classes.header}>
-            <nav className="navbar navbar-expand-lg navbar-dark navbar-brand fixed-top" style={{"background-color" : "rgb(134, 58, 111)", "width" : "100%", "height" : "9%"}}>
+            <nav className="navbar navbar-expand-lg navbar-dark navbar-brand fixed-top" style={{"background-color" : "#443C68", "width" : "100%", "height" : "9%"}}>
                 <div className="container-fluid">
 
                     <NavLink to="/" className="navbar-brand">
