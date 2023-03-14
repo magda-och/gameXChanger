@@ -19,7 +19,6 @@ function Games(props) {
         GameAPI.getMyGames(currentId).then(
             function (response) {
                 setGames(response.data)
-                console.log(response.data)
             }
         ).catch(function (error) {
             console.error(`Error: ${error}`)
@@ -92,13 +91,13 @@ function Games(props) {
         if(status==="RESERVATION"){
             return (
                 <div>
-            <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none", marginRight:5}} onClick={(e) => updateGameStatus(game,"LENT", e)}>LENT</button>
-            <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(game,"AVAILABLE", e)}>REJECT</button>
+            <button className="btn btn-primary" style={{background:"#443C68", border:"none", marginRight:5}} onClick={(e) => updateGameStatus(game,"LENT", e)}>LENT</button>
+            <button className="btn btn-primary" style={{background:"#443C68", border:"none"}} onClick={(e) => updateGameStatus(game,"AVAILABLE", e)}>REJECT</button>
                 </div>
             )
         }else if(status==="RETURNING"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(game,"AVAILABLE", e)}>RETURNED</button>
+                <button className="btn btn-primary" style={{background:"#443C68", border:"none"}} onClick={(e) => updateGameStatus(game,"AVAILABLE", e)}>RETURNED</button>
             )
         }
     }
@@ -145,7 +144,7 @@ function Games(props) {
     function printDeleteButton(id, status){
         if(status==="AVAILABLE"){
             return(
-                <button className="btn btn-danger" style={{background:"rgb(151, 92, 141)", border:"none"}}
+                <button className="btn btn-danger" style={{background:"#443C68", border:"none",margin:"10%"}}
                         onClick={() => removeGame(id)}><span
                     className="bi bi-trash"></span>
                 </button>
@@ -200,8 +199,8 @@ function Games(props) {
             <div>
                 <div className="text-center m-4" id="myForm">
                     <div className="row" >
-                        <div style={{background:"rgb(255, 173, 188)"}} className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-                            <button style={{background:"rgb(134, 58, 111)", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={openForm}> Add game</button>
+                        <div style={{background:"#F0EEED"}} className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
+                            <button style={{background:"#443C68", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={openForm}> Add game</button>
 
                             {showForm && (
                                 <form className="add-game" id="add-game" onSubmit={handleSubmit(onSubmit)}>
@@ -220,11 +219,11 @@ function Games(props) {
                                         />
                                         {errors.name?.type === 'required' && <p role="alert">Game name is required</p>}
                                     </div>
-                                    <button style={{background:"rgb(134, 58, 111)", border:"none"}} type="submit" className="btn btn-secondary">
+                                    <button style={{background:"#443C68", border:"none"}} type="submit" className="btn btn-secondary">
                                         Add
                                     </button>
                                     <span> </span>
-                                    <button style={{background:"rgb(151, 92, 141)", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={closeForm}>Close</button>
+                                    <button style={{background:"#443C68", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={closeForm}>Close</button>
                                 </form>
                             )}
                         </div>
@@ -236,7 +235,8 @@ function Games(props) {
                             <div>
                                 {
                                     shelf.map(game => {
-                                            return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#FFADBC",margin:"10px",borderRadius:"12px"}}>
+
+                                            return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#cfcbf1",margin:"10px",borderRadius:"12px"}}>
                                                 <p style={{margin:0}}>{game.name}</p>
                                                 <p style={{margin:0}}> {game.gameStatus}</p>
                                                 {printUserName(game,game.gameStatus)}
