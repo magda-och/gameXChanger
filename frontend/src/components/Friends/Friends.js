@@ -40,13 +40,13 @@ function Friends() {
 
     return (
         <div>
-            <div className="col-md-5">
+            <div className="col-lg-5" style={{marginLeft: "12.5%"}}>
                 <FriendsSearchingBar/>
             </div>
 
-            <div className="row-cols-3">
-                <h1 className="text-center " style={{width: "30%", marginLeft: "0%"}}> All Friends </h1>
-                <table className="table table-striped" style={{width:"100%", marginLeft: "7%", padding: "3px"}}>
+            <div style={{marginTop: "5%"}}>
+                <h1 className="text-center " style={{width: "40%", marginLeft: "35%", textAlign: "center"}}> All Friends </h1>
+                <table className="table table-striped" style={{width:"75%", marginLeft: "22%", padding: "3px"}}>
                     <thead>
                     <tr>
                         <td> Friend first name</td>
@@ -62,7 +62,7 @@ function Friends() {
                                     <td style={{width: "15%"}}>{friend.firstName}</td>
                                     <td style={{width: "15%"}}>{friend.lastName}</td>
                                     <td style={{width: "15%"}}>{friend.city}</td>
-                                    <td style={{width: "8%"}}>
+                                    <td style={{width: "12%"}}>
                                         <Link
                                             to={{
                                                 pathname: `/profile/games/${friend.id}`,
