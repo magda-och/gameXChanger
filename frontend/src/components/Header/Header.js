@@ -31,7 +31,7 @@ function Header() {
                                 <Link className="nav-link" to={"/profile"}>Profile</Link>
                             </li>}
                             {isUserLoggedIn && <li className="nav-item active">
-                                <Link className="nav-link" to={"/admin"}>Admin Page</Link>
+                                <Link className="nav-link" to={"/profile/admin"}>Admin Page</Link>
                             </li>}
 
                         </ul>

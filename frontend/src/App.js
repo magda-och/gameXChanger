@@ -48,7 +48,7 @@ const router = createBrowserRouter([
                 element: <FriendGames/>
             },
             {
-                path: '/admin',
+                path: '/profile/admin',
                 element: <UserList/>
             }
         ],
