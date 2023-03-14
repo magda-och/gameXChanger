@@ -54,7 +54,7 @@ export default function FriendsSearchingBar() {
 
     return (
         <div className={classes.friends}>
-            <div className="col-md-12 container" style={{width:"500px", float:"left",height:"170px",background:"#cfcbf1",margin:"10px",borderRadius:"12px"}}>
+            <div className="col-md-12 container" >
                     <h3> Find new friends </h3>
                     <form id="form-id">
                         <input
