@@ -27,13 +27,13 @@ function Header() {
                             <li className="nav-item active">
                                 <Link className="nav-link" to={"/about"}>About</Link>
                             </li>
-
-                            {/*<li className="nav-item active">*/}
-                            {/*    <Link className="nav-link" to={"/contacts"}>Contacts</Link>*/}
-                            {/*</li>*/}
                             {isUserLoggedIn && <li className="nav-item active">
                                 <Link className="nav-link" to={"/profile"}>Profile</Link>
                             </li>}
+                            {isUserLoggedIn && <li className="nav-item active">
+                                <Link className="nav-link" to={"/admin"}>Admin Page</Link>
+                            </li>}
+
                         </ul>
 
                         <ul className="navbar-nav ms-auto d-flex flex-row">
@@ -44,6 +44,7 @@ function Header() {
                                 <Link className="nav-link" to={"/"} onClick={AuthenticationService.logout} >Log out</Link>
                             </li>}
                         </ul>
+
                     </div>
                 </div>
             </nav>

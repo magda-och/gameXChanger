@@ -16,6 +16,7 @@ import Friends from "./components/Friends/Friends";
 import Registration from "./pages/Registration";
 import FriendGames from "./components/Games/FriendGames";
 import LendGame from "./components/Games/LendGame";
+import UserList from "./components/Users/UserList";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: '/profile/games/:id',
                 element: <FriendGames/>
+            },
+            {
+                path: '/admin',
+                element: <UserList/>
             }
         ],
     },
