@@ -152,7 +152,7 @@ function Games(props) {
         }
     }
     function printUserName(game,gameStatus){
-        if(gameStatus==="RESERVATION" || gameStatus==="LENT")
+        if(gameStatus==="RESERVATION" || gameStatus==="LENT" || gameStatus==="RETURNING")
             return (
                 <p>by {game.actualUserDto.firstName+ " "+ game.actualUserDto.lastName}</p>
             )

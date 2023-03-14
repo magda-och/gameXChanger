@@ -60,9 +60,10 @@ function show(){
         return <p>email</p>;
     }
     function printUserName(game,gameStatus){
-        if(gameStatus==="RESERVATION" || gameStatus==="LENT")
+        if((gameStatus==="RESERVATION" || gameStatus==="LENT" || gameStatus==="RETURNING") && game.actualUserDto.id===currentId)
             return (
-                <p>by {game.actualUserDto.firstName+ " "+ game.actualUserDto.lastName}</p>
+               /* <p>by {game.actualUserDto.firstName+ " "+ game.actualUserDto.lastName}</p>*/
+                <p>by me</p>
             )
     }
     function printButtonToReservation(game_,status){
@@ -75,7 +76,7 @@ function show(){
             return (
                 <button className="btn btn-primary" style={{background:"#443C68",margin: "6%", border:"none"}} onClick={(e) => updateGameStatus(game,"AVAILABLE", e)}>CANCEL</button>
             )
-        }else if(status==="LENT"){
+        }else if(status==="LENT" && game.actualUserDto.id===currentId){
             return (
                 <button className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}} onClick={(e) => updateGameStatus(game,"RETURNING", e)}>RETURN</button>
             )
