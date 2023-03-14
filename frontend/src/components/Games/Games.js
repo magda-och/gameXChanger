@@ -87,25 +87,25 @@ function Games(props) {
             alert(error)
         }
     }
-    function printButtonToLent(id_,status){
-        var id = id_
+    function printButtonToLent(game_,status){
+        var game = game_
         if(status==="RESERVATION"){
             return (
                 <div>
-            <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"LENT", e)}>LENT</button>
-            <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>REJECT</button>
+            <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none", marginRight:5}} onClick={(e) => updateGameStatus(game,"LENT", e)}>LENT</button>
+            <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(game,"AVAILABLE", e)}>REJECT</button>
                 </div>
             )
         }else if(status==="RETURNING"){
             return (
-                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>RETURNED</button>
+                <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(game,"AVAILABLE", e)}>RETURNED</button>
             )
         }
     }
-    function updateGameStatus(id, status, e){
+    function updateGameStatus(game, status, e){
         console.log("cos");
         if(status==="AVAILABLE") {
-            GameAPI.update(id, status, currentId)
+            GameAPI.update(game.id, status, currentId)
                 .then(res => {
                     console.log("cos2")
                     console.log(res);
@@ -123,7 +123,7 @@ function Games(props) {
                     });
                 });
         }else if("LENT"){
-            GameAPI.update(id, status, currentId)
+            GameAPI.update(game.id, status, game.actualUserDto.id)
                 .then(res => {
                     console.log("cos3")
                     console.log(res);
@@ -141,6 +141,22 @@ function Games(props) {
                     });
                 });
         }
+    }
+    function printDeleteButton(id, status){
+        if(status==="AVAILABLE"){
+            return(
+                <button className="btn btn-danger" style={{background:"rgb(151, 92, 141)", border:"none"}}
+                        onClick={() => removeGame(id)}><span
+                    className="bi bi-trash"></span>
+                </button>
+            )
+        }
+    }
+    function printUserName(game,gameStatus){
+        if(gameStatus==="RESERVATION" || gameStatus==="LENT")
+            return (
+                <p>by {game.actualUserDto.firstName+ " "+ game.actualUserDto.lastName}</p>
+            )
     }
 /*    const giveBackGame = async (id, userId) => {
         try {
@@ -221,14 +237,13 @@ function Games(props) {
                                 {
                                     shelf.map(game => {
                                             return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#FFADBC",margin:"10px",borderRadius:"12px"}}>
-                                                <p>{game.name}</p>
-                                                <p> {game.gameStatus}</p>
-                                                {printButtonToLent(game.id,game.gameStatus)}
+                                                <p style={{margin:0}}>{game.name}</p>
+                                                <p style={{margin:0}}> {game.gameStatus}</p>
+                                                {printUserName(game,game.gameStatus)}
+                                                {printButtonToLent(game,game.gameStatus)}
                                                 {/*{printButtonToLent(game)}*/}
-                                                    <button className="btn btn-danger" style={{background:"rgb(151, 92, 141)", border:"none"}}
-                                                            onClick={() => removeGame(game.id)}><span
-                                                        className="bi bi-trash"></span>
-                                                    </button>
+
+                                                {printDeleteButton(game.id, game.gameStatus)}
                                             </div>
                                         }
                                     )

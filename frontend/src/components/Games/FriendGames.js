@@ -59,27 +59,27 @@ function show(){
         }
         return <p>email</p>;
     }
+    function printUserName(game,gameStatus){
+        if(gameStatus==="RESERVATION" || gameStatus==="LENT")
+            return (
+                <p>by {game.actualUserDto.firstName+ " "+ game.actualUserDto.lastName}</p>
+            )
+    }
     function printButtonToReservation(id_,status){
         var id = id_
         if(status==="AVAILABLE"){
             return (
                 <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"RESERVATION", e)}>RESERVATION</button>
             )
-        }else if("RESERVATION"){
+        }else if(status==="RESERVATION"){
             return (
                 <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>CANCEL</button>
             )
-        }else if("LENT"){
+        }else if(status==="LENT"){
             return (
                 <button className="btn btn-primary" style={{background:"rgb(134, 58, 111)", border:"none"}} onClick={(e) => updateGameStatus(id,"RETURNING", e)}>RETURN</button>
             )
         }
-    }
-  function printUserName(game,gameStatus){
-    if(gameStatus==="RESERVATION")
-    return (
-       <p> by {game.actualUserDto.firstName+ " "+ game.actualUserDto.lastName}</p>
-    )
     }
 
     function updateGameStatus(id, status, e){
@@ -117,8 +117,8 @@ function show(){
                     {
                         friendGames.map(game => {
                                 return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#FFADBC",margin:"10px",borderRadius:"12px"}}>
-                                    <p>{game.name}</p>
-                                    <p> {game.gameStatus}</p>
+                                    <p style={{margin:0}}>{game.name}</p>
+                                    <p style={{margin:0}}> {game.gameStatus}</p>
 
                                     {printUserName(game,game.gameStatus)}
                                     {printButtonToReservation(game.id,game.gameStatus)}
