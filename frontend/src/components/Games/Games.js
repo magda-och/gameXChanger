@@ -8,6 +8,7 @@ import {UserAPI} from "../../api/UserAPI";
 
 function Games(props) {
     const [shelf, setGames] = useState([])
+    const [borrowedGames, setBorrowedGames] = useState([])
     const[user, setUser]=useState(null)
     const navigate = useNavigate();
     const {register, handleSubmit, formState: {errors}} =
@@ -19,6 +20,15 @@ function Games(props) {
         GameAPI.getMyGames(currentId).then(
             function (response) {
                 setGames(response.data)
+            }
+        ).catch(function (error) {
+            console.error(`Error: ${error}`)
+        });
+    }, []);
+    useEffect(() =>{
+        GameAPI.getBorrowedGames(currentId).then(
+            function (response) {
+                setBorrowedGames(response.data)
             }
         ).catch(function (error) {
             console.error(`Error: ${error}`)
@@ -152,46 +162,89 @@ function Games(props) {
         }
     }
     function printUserName(game,gameStatus){
-        if(gameStatus==="RESERVATION" || gameStatus==="LENT")
+        if(gameStatus==="RESERVATION" || gameStatus==="LENT" || gameStatus==="RETURNING")
             return (
                 <p>by {game.actualUserDto.firstName+ " "+ game.actualUserDto.lastName}</p>
             )
     }
-/*    const giveBackGame = async (id, userId) => {
-        try {
-            const res = await GameAPI.giveBack(id, userId)//, visibility)
-            console.log('Item successfully updated.')
-            alert("Game successfully updated.")
-            window.location.replace('/profile/shelf')
-            return res;
-        } catch (error) {
-            alert(error)
+    function printOwnerName(game,gameStatus){
+        if(gameStatus==="RETURNING") {
+            return (<p>to {game.ownerDto.firstName + " " + game.ownerDto.lastName}</p>)
+        }else{
+            return (<p>from {game.ownerDto.firstName + " " + game.ownerDto.lastName}</p>)
         }
-    }*/
-    // function printButtonToLent(game){
-    //     if(game.gameStatus==="AVAILABLE"){
-    //         return (
-    //             <Link
-    //                 to={{
-    //                     pathname: `/profile/lend/${game.id}`,
-    //                     state: { game: game.id }
-    //                 }}
-    //             >
-    //                 <button className="btn btn-outline-secondary">LENT</button>
-    //             </Link>
-    //         )
-    //     } else if(game.gameStatus === "LENT"){
-    //         return(
-    //             <div>{game.actualUserDto.firstName + " " + game.actualUserDto.lastName}
-    //                 <button
-    //                     className="btn btn-outline-secondary"
-    //                     onClick={() => giveBackGame(game.id, game.actualUserDto.id)}>
-    //                     given back
-    //                 </button>
-    //             </div>)
-    //     }
-    // }
+    }
+    function printButtonToCancelOrReturnBorrowedGames(game_,status){
+        var game = game_
+        if(status==="RESERVATION"){
+            return (
+                <button className="btn btn-primary" style={{background:"#443C68",margin: "6%", border:"none"}} onClick={(e) => updateBorrowedGameStatus(game,"AVAILABLE", e)}>CANCEL</button>
+            )
+        }else if(status==="LENT" && game.actualUserDto.id===currentId){
+            return (
+                <button className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}} onClick={(e) => updateBorrowedGameStatus(game,"RETURNING", e)}>RETURN</button>
+            )
+        }
+    }
 
+    function updateBorrowedGameStatus(game, status, e){
+        console.log("cos");
+        if(status==="RESERVATION") {
+            GameAPI.update(game.id, status, currentId)
+                .then(res => {
+                    console.log("cos2")
+                    console.log(res);
+                    if (status === "LENT") {
+                        alert("Game is return!")
+                    } else {
+                        /* alert("You dont lent game")*/
+                    }
+                    GameAPI.getBorrowedGames(user.id).then(
+                        function (response) {
+                            setBorrowedGames(response.data)
+                        }
+                    ).catch(function (error) {
+                        console.error(`Error: ${error}`)
+                    });
+                });
+        }else if(status==="AVAILABLE"){
+            GameAPI.update(game.id, status, game.ownerDto.id)
+                .then(res => {
+                    console.log("cos3")
+                    console.log(res);
+                    if (status === "LENT") {
+                        alert("Game is lent!")
+                    } else {
+                        /*alert("You dont return game")*/
+                    }
+                    GameAPI.getBorrowedGames(user.id).then(
+                        function (response) {
+                            setBorrowedGames(response.data)
+                        }
+                    ).catch(function (error) {
+                        console.error(`Error: ${error}`)
+                    });
+                });
+        }else if(status==="RETURNING"){
+            GameAPI.update(game.id, status, currentId)
+                .then(res => {
+                    console.log("cos3")
+                    console.log(res);
+                    if (status === "LENT") {
+                        alert("Game is lent!")
+                    } else {
+                        /*alert("You dont return game")*/
+                    }
+                    GameAPI.getMyGames(user.id).then(
+                        function (response) {
+                            setBorrowedGames(response.data)
+                        }
+                    ).catch(function (error) {
+                        console.error(`Error: ${error}`)
+                    });
+                });
+        }
+    }
 
     const displayGames = () => {
 
@@ -241,8 +294,6 @@ function Games(props) {
                                                 <p style={{margin:0, fontFamily: "Arial"}}> {game.gameStatus}</p>
                                                 {printUserName(game,game.gameStatus)}
                                                 {printButtonToLent(game,game.gameStatus)}
-                                                {/*{printButtonToLent(game)}*/}
-
                                                 {printDeleteButton(game.id, game.gameStatus)}
                                             </div>
                                         }
@@ -250,6 +301,25 @@ function Games(props) {
                                 }
                             </div>
                 </div>
+                </div>
+                <div style={{resize:"both", overflow:"auto"}}>
+                    <h2 className="text-center">My Borrowed Games</h2>
+                    <div className="shelf">
+                        <div>
+                            {
+                                borrowedGames.map(game => {
+
+                                        return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#cfcbf1",margin:"10px",borderRadius:"12px"}}>
+                                            <p style={{margin:0}}>{game.name}</p>
+                                            <p style={{margin:0}}> {game.gameStatus}</p>
+                                            {printOwnerName(game,game.gameStatus)}
+                                          {/* { printButtonToCancelOrReturnBorrowedGames(game,game.gameStatus)}*/}
+                                        </div>
+                                    }
+                                )
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         )
@@ -263,11 +333,3 @@ function Games(props) {
 }
 
 export default Games;
-/*GameAPI.getMyGames(2).then(
-            (response) => {
-                this.setState({ ga:response.data});
-            });
-        InvitationAPI.getSend(2).then(
-            (response) => {
-                this.setState({ sendInvitations:response.data});
-            });*/

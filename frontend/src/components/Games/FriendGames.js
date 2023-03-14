@@ -60,32 +60,33 @@ function show(){
         return <p>email</p>;
     }
     function printUserName(game,gameStatus){
-        if(gameStatus==="RESERVATION" || gameStatus==="LENT")
+        if((gameStatus==="RESERVATION" || gameStatus==="LENT" || gameStatus==="RETURNING") && game.actualUserDto.id===currentId)
             return (
-                <p>by {game.actualUserDto.firstName+ " "+ game.actualUserDto.lastName}</p>
+               /* <p>by {game.actualUserDto.firstName+ " "+ game.actualUserDto.lastName}</p>*/
+                <p>by me</p>
             )
     }
-    function printButtonToReservation(id_,status){
-        var id = id_
+    function printButtonToReservation(game_,status){
+        var game = game_
         if(status==="AVAILABLE"){
             return (
-                <button className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}} onClick={(e) => updateGameStatus(id,"RESERVATION", e)}>RESERVATION</button>
+                <button className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}} onClick={(e) => updateGameStatus(game,"RESERVATION", e)}>RESERVATION</button>
             )
         }else if(status==="RESERVATION"){
             return (
-                <button className="btn btn-primary" style={{background:"#443C68",margin: "6%", border:"none"}} onClick={(e) => updateGameStatus(id,"AVAILABLE", e)}>CANCEL</button>
+                <button className="btn btn-primary" style={{background:"#443C68",margin: "6%", border:"none"}} onClick={(e) => updateGameStatus(game,"AVAILABLE", e)}>CANCEL</button>
             )
-        }else if(status==="LENT"){
+        }else if(status==="LENT" && game.actualUserDto.id===currentId){
             return (
-                <button className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}} onClick={(e) => updateGameStatus(id,"RETURNING", e)}>RETURN</button>
+                <button className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}} onClick={(e) => updateGameStatus(game,"RETURNING", e)}>RETURN</button>
             )
         }
     }
 
-    function updateGameStatus(id, status, e){
+    function updateGameStatus(game, status, e){
         console.log("cos");
         if(status==="RESERVATION") {
-            GameAPI.update(id, status, currentId)
+            GameAPI.update(game.id, status, currentId)
                 .then(res => {
                     console.log("cos2")
                     console.log(res);
@@ -94,9 +95,16 @@ function show(){
                     } else {
                         /* alert("You dont lent game")*/
                     }
+                    GameAPI.getMyGames(user.id).then(
+                        function (response) {
+                            setFriendGames(response.data)
+                        }
+                    ).catch(function (error) {
+                        console.error(`Error: ${error}`)
+                    });
                 });
-        }else{
-            GameAPI.update(id, status, currentId)
+        }else if(status==="AVAILABLE"){
+            GameAPI.update(game.id, status, game.ownerDto.id)
                 .then(res => {
                     console.log("cos3")
                     console.log(res);
@@ -105,6 +113,31 @@ function show(){
                     } else {
                         /*alert("You dont return game")*/
                     }
+                    GameAPI.getMyGames(user.id).then(
+                        function (response) {
+                            setFriendGames(response.data)
+                        }
+                    ).catch(function (error) {
+                        console.error(`Error: ${error}`)
+                    });
+                });
+        }else if(status==="RETURNING"){
+            GameAPI.update(game.id, status, currentId)
+                .then(res => {
+                    console.log("cos3")
+                    console.log(res);
+                    if (status === "LENT") {
+                        alert("Game is lent!")
+                    } else {
+                        /*alert("You dont return game")*/
+                    }
+                    GameAPI.getMyGames(user.id).then(
+                        function (response) {
+                            setFriendGames(response.data)
+                        }
+                    ).catch(function (error) {
+                        console.error(`Error: ${error}`)
+                    });
                 });
         }
     }
@@ -121,7 +154,7 @@ function show(){
                                     <p style={{margin:0}}> {game.gameStatus}</p>
 
                                     {printUserName(game,game.gameStatus)}
-                                    {printButtonToReservation(game.id,game.gameStatus)}
+                                    {printButtonToReservation(game,game.gameStatus)}
                                     {/*{printButtonToLent(game)}*/}
                                 </div>
                             }
