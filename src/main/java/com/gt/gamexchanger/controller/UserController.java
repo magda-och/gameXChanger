@@ -21,7 +21,6 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping("/all")
-    @Secured("ADMIN")
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
