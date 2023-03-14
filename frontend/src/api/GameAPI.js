@@ -61,7 +61,8 @@ export const GameAPI = {
             mode: 'cors',
             headers:{
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Methods": "GET"
+                "Access-Control-Allow-Methods": "GET",
+                'Authorization': AuthenticationService.getHeader()
             }
         });
     },

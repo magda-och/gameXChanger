@@ -33,19 +33,21 @@ function Friends() {
         }
     }
 
-   /* const getFriendGames = (id) => {
-        alert("wchodze do game friend")
-        window.location.replace(`/profile/games/${id}`);
-        return <FriendGames id = {id}/>
-    };*/
+    /* const getFriendGames = (id) => {
+         alert("wchodze do game friend")
+         window.location.replace(`/profile/games/${id}`);
+         return <FriendGames id = {id}/>
+     };*/
 
     return (
         <div>
-            <FriendsSearchingBar />
-        <div className={classes.friends}>
-            <div>
-                <h1 className="text-center "> All Friends </h1>
-                <table className="table table-striped">
+            <div className="col-md-5">
+                <FriendsSearchingBar/>
+            </div>
+
+            <div className="row-cols-3">
+                <h1 className="text-center " style={{width: "30%", marginLeft: "0%"}}> All Friends </h1>
+                <table className="table table-striped" style={{width:"100%", marginLeft: "7%", padding: "3px"}}>
                     <thead>
                     <tr>
                         <td> Friend first name</td>
@@ -58,21 +60,33 @@ function Friends() {
                         friends.map(
                             friend => {
                                 return <tr key={friend.id}>
-                                    <td>{friend.firstName}</td>
-                                    <td>{friend.lastName}</td>
-                                    <td>{friend.city}</td>
-                                    <td>
+                                    <td style={{width: "15%"}}>{friend.firstName}</td>
+                                    <td style={{width: "15%"}}>{friend.lastName}</td>
+                                    <td style={{width: "15%"}}>{friend.city}</td>
+                                    <td style={{width: "8%"}}>
                                         <Link
                                             to={{
                                                 pathname: `/profile/games/${friend.id}`,
-                                                state: { friends: friend }
+                                                state: {friends: friend}
                                             }}
                                         >
-                                            <button style={{background:"rgb(134, 58, 111)", border:"none", color:"white"}} className="btn btn-outline-secondary">Show games</button>
+                                            <button
+                                                style={{
+                                                    background: "#443C68",
+                                                    border: "none",
+                                                    color: "white"
+                                                }}
+                                                className="btn btn-outline-secondary">Show games
+                                            </button>
                                         </Link>
                                     </td>
                                     <td>
-                                        <button style={{background:"rgb(151, 92, 141)", border:"none", color:"white"}} className="btn btn-outline-secondary"
+                                        <button style={{
+                                            background: "#443C68",
+                                            border: "none",
+                                            color: "white",
+                                        }}
+                                                className="btn btn-outline-secondary"
                                                 onClick={() => removeFriend(friend.id)}>Delete
                                         </button>
                                     </td>
@@ -84,7 +98,8 @@ function Friends() {
                 </table>
             </div>
         </div>
-        </div>
+
+
     )
 }
 
