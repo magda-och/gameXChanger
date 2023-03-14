@@ -5,6 +5,7 @@ import classes from "../Games/FriendGames.module.css";
 import {UserAPI} from "../../api/UserAPI";
 import {currentId} from "../Users/UserDetails";
 import AuthenticationService from "../../services/AuthenticationService";
+import {InvitationAPI} from "../../api/InvitationAPI";
 function FriendGames() {
     const{id} = useParams();
     const [friendGames, setFriendGames] = useState([])
@@ -13,11 +14,25 @@ function FriendGames() {
         GameAPI.getMyGames(id).then(
             function (response) {
                 setFriendGames(response.data)
+                console.log(response.data)
             }
         ).catch(function (error) {
             console.error(`Error: ${error}`)
         });
     }, []);
+
+   /* InvitationAPI.getReceived(currentId).then(
+        (response) => {
+            this.setState({ receivedInvitations: [{
+                    requestFriendId: 1,
+                    requestStatus: 1,
+                    fromUserId: 1,
+                    toUserId: 1,
+                    message:1
+                }] });
+            this.setState({ receivedInvitations:response.data });
+        });*/
+
 
     useEffect(()=>{
         UserAPI.getById(id).then(
@@ -60,12 +75,13 @@ function show(){
             )
         }
     }
-    function printUserName(game,gameStatus){
+  function printUserName(game,gameStatus){
     if(gameStatus==="RESERVATION")
     return (
-        <p>by+{game.ownerID.id}</p>
+       <p> by {game.actualUserDto.firstName+ " "+ game.actualUserDto.lastName}</p>
     )
     }
+
     function updateGameStatus(id, status, e){
         console.log("cos");
         if(status==="RESERVATION") {
@@ -103,6 +119,7 @@ function show(){
                                 return <div className="col-md-12 container" style={{width:"170px", float:"left",height:"170px",background:"#FFADBC",margin:"10px",borderRadius:"12px"}}>
                                     <p>{game.name}</p>
                                     <p> {game.gameStatus}</p>
+
                                     {printUserName(game,game.gameStatus)}
                                     {printButtonToReservation(game.id,game.gameStatus)}
                                     {/*{printButtonToLent(game)}*/}

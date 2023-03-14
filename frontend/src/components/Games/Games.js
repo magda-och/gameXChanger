@@ -19,6 +19,7 @@ function Games(props) {
         GameAPI.getMyGames(currentId).then(
             function (response) {
                 setGames(response.data)
+                console.log(response.data)
             }
         ).catch(function (error) {
             console.error(`Error: ${error}`)
@@ -48,7 +49,8 @@ function Games(props) {
             description: "fajna gra",
             gameStatus: "AVAILABLE",
             visibility: "PRIVATE",
-            owner: getUser()
+            ownerDto: getUser(),
+            actualUserDto:getUser()
         }
         GameAPI.create(currentId, newGame)
             .then(() => {
