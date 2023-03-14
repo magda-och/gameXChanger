@@ -46,8 +46,8 @@ function Friends() {
             </div>
 
             <div className="row-cols-3">
-                <h1 className="text-center "> All Friends </h1>
-                <table className="table table-striped">
+                <h1 className="text-center " style={{width: "30%", marginLeft: "0%"}}> All Friends </h1>
+                <table className="table table-striped" style={{width:"100%", marginLeft: "7%", padding: "3px"}}>
                     <thead>
                     <tr>
                         <td> Friend first name</td>
@@ -60,10 +60,10 @@ function Friends() {
                         friends.map(
                             friend => {
                                 return <tr key={friend.id}>
-                                    <td>{friend.firstName}</td>
-                                    <td>{friend.lastName}</td>
-                                    <td>{friend.city}</td>
-                                    <td>
+                                    <td style={{width: "15%"}}>{friend.firstName}</td>
+                                    <td style={{width: "15%"}}>{friend.lastName}</td>
+                                    <td style={{width: "15%"}}>{friend.city}</td>
+                                    <td style={{width: "8%"}}>
                                         <Link
                                             to={{
                                                 pathname: `/profile/games/${friend.id}`,
@@ -72,7 +72,7 @@ function Friends() {
                                         >
                                             <button
                                                 style={{
-                                                    background: "rgb(134, 58, 111)",
+                                                    background: "#443C68",
                                                     border: "none",
                                                     color: "white"
                                                 }}
@@ -82,9 +82,9 @@ function Friends() {
                                     </td>
                                     <td>
                                         <button style={{
-                                            background: "rgb(151, 92, 141)",
+                                            background: "#443C68",
                                             border: "none",
-                                            color: "white"
+                                            color: "white",
                                         }}
                                                 className="btn btn-outline-secondary"
                                                 onClick={() => removeFriend(friend.id)}>Delete

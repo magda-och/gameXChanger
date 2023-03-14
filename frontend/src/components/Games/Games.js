@@ -144,7 +144,7 @@ function Games(props) {
     function printDeleteButton(id, status){
         if(status==="AVAILABLE"){
             return(
-                <button className="btn btn-danger" style={{background:"rgb(151, 92, 141)", border:"none"}}
+                <button className="btn btn-danger" style={{background:"#443C68", border:"none",margin:"10%"}}
                         onClick={() => removeGame(id)}><span
                     className="bi bi-trash"></span>
                 </button>
