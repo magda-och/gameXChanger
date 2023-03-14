@@ -23,6 +23,8 @@ class AuthenticationService {
 
     logout() {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
+        sessionStorage.removeItem(USER_ROLE);
+        sessionStorage.removeItem(USER_ID_SESSION)
     }
 
     isUserLoggedIn() {
