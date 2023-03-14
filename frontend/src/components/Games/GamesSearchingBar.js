@@ -4,6 +4,9 @@ import classes from "../../pages/Shelf.module.css"
 import "../../pages/Shelf.module.css"
 import {currentId} from "../Users/UserDetails";
 
+import {useLocation, useParams} from "react-router-dom";
+import {UserAPI} from "../../api/UserAPI";
+
 export default function GamesSearchingBar() {
     const [state, setstate] = useState({
         query: '',
@@ -45,15 +48,16 @@ export default function GamesSearchingBar() {
                 </form>
                 <ul style={{textAlign: "left"}}>
                     {(state.query === '' ? "No users match the query" : !state.list.length ? "Your query did not return any results" : state.list.map(game => {
+                        console.log(game)
                         return <li key={game.id}>
                             <td id="1">{game.name}&nbsp;</td>
                             <td id="1"> {game.gameStatus}&nbsp;&nbsp;</td>
+                            <td id="1"> {game.ownerDto.firstName+ " "+game.ownerDto.lastName}&nbsp;&nbsp;</td>
+                            <td id="1"><button>RESERVATION</button></td>
                         </li>
                     }))}
                 </ul>
             </div>
         </div>
     )
-
-
 }

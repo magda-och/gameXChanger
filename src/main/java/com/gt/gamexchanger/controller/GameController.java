@@ -95,7 +95,7 @@ public class GameController {
     }
 
     @GetMapping("/myfriends/{userId}")
-    public List<Game> getMyFriendsGames(@PathVariable("userId") Long userId) {
+    public List<GameDto> getMyFriendsGames(@PathVariable("userId") Long userId) {
         return gameService.getMyFriendsGames(userId);
     }
 }
