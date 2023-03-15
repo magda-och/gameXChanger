@@ -36,6 +36,7 @@ public class AuthController {
                     .badRequest()
                     .body(new AuthenticationResponse("Error: Email is already in use!"));
         }
+        Role role = addRole(signUpRequest);
 
         UserDto userToRegister = new UserDto(
                 signUpRequest.getFirstName(),
@@ -44,7 +45,7 @@ public class AuthController {
                 passwordEncoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getCity(),
                 signUpRequest.getPhoneNumber(),
-                Role.USER);
+                role);
 
         var jwtToken = jwtService.generateToken(userToRegister);
         userService.addUser(userToRegister);
@@ -52,7 +53,6 @@ public class AuthController {
 
         return ResponseEntity.ok(AuthenticationResponse.builder().token(jwtToken).build());
     }
-
 
 
     @PostMapping("/login") //do authentication controller
@@ -68,5 +68,16 @@ public class AuthController {
 
         var jwtToken = jwtService.generateToken(user);
         return ResponseEntity.ok(AuthenticationResponse.builder().token(jwtToken).build());
+    }
+
+    private static Role addRole(UserDto signUpRequest) {
+        Role role;
+        String adminEmail = "adminek@admin.com";
+        if(signUpRequest.getEmail().equals(adminEmail)){
+            role = Role.ADMIN;
+        }else{
+            role = Role.USER;
+        }
+        return role;
     }
 }

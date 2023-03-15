@@ -1,10 +1,10 @@
-import {api} from "../api/configurationAPI";
 import {UserAPI} from "../api/UserAPI";
 
 
 const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 const HEADER_SESSION= 'Authorization:'
 const USER_ID_SESSION= 'id'
+const USER_ROLE = 'role';
 
 class AuthenticationService {
 
@@ -12,6 +12,7 @@ class AuthenticationService {
     registerJwtSuccessfulLogin(email, token) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, email)
         sessionStorage.setItem(HEADER_SESSION, this.createJWTToken(token))
+        this.setUserIdAndRole();
       /*  this.setupAxiosInterceptors(this.createJWTToken(token))*/
     }
 
@@ -22,6 +23,8 @@ class AuthenticationService {
 
     logout() {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
+        sessionStorage.removeItem(USER_ROLE);
+        sessionStorage.removeItem(USER_ID_SESSION)
     }
 
     isUserLoggedIn() {
@@ -41,20 +44,27 @@ class AuthenticationService {
         return user
     }
 
- /*   setUserId(){
+    setUserIdAndRole(){
         UserAPI.getByEmail(this.getLoggedInUserName()).then(
             function (response) {
-                sessionStorage.setItem(USER_ID_SESSION, response.data)
+                sessionStorage.setItem(USER_ID_SESSION, response.data.id);
+                sessionStorage.setItem(USER_ROLE, response.data.role);
             }
         ).catch(function (error) {
             console.error(`Error: ${error}`)
         });
-    }*/
+    }
 
     getLoggedInUserID() {
-        let id = sessionStorage.getItem(USER_ID_SESSION)
-        if (id === null) return ''
+        let id = sessionStorage.getItem(USER_ID_SESSION);
+        //if (id === null) return ''
         return id
+    }
+
+    getLoggedInUserRole() {
+        let role = sessionStorage.getItem(USER_ROLE)
+        if (role === null) return 'anonymous'
+        return role
     }
 
    /* setupAxiosInterceptors(token) {

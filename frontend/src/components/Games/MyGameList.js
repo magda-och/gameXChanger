@@ -1,13 +1,15 @@
 import {useEffect, useState} from "react";
 import Games from "./Games";
 import {GameAPI} from "../../api/GameAPI";
-import {currentId} from "../Users/UserDetails";
+import AuthenticationService from "../../services/AuthenticationService";
 
 function MyGameList() {
     const [games, setGames] = useState([])
 
+    const userId = AuthenticationService.getLoggedInUserID()
+
     useEffect(() => {
-        GameAPI.getMyGames(currentId).then(
+        GameAPI.getMyGames(userId).then(
             function (response) {
                 setGames(response.data)
             }

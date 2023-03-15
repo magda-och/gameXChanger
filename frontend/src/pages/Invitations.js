@@ -1,9 +1,11 @@
 import React from "react";
 import classes from "./Invitations.module.css"
 import {InvitationAPI} from "../api/InvitationAPI";
-import {currentId} from "../components/Users/UserDetails";
+import AuthenticationService from "../services/AuthenticationService";
 
+const userId = AuthenticationService.getLoggedInUserID();
 class Invitations extends React.Component{
+
     constructor(props) {
         super(props);
         this.state= {
@@ -12,8 +14,9 @@ class Invitations extends React.Component{
         }
     }
 
+
     componentDidMount() {
-        InvitationAPI.getSend(currentId).then(
+        InvitationAPI.getSend(userId).then(
             (response) => {
                 //this.state.invitations = response.data
                 this.setState({ sendInvitations: [{
@@ -27,7 +30,7 @@ class Invitations extends React.Component{
                 //console.log(this.state)
         });
 
-        InvitationAPI.getReceived(currentId).then(
+        InvitationAPI.getReceived(userId).then(
             (response) => {
                 this.setState({ receivedInvitations: [{
                         requestFriendId: 1,
@@ -60,11 +63,11 @@ class Invitations extends React.Component{
                 } else {
                     alert("You reject user")
                 }
-                InvitationAPI.getReceived(currentId).then(
+                InvitationAPI.getReceived(userId).then(
                     (response) => {
                         this.setState({ receivedInvitations:response.data});
                     });
-                InvitationAPI.getSend(currentId).then(
+                InvitationAPI.getSend(userId).then(
                     (response) => {
                         this.setState({ sendInvitations:response.data});
                     });

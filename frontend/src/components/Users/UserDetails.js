@@ -1,16 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {UserAPI} from "../../api/UserAPI";
 import AuthenticationService from "../../services/AuthenticationService";
-import "./UserDetails.css"
-import {AuthAPI} from "../../api/AuthAPI";
-import {useForm} from "react-hook-form";
-import CryptoJS from "crypto-js";
-import {text} from "@fortawesome/fontawesome-svg-core";
 
 export let currentId
 
 function UserDetailsPage() {
-
 
     const [user, setUser] = useState([])
     const [encryptedData, setEncryptedData] = useState("")
@@ -23,7 +17,6 @@ function UserDetailsPage() {
         UserAPI.getByEmail(AuthenticationService.getLoggedInUserName()).then(
             function (response) {
                 setUser(response.data)
-                setFirstName(response.data.firstName);
             }
         ).catch(function (error) {
             console.error(`Error: ${error}`)
