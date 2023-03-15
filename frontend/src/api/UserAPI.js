@@ -20,10 +20,13 @@ export const UserAPI = {
 
     update: function(userId, user) {
         return api.request({
-            method: "PUT",
+            method: "PATCH",
             url: `/user/${userId}`,
             data: user,
-            headers:{'Authorization': AuthenticationService.getHeader()}
+            headers:{
+                'Authorization': AuthenticationService.getHeader(),
+                "Access-Control-Allow-Origin": api.baseURL,
+            }
         });
     },
 
