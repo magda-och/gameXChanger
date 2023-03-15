@@ -1,25 +1,25 @@
 #firstName{
     display: none;
     margin: 10px;
-    width: 30%;
+    width: 35%;
 }
 
 #lastName{
     display: none;
     margin: 10px;
-    width: 30%;
+    width: 35%;
 }
 
 #city {
     display: none;
     margin: 10px;
-    width: 30%;
+    width: 35%;
 }
 
 #phoneNumber {
     display: none;
     margin: 10px;
-    width: 30%;
+    width: 35%;
 }
 
 #changeButton {
