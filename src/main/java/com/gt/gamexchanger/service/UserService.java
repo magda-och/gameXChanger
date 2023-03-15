@@ -1,5 +1,6 @@
 package com.gt.gamexchanger.service;
 
+import com.gt.gamexchanger.dto.RequestFriendDto;
 import com.gt.gamexchanger.exception.NoDataFoundException;
 import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.mapper.DtoMapper;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final FriendRequestService friendRequestService;
     private final DtoMapper<UserDto, User> dtoMapper;
 
 /*    public UserService(UserRepository userRepository, DtoMapper<UserDto, User> dtoMapper) {
@@ -137,9 +139,14 @@ public class UserService {
         List<UserDto> myFriends = getMyFriends(userId);
         List<UserDto> allUsers = getAllUsers();
         List<UserDto> notMyFriends = new ArrayList<>();
-
+        List<UserDto> invitationFriend= friendRequestService
+                .getAllRequest()
+                .stream()
+                .filter(requestFriendDto -> requestFriendDto.getFromUserId().getId().equals(userId))
+                .map(RequestFriendDto::getToUserId).map(dtoMapper::toDto).toList();
+//System.out.println(invitationFriend.size());
         for (UserDto userDto : allUsers) {
-            if (!(myFriends.contains(userDto)) && (!Objects.equals(userDto.getId(), userId))) {
+            if (!(myFriends.contains(userDto)) && !(invitationFriend.contains(userDto)) && (!Objects.equals(userDto.getId(), userId))) {
                 notMyFriends.add(userDto);
             }
         }

@@ -170,9 +170,9 @@ function Games() {
     }
     function printOwnerName(game,gameStatus){
         if(gameStatus==="RETURNING") {
-            return (<p>to {game.ownerDto.firstName + " " + game.ownerDto.lastName}</p>)
+            return (<p style={{margin:0}}>to {game.ownerDto.firstName + " " + game.ownerDto.lastName}</p>)
         }else{
-            return (<p>from {game.ownerDto.firstName + " " + game.ownerDto.lastName}</p>)
+            return (<p style={{margin:0}}>from {game.ownerDto.firstName + " " + game.ownerDto.lastName}</p>)
         }
     }
     function printButtonToCancelOrReturnBorrowedGames(game_,status){
@@ -181,7 +181,7 @@ function Games() {
             return (
                 <button className="btn btn-primary" style={{background:"#443C68",margin: "6%", border:"none"}} onClick={(e) => updateBorrowedGameStatus(game,"AVAILABLE", e)}>CANCEL</button>
             )
-        }else if(status==="LENT" && game.actualUserDto.id===userId){
+        }else if(status==="LENT" && game.actualUserDto.id==userId){
             return (
                 <button className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}} onClick={(e) => updateBorrowedGameStatus(game,"RETURNING", e)}>RETURN</button>
             )
@@ -190,25 +190,7 @@ function Games() {
 
     function updateBorrowedGameStatus(game, status, e){
         console.log("cos");
-        if(status==="RESERVATION") {
-            GameAPI.update(game.id, status, userId)
-                .then(res => {
-                    console.log("cos2")
-                    console.log(res);
-                    if (status === "LENT") {
-                        alert("Game is return!")
-                    } else {
-                        /* alert("You dont lent game")*/
-                    }
-                    GameAPI.getBorrowedGames(user.id).then(
-                        function (response) {
-                            setBorrowedGames(response.data)
-                        }
-                    ).catch(function (error) {
-                        console.error(`Error: ${error}`)
-                    });
-                });
-        }else if(status==="AVAILABLE"){
+         if(status==="AVAILABLE"){
             GameAPI.update(game.id, status, game.ownerDto.id)
                 .then(res => {
                     console.log("cos3")
@@ -218,7 +200,7 @@ function Games() {
                     } else {
                         /*alert("You dont return game")*/
                     }
-                    GameAPI.getBorrowedGames(user.id).then(
+                    GameAPI.getBorrowedGames(userId).then(
                         function (response) {
                             setBorrowedGames(response.data)
                         }
@@ -236,7 +218,7 @@ function Games() {
                     } else {
                         /*alert("You dont return game")*/
                     }
-                    GameAPI.getMyGames(user.id).then(
+                    GameAPI.getBorrowedGames(userId).then(
                         function (response) {
                             setBorrowedGames(response.data)
                         }
@@ -315,7 +297,7 @@ function Games() {
                                             <p style={{margin:0}}>{game.name}</p>
                                             <p style={{margin:0}}> {game.gameStatus}</p>
                                             {printOwnerName(game,game.gameStatus)}
-                                          {/* { printButtonToCancelOrReturnBorrowedGames(game,game.gameStatus)}*/}
+                                           { printButtonToCancelOrReturnBorrowedGames(game,game.gameStatus)}
                                         </div>
                                     }
                                 )

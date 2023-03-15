@@ -162,25 +162,6 @@ function show(){
                     }
                 </div>
             </div>
-            {/*<table className="table table-striped">
-                <thead>
-                <tr>
-                    <td> Game Name</td>
-                    <td> Game Status</td>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    friendGames.map(game => {
-                            return <tr key={game.id}>
-                                <td>{game.name}</td>
-                                <td> {game.gameStatus}</td>
-                            </tr>
-                        }
-                    )
-                }
-                </tbody>
-            </table>*/}
         </div>
     )
 }
