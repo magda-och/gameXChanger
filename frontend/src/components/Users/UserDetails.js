@@ -23,7 +23,7 @@ function UserDetailsPage() {
     /* sessionStorage.setItem("id", user.id);*/
 
     return (
-        <div style={{marginLeft: "5%"}}>
+        <div style={{marginLeft: "5%", background:"#cfcbf1", borderRadius:"12px", width:"80%"}}>
             <d>
                 <h1 style={{height:"60px"}}>Hello {user.firstName}!</h1>
                 <p>Your personal data: </p>

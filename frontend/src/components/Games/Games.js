@@ -154,7 +154,7 @@ function Games(props) {
     function printDeleteButton(id, status){
         if(status==="AVAILABLE"){
             return(
-                <button className="btn btn-danger" style={{background:"#443C68", border:"none",margin:"10%"}}
+                <button className="btn btn-danger" style={{background:"#443C68", border:"none",margin:"10%", float:"right", }}
                         onClick={() => removeGame(id)}><span
                     className="bi bi-trash"></span>
                 </button>
@@ -249,19 +249,20 @@ function Games(props) {
     const displayGames = () => {
 
         return (
-            <div>
-                <div className="text-center m-4" id="myForm">
-                    <div className="row" >
-                        <div style={{background:"#F0EEED"}} className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
+            <div style={{width:"100%"}}>
+                <div className="text-center m-4" id="myForm" style={{width:"inherit"}}>
+                    <div className="row" style={{width:"inherit"}}>
+                        <div style={{background:"#F0EEED",width:"inherit", marginLeft:0}} className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
                             <button style={{background:"#443C68", border:"none", color:"white"}} type="button" className="btn btn-outline-secondary" onClick={openForm}> Add game</button>
 
                             {showForm && (
-                                <form className="add-game" id="add-game" onSubmit={handleSubmit(onSubmit)}>
-                                    <div className="mb-3">
+                                <form  className="add-game" id="add-game" style={{alignItems:"center"}} onSubmit={handleSubmit(onSubmit)}>
+                                    <div className="mb-3" style={{width:"50%", marginLeft:"25%"}} >
                                         <label htmlFor="name" className="form-label">
 
                                         </label>
                                         <input
+
                                             type="text"
                                             className="form-control"
                                             placeholder="Enter name of game you want to add"
