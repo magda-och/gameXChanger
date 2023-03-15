@@ -165,11 +165,12 @@ public class GameService {
         }
     }
 
-    public List<Game> getMyFriendsGames(Long userId){
+    public List<GameDto> getMyFriendsGames(Long userId){
         List<User> friends = userRepository.findUserFriends(userId);
-        List<Game> friendsGames = new ArrayList<>();
+        List<GameDto> friendsGames = new ArrayList<>();
         for (User friend : friends){
-            friendsGames.addAll(friend.getMyGames());
+            Long id=friend.getId();
+            friendsGames.addAll(getAllMyGames(id));
         }
         return  friendsGames;
     }
