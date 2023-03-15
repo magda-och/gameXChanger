@@ -30,7 +30,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/auth/**")
                     .permitAll()
                 .requestMatchers("/user/all")
-                .hasRole("ADMIN")
+                .hasAuthority("ADMIN")
                 .anyRequest()
                     .authenticated()
                 .and()
