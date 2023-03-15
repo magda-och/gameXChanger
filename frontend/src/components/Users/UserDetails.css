@@ -1,0 +1,38 @@
+#firstName{
+    display: none;
+    margin: 10px;
+    width: 35%;
+}
+
+#lastName{
+    display: none;
+    margin: 10px;
+    width: 35%;
+}
+
+#city {
+    display: none;
+    margin: 10px;
+    width: 35%;
+}
+
+#phoneNumber {
+    display: none;
+    margin: 10px;
+    width: 35%;
+}
+
+#changeButton {
+    background: #443C68;
+    border: none;
+    margin-right: 5%;
+    font-size: small;
+}
+
+#savingButton {
+    display: none;
+    margin: 10px;
+    background: #443C68;
+    border: none;
+    font-size: small;
+}

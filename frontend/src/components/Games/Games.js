@@ -1,23 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import {GameAPI} from "../../api/GameAPI";
 import {currentId} from "../Users/UserDetails";
-import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {UserAPI} from "../../api/UserAPI";
+import AuthenticationService from "../../services/AuthenticationService";
 
 
-function Games(props) {
+function Games() {
     const [shelf, setGames] = useState([])
     const [borrowedGames, setBorrowedGames] = useState([])
     const[user, setUser]=useState(null)
-    const navigate = useNavigate();
     const {register, handleSubmit, formState: {errors}} =
         useForm({mode: "onBlur"});
 
     const [showForm, setShowForm] = useState(undefined);
 
+    const userId = AuthenticationService.getLoggedInUserID()
+
     useEffect(() =>{
-        GameAPI.getMyGames(currentId).then(
+        GameAPI.getMyGames(userId).then(
             function (response) {
                 setGames(response.data)
             }
@@ -26,7 +27,7 @@ function Games(props) {
         });
     }, []);
     useEffect(() =>{
-        GameAPI.getBorrowedGames(currentId).then(
+        GameAPI.getBorrowedGames(userId).then(
             function (response) {
                 setBorrowedGames(response.data)
             }
@@ -42,7 +43,7 @@ function Games(props) {
         setShowForm(false)
     }
     function getUser(){
-        return  UserAPI.getById(currentId).then(
+        return  UserAPI.getById(userId).then(
             (response)=>{
                 setUser(Object.values(response.data))
             }
@@ -61,14 +62,14 @@ function Games(props) {
             ownerDto: getUser(),
             actualUserDto:getUser()
         }
-        GameAPI.create(currentId, newGame)
+        GameAPI.create(userId, newGame)
             .then(() => {
                 alert("Game successfully added to shelf!")
                 //var lastId = "#" + currentId;
                 //window.location.replace("/profile/shelf" + lastId);
                 //window.location.reload();
 
-                GameAPI.getMyGames(currentId).then(
+                GameAPI.getMyGames(userId).then(
                     function (response) {
                         setGames(response.data)
                     }
@@ -84,7 +85,7 @@ function Games(props) {
             console.log('Item successfully deleted.')
             alert("Game successfully deleted.")
 
-            GameAPI.getMyGames(currentId).then(
+            GameAPI.getMyGames(userId).then(
                 function (response) {
                     setGames(response.data)
                 }
@@ -114,7 +115,7 @@ function Games(props) {
     function updateGameStatus(game, status, e){
         console.log("cos");
         if(status==="AVAILABLE") {
-            GameAPI.update(game.id, status, currentId)
+            GameAPI.update(game.id, status, userId)
                 .then(res => {
                     console.log("cos2")
                     console.log(res);
@@ -123,7 +124,7 @@ function Games(props) {
                     } else {
                        /* alert("You dont lent game")*/
                     }
-                    GameAPI.getMyGames(currentId).then(
+                    GameAPI.getMyGames(userId).then(
                         function (response) {
                             setGames(response.data)
                         }
@@ -141,7 +142,7 @@ function Games(props) {
                     } else {
                         /*alert("You dont return game")*/
                     }
-                    GameAPI.getMyGames(currentId).then(
+                    GameAPI.getMyGames(userId).then(
                         function (response) {
                             setGames(response.data)
                         }
@@ -180,7 +181,7 @@ function Games(props) {
             return (
                 <button className="btn btn-primary" style={{background:"#443C68",margin: "6%", border:"none"}} onClick={(e) => updateBorrowedGameStatus(game,"AVAILABLE", e)}>CANCEL</button>
             )
-        }else if(status==="LENT" && game.actualUserDto.id===currentId){
+        }else if(status==="LENT" && game.actualUserDto.id===userId){
             return (
                 <button className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}} onClick={(e) => updateBorrowedGameStatus(game,"RETURNING", e)}>RETURN</button>
             )
@@ -190,7 +191,7 @@ function Games(props) {
     function updateBorrowedGameStatus(game, status, e){
         console.log("cos");
         if(status==="RESERVATION") {
-            GameAPI.update(game.id, status, currentId)
+            GameAPI.update(game.id, status, userId)
                 .then(res => {
                     console.log("cos2")
                     console.log(res);
@@ -226,7 +227,7 @@ function Games(props) {
                     });
                 });
         }else if(status==="RETURNING"){
-            GameAPI.update(game.id, status, currentId)
+            GameAPI.update(game.id, status, userId)
                 .then(res => {
                     console.log("cos3")
                     console.log(res);

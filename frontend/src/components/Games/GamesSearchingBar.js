@@ -6,6 +6,7 @@ import {currentId} from "../Users/UserDetails";
 
 import {useLocation, useParams} from "react-router-dom";
 import {UserAPI} from "../../api/UserAPI";
+import AuthenticationService from "../../services/AuthenticationService";
 
 export default function GamesSearchingBar() {
     const [state, setstate] = useState({
@@ -13,9 +14,10 @@ export default function GamesSearchingBar() {
         list: []
     })
 
+    const userId = AuthenticationService.getLoggedInUserID();
     let games;
 
-   GameAPI.getMyFriendsGames(currentId).then(
+   GameAPI.getMyFriendsGames(userId).then(
         response => {
             const data = response.data;
             games = Object.values(data)
