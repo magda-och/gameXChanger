@@ -26,6 +26,7 @@ public class UserDtoMapper implements DtoMapper<UserDto, User> {
         user.setEmail(userDto.getEmail());
         user.setCity(userDto.getCity());
         user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setRole(userDto.getRole());
 
         return user;
     }

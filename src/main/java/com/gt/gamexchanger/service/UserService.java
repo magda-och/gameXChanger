@@ -1,6 +1,5 @@
 package com.gt.gamexchanger.service;
 
-import com.gt.gamexchanger.enums.Role;
 import com.gt.gamexchanger.exception.NoDataFoundException;
 import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.mapper.DtoMapper;
@@ -11,10 +10,7 @@ import com.gt.gamexchanger.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,10 +28,6 @@ public class UserService {
 
         if (areFieldsInRegistrationFilledCorrectly(userDto)) {
             User user = dtoMapper.toDomainObject(userDto);
-
-           if (user.getRole() == null) {
-               user.setRole(Role.USER);
-            }
 
             userRepository.save(user);
             return dtoMapper.toDto(user);
@@ -141,7 +133,7 @@ public class UserService {
         List<UserDto> notMyFriends = new ArrayList<>();
 
         for (UserDto userDto : allUsers) {
-            if (!(myFriends.contains(userDto)) && (userDto.getId() != userId)) {
+            if (!(myFriends.contains(userDto)) && (!Objects.equals(userDto.getId(), userId))) {
                 notMyFriends.add(userDto);
             }
         }

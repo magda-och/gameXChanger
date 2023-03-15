@@ -3,10 +3,13 @@ import React, {useEffect, useState} from "react";
 import {InvitationAPI} from "../../api/InvitationAPI";
 import classes from "./UserList.module.css";
 import {currentId} from "./UserDetails";
+import {Navigate} from "react-router-dom";
+import AuthenticationService from "../../services/AuthenticationService";
 
 function UserList() {
 
     const [users, setUsers] = useState([])
+
 
     useEffect(() => {
         UserAPI.getAll().then(

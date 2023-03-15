@@ -7,7 +7,7 @@ export let currentId
 function UserDetailsPage() {
 
     const [user, setUser] = useState([])
-
+    
 
     useEffect(() => {
         UserAPI.getByEmail(AuthenticationService.getLoggedInUserName()).then(
