@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "crypto-js": "^4.1.1",
     "formik": "^2.2.9",
     "react-helmet": "^6.1.0"
   }
