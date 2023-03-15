@@ -181,7 +181,7 @@ function Games() {
             return (
                 <button className="btn btn-primary" style={{background:"#443C68",margin: "6%", border:"none"}} onClick={(e) => updateBorrowedGameStatus(game,"AVAILABLE", e)}>CANCEL</button>
             )
-        }else if(status==="LENT" && game.actualUserDto.id===currentId){
+        }else if(status==="LENT" && game.actualUserDto.id===userId){
             return (
                 <button className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}} onClick={(e) => updateBorrowedGameStatus(game,"RETURNING", e)}>RETURN</button>
             )

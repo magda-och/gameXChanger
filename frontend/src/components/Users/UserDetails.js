@@ -1,17 +1,18 @@
 import React, {useEffect, useState} from "react";
 import {UserAPI} from "../../api/UserAPI";
 import AuthenticationService from "../../services/AuthenticationService";
+import {useForm} from "react-hook-form";
+import "./UserDetails.css"
 
 export let currentId
 
 function UserDetailsPage() {
 
     const [user, setUser] = useState([])
-    const [encryptedData, setEncryptedData] = useState("")
-    const [decryptedData, setDecryptedData] = useState("")
-    const [firstName, setFirstName] = useState();
     const {register, handleSubmit, formState: {errors}} =
         useForm({mode: "onBlur"});
+
+
 
     useEffect(() => {
         UserAPI.getByEmail(AuthenticationService.getLoggedInUserName()).then(
@@ -29,41 +30,54 @@ function UserDetailsPage() {
     const showForm = () => {
         let formForFirstName = document.getElementById("firstName")
         let formForLastName = document.getElementById("lastName")
+        let formForCity = document.getElementById("city");
+        let formForPhoneNumber = document.getElementById("phoneNumber");
         let savingButton = document.getElementById("savingButton");
         if (formForFirstName.style.display === 'none') {
             formForFirstName.style.display = 'block'
             formForLastName.style.display = 'block'
+            formForCity.style.display = 'block'
+            formForPhoneNumber.style.display = 'block'
             savingButton.style.display = 'block'
         } else {
             formForFirstName.style.display = 'none'
             formForLastName.style.display = 'none'
+            formForCity.style.display = 'none'
+            formForPhoneNumber.style.display = 'none'
             savingButton.style.display = 'none'
         }
     }
 
     const onSubmit = async data => {
-        let modifiedFirstName = firstUpper(data.firstName)
-        // let modifiedLastName = firstUpper(data.lastName)
-        // let modifiedCity = firstUpper(data.city)
         let newFirstName = user.firstName;
         let newLastName = user.lastName;
+        let newCity = user.city;
+        let newPhoneNumber = user.phoneNumber;
         if (data.firstName !== null && data.firstName !== "" && data.firstName !== undefined) {
-            newFirstName = data.firstName;
+            newFirstName = firstUpper(data.firstName);
         }
         if (data.lastName !== null && data.lastName !== "" && data.lastName !== undefined) {
-            newLastName = data.lastName;
+            newLastName = firstUpper(data.lastName);
         }
+
+        if (data.city !== null && data.city !== "" && data.city !== undefined) {
+            newCity = firstUpper(data.city);
+        }
+
+        if (data.phoneNumber !== null && data.phoneNumber !== "" && data.phoneNumber !== undefined) {
+            newPhoneNumber = data.phoneNumber;
+        }
+
         const newUser = {
             id: user.id,
             firstName: newFirstName,
             lastName: newLastName,
             email: user.email,
-            city: user.city,
-            phoneNumber: user.phoneNumber,
+            city: newCity,
+            phoneNumber: newPhoneNumber,
 
         }
-        setFirstName(modifiedFirstName);
-        await UserAPI.update(currentId, newUser)
+        UserAPI.update(currentId, newUser)
             .then(() => {
                 alert("First name changed")
             })
@@ -71,6 +85,8 @@ function UserDetailsPage() {
         // setUser(newUser);
         user.firstName = newFirstName;
         user.lastName = newLastName;
+        user.city = newCity;
+        user.phoneNumber = newPhoneNumber;
     };
 
     function firstUpper(name) {
@@ -92,6 +108,7 @@ function UserDetailsPage() {
                     className={`form-control ${errors.firstName ? 'errFirstName' : ''}`}
                     name="firstName"
                     id="firstName"
+                    placeholder="Enter your first name"
                     {...register("firstName", {
                         minLength: 3,
                         pattern: /^[a-zA-Z]+$/
@@ -107,6 +124,7 @@ function UserDetailsPage() {
                     className={`form-control ${errors.firstName ? 'errFirstName' : ''}`}
                     name="lastName"
                     id="lastName"
+                    placeholder="Enter your last name"
                     {...register("lastName", {
                         minLength: 3,
                         pattern: /^[a-zA-Z]+$/
@@ -118,8 +136,35 @@ function UserDetailsPage() {
                     <p id="alert-msg" role="alert">First name is not valid - should contains only letters </p>}
                 <p><b>E-mail:</b> {user.email}</p>
                 <p><b>City:</b> {user.city}</p>
+                <input
+                    type="text"
+                    className={`form-control ${errors.city ? 'errCity' : ''}`}
+                    name="city"
+                    id="city"
+                    placeholder="Enter your city"
+                    {...register("city", {
+                        minLength: 3,
+                        pattern: /^[a-zA-Z]+$/
+                    })}
+                />
+                {errors.city?.type === 'minLength' &&
+                    <p id='alert-msg' role="alert">City should be at least 3 characters long</p>}
+                {errors.city?.type === 'pattern' &&
+                    <p id="alert-msg" role="alert">City is not valid - should contains only letters </p>}
                 <p><b>Phone number:</b> {user.phoneNumber}</p>
-                <p><b>Password:</b> {decryptedData}</p>
+                <input
+                    type={"number"}
+                    className={`form-control ${errors.phoneNumber ? 'errPhoneNumber' : ''}`}
+                    placeholder="Enter your phone number"
+                    name="phoneNumber"
+                    id="phoneNumber"
+                    {...register("phoneNumber", {
+                        minLength: 9,
+                        pattern: /^\d+$/
+                    })}
+                />
+                {errors.phoneNumber?.type === 'minLength' && <p id='alert-msg' role="alert">Phone number should be at least 9 characters long</p>}
+                {errors.phoneNumber?.type === 'pattern' && <p id="alert-msg" role="alert">Phone number is not valid - should contains only digits </p>}
                 <button className="btn btn-primary" type="submit" id="savingButton">SAVE</button>
             </form>
 

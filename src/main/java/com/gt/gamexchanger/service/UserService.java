@@ -76,6 +76,12 @@ public class UserService {
         if (newUserDto.getLastName() != null) {
             modifiedUser.setLastName(newUserDto.getLastName());
         }
+        if (newUserDto.getCity() != null) {
+            modifiedUser.setCity(newUserDto.getCity());
+        }
+        if (newUserDto.getPhoneNumber() != 0) {
+            modifiedUser.setPhoneNumber(newUserDto.getPhoneNumber());
+        }
     }
 
     public void updateUser(Long userId, UserDto newUserDto) {
