@@ -2,10 +2,7 @@ import React, { useState} from "react";
 import {GameAPI} from "../../api/GameAPI";
 import classes from "../../pages/Shelf.module.css"
 import "../../pages/Shelf.module.css"
-import {currentId} from "../Users/UserDetails";
 
-import {useLocation, useParams} from "react-router-dom";
-import {UserAPI} from "../../api/UserAPI";
 import AuthenticationService from "../../services/AuthenticationService";
 
 export default function GamesSearchingBar() {
@@ -34,6 +31,27 @@ export default function GamesSearchingBar() {
             list: results,
         })
     }
+    function updateGameStatus(game, status, e){
+        if(status==="RESERVATION") {
+            GameAPI.update(game.id, status, userId)
+                .then(res => {
+                    if (status === "LENT") {
+                        alert("Game is return!")
+                    } else {
+                        /* alert("You dont lent game")*/
+                    }
+                    GameAPI.getMyFriendsGames(userId).then(
+                        function (response) {
+                            games = Object.values(response.data)
+                            window.location.replace("/profile/shelf");
+                        }
+
+                    ).catch(function (error) {
+                        console.error(`Error: ${error}`)
+                    });
+                });
+        }
+    }
 
     return (
         <div className={classes.friendsGames}>
@@ -50,12 +68,11 @@ export default function GamesSearchingBar() {
                 </form>
                 <ul style={{textAlign: "left"}}>
                     {(state.query === '' ? "No users match the query" : !state.list.length ? "Your query did not return any results" : state.list.map(game => {
-                        console.log(game)
                         return <li key={game.id}>
                             <td id="1">{game.name}&nbsp;</td>
                             <td id="1"> {game.gameStatus}&nbsp;&nbsp;</td>
                             <td id="1"> {game.ownerDto.firstName+ " "+game.ownerDto.lastName}&nbsp;&nbsp;</td>
-                            <td id="1"><button>RESERVATION</button></td>
+                            <td id="1"><button onClick={(e) => updateGameStatus(game,"RESERVATION", e)}>RESERVATION</button></td>
                         </li>
                     }))}
                 </ul>

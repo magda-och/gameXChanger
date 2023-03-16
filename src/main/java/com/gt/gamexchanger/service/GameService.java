@@ -167,10 +167,18 @@ public class GameService {
 
     public List<GameDto> getMyFriendsGames(Long userId){
         List<User> friends = userRepository.findUserFriends(userId);
+        List<User> friendsWithoutMe=friends.stream().filter(user -> !user.getId().equals(userId)).collect(Collectors.toList());
         List<GameDto> friendsGames = new ArrayList<>();
-        for (User friend : friends){
+
+        for (User friend : friendsWithoutMe){
             Long id=friend.getId();
-            friendsGames.addAll(getAllMyGames(id));
+            List<GameDto> gameList=getAllMyGames(id);
+            List<GameDto> onlyAvailableGameList=gameList
+                    .stream()
+                    .filter(game -> game.getGameStatus().equals(GameStatus.AVAILABLE))
+                    .collect(Collectors.toList());
+
+            friendsGames.addAll(onlyAvailableGameList);
         }
         return  friendsGames;
     }
