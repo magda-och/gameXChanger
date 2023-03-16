@@ -72,7 +72,7 @@ public class AuthController {
 
     private static Role addRole(UserDto signUpRequest) {
         Role role;
-        String adminEmail = "adminek@admin.com";
+        String adminEmail = "admin@admin.com";
         if(signUpRequest.getEmail().equals(adminEmail)){
             role = Role.ADMIN;
         }else{

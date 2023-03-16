@@ -6,7 +6,7 @@ export const UserAPI = {
     getAll: function() {
         return api.request({
             method: "GET",
-            url: `/user`,
+            url: `/user/all`,
             headers:{'Authorization': AuthenticationService.getHeader()}
         });
     },
