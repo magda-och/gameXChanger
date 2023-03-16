@@ -26,18 +26,7 @@
     flex: auto;
 }
 
-#photoKasia {
-    width: 90%;
-}
-
-#photoAga{
-    width: 80%;
-}
-
-#firstCol {
-    width: 10px;
-}
-
-#photoDominika {
-    width: 90%;
+#usImage {
+    width: auto;
+    height: 700px;
 }
