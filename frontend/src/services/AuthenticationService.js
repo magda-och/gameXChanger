@@ -20,11 +20,10 @@ class AuthenticationService {
         return 'Bearer ' + token
     }
 
-
     logout() {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
         sessionStorage.removeItem(USER_ROLE);
-        sessionStorage.removeItem(USER_ID_SESSION)
+        sessionStorage.removeItem(HEADER_SESSION);
     }
 
     isUserLoggedIn() {
@@ -45,6 +44,7 @@ class AuthenticationService {
     }
 
     setUserIdAndRole(){
+       /* const userName = this.getLoggedInUserName()*/
         UserAPI.getByEmail(this.getLoggedInUserName()).then(
             function (response) {
                 sessionStorage.setItem(USER_ID_SESSION, response.data.id);
@@ -63,7 +63,7 @@ class AuthenticationService {
 
     getLoggedInUserRole() {
         let role = sessionStorage.getItem(USER_ROLE)
-        if (role === null) return 'anonymous'
+        if (role === null) return ''
         return role
     }
 

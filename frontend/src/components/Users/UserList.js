@@ -1,15 +1,14 @@
 import {UserAPI} from "../../api/UserAPI";
 import React, {useEffect, useState} from "react";
-import {InvitationAPI} from "../../api/InvitationAPI";
 import classes from "./UserList.module.css";
-import {currentId} from "./UserDetails";
-import {Navigate} from "react-router-dom";
+
 import AuthenticationService from "../../services/AuthenticationService";
+
 
 function UserList() {
 
     const [users, setUsers] = useState([])
-
+    const adminId = AuthenticationService.getLoggedInUserID()
 
     useEffect(() => {
         UserAPI.getAll().then(
@@ -21,28 +20,28 @@ function UserList() {
         });
     }, []);
 
-    function addInvitation(fromId, toId) {
-        const invitation = {
-            "requestStatus": "WAITING",
-            "fromUserId": {
-                "id": fromId
-            },
-            "toUserId": {
-                "id": toId
-            },
-            "message": "Zapraszam do znajomych"
-        };
-
-        InvitationAPI.create(invitation)
-            .then(() => {
-                alert("Invitation successfully send!")
-            })
+    const deleteUser = async (id) => {
+        try {
+            const res = await UserAPI.delete(id)
+            console.log('User successfully deleted.')
+            alert("User successfully deleted.")
+            UserAPI.getAll().then(
+                function (response) {
+                    setUsers(response.data)
+                }
+            ).catch(function (error) {
+                console.error(`Error: ${error}`)
+            });
+            return res;
+        } catch (error) {
+            alert(error)
+        }
     }
 
     return (
         <div>
             <div>
-                <h1 className="text-center"> All users </h1>
+                <h1 className="text-center" style={{width: "40%", marginLeft: "35%", textAlign: "center"}}> All users </h1>
                 <table className="table table-striped">
                     <thead>
                     <tr>
@@ -58,7 +57,7 @@ function UserList() {
                     {
                         users.map(
                             (user) => {
-                                const visibility = user.id === 2 ? classes.hidden : classes.visible
+                                const visibility = user.id === adminId ? classes.hidden : classes.visible
                                 return (
                                     <tr key={user.id}>
                                         <td>{user.id}</td>
@@ -68,7 +67,7 @@ function UserList() {
                                         <td>{user.city}</td>
                                         <td>
                                             <button className={"btn btn-outline-secondary " + visibility}
-                                                    onClick={(e) => addInvitation(currentId, user.id)}>Invite
+                                                    onClick={() => deleteUser(user.id)}>Delete
                                             </button>
                                         </td>
                                     </tr>)
