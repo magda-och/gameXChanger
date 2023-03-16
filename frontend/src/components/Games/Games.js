@@ -65,10 +65,6 @@ function Games() {
         GameAPI.create(userId, newGame)
             .then(() => {
                 alert("Game successfully added to shelf!")
-                //var lastId = "#" + currentId;
-                //window.location.replace("/profile/shelf" + lastId);
-                //window.location.reload();
-
                 GameAPI.getMyGames(userId).then(
                     function (response) {
                         setGames(response.data)
@@ -113,12 +109,9 @@ function Games() {
         }
     }
     function updateGameStatus(game, status, e){
-        console.log("cos");
         if(status==="AVAILABLE") {
             GameAPI.update(game.id, status, userId)
                 .then(res => {
-                    console.log("cos2")
-                    console.log(res);
                     if (status === "LENT") {
                         alert("Game is return!")
                     } else {
@@ -135,8 +128,6 @@ function Games() {
         }else if("LENT"){
             GameAPI.update(game.id, status, game.actualUserDto.id)
                 .then(res => {
-                    console.log("cos3")
-                    console.log(res);
                     if (status === "LENT") {
                         alert("Game is lent!")
                     } else {
@@ -189,12 +180,10 @@ function Games() {
     }
 
     function updateBorrowedGameStatus(game, status, e){
-        console.log("cos");
          if(status==="AVAILABLE"){
             GameAPI.update(game.id, status, game.ownerDto.id)
                 .then(res => {
-                    console.log("cos3")
-                    console.log(res);
+                    window.location.replace("/profile/shelf");
                     if (status === "LENT") {
                         alert("Game is lent!")
                     } else {
@@ -211,8 +200,6 @@ function Games() {
         }else if(status==="RETURNING"){
             GameAPI.update(game.id, status, userId)
                 .then(res => {
-                    console.log("cos3")
-                    console.log(res);
                     if (status === "LENT") {
                         alert("Game is lent!")
                     } else {

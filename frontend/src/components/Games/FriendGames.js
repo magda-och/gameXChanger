@@ -4,8 +4,6 @@ import {useLocation, useParams} from "react-router-dom";
 import classes from "../Games/FriendGames.module.css";
 import {UserAPI} from "../../api/UserAPI";
 import {currentId} from "../Users/UserDetails";
-import AuthenticationService from "../../services/AuthenticationService";
-import {InvitationAPI} from "../../api/InvitationAPI";
 function FriendGames() {
     const{id} = useParams();
     const [friendGames, setFriendGames] = useState([])
@@ -14,25 +12,11 @@ function FriendGames() {
         GameAPI.getMyGames(id).then(
             function (response) {
                 setFriendGames(response.data)
-                console.log(response.data)
             }
         ).catch(function (error) {
             console.error(`Error: ${error}`)
         });
     }, []);
-
-   /* InvitationAPI.getReceived(currentId).then(
-        (response) => {
-            this.setState({ receivedInvitations: [{
-                    requestFriendId: 1,
-                    requestStatus: 1,
-                    fromUserId: 1,
-                    toUserId: 1,
-                    message:1
-                }] });
-            this.setState({ receivedInvitations:response.data });
-        });*/
-
 
     useEffect(()=>{
         UserAPI.getById(id).then(
@@ -62,7 +46,6 @@ function show(){
     function printUserName(game,gameStatus){
         if((gameStatus==="RESERVATION" || gameStatus==="LENT" || gameStatus==="RETURNING") && game.actualUserDto.id===currentId)
             return (
-               /* <p>by {game.actualUserDto.firstName+ " "+ game.actualUserDto.lastName}</p>*/
                 <p>by me</p>
             )
     }
@@ -84,16 +67,12 @@ function show(){
     }
 
     function updateGameStatus(game, status, e){
-        console.log("cos");
         if(status==="RESERVATION") {
             GameAPI.update(game.id, status, currentId)
                 .then(res => {
-                    console.log("cos2")
-                    console.log(res);
                     if (status === "LENT") {
                         alert("Game is return!")
                     } else {
-                        /* alert("You dont lent game")*/
                     }
                     GameAPI.getMyGames(user.id).then(
                         function (response) {
@@ -106,16 +85,15 @@ function show(){
         }else if(status==="AVAILABLE"){
             GameAPI.update(game.id, status, game.ownerDto.id)
                 .then(res => {
-                    console.log("cos3")
-                    console.log(res);
                     if (status === "LENT") {
                         alert("Game is lent!")
                     } else {
-                        /*alert("You dont return game")*/
                     }
+
                     GameAPI.getMyGames(user.id).then(
                         function (response) {
                             setFriendGames(response.data)
+
                         }
                     ).catch(function (error) {
                         console.error(`Error: ${error}`)
@@ -124,12 +102,9 @@ function show(){
         }else if(status==="RETURNING"){
             GameAPI.update(game.id, status, currentId)
                 .then(res => {
-                    console.log("cos3")
-                    console.log(res);
                     if (status === "LENT") {
                         alert("Game is lent!")
                     } else {
-                        /*alert("You dont return game")*/
                     }
                     GameAPI.getMyGames(user.id).then(
                         function (response) {
@@ -155,7 +130,6 @@ function show(){
 
                                     {printUserName(game,game.gameStatus)}
                                     {printButtonToReservation(game,game.gameStatus)}
-                                    {/*{printButtonToLent(game)}*/}
                                 </div>
                             }
                         )
