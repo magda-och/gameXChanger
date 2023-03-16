@@ -1,13 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, NavLink} from "react-router-dom";
 import classes from './Header.module.css';
 import './Header.module.css'
 import AuthenticationService from "../../services/AuthenticationService";
+import {UserAPI} from "../../api/UserAPI";
 
 function Header() {
-
+    const [user, setUser] = useState([]);
     const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
     const userRole = AuthenticationService.getLoggedInUserRole();
+
+    useEffect(() => {
+        UserAPI.getByEmail(AuthenticationService.getLoggedInUserName()).then(
+            function (response) {
+                setUser(response.data)
+            }
+        ).catch(function (error) {
+            console.error(`Error: ${error}`)
+        });
+    }, []);
 
     function showAdminButton() {
 
@@ -48,6 +59,11 @@ function Header() {
                         </ul>
 
                         <ul className="navbar-nav ms-auto d-flex flex-row">
+
+                            {isUserLoggedIn && <li className="nav-item active">
+                                <Link className="nav-link" to={"/profile"}>Hello {user.firstName}!</Link>
+                            </li>}
+
                             {!isUserLoggedIn && <li className="nav-item active">
                                 <Link className="nav-link" to={"/login"}>Log in</Link>
                             </li>}
