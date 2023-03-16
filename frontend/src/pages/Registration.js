@@ -158,7 +158,6 @@ export default function Registration() {
                                 className={`form-control ${errors.city ? 'errCity' : ''}`}
                                 placeholder="Enter your city"
                                 name="city"
-                                id="city"
                                 {...register("city", {
                                     minLength: 3,
                                     pattern: /^[a-zA-Z]+$/    //todo? nie akceptuje polskich znaków
@@ -176,7 +175,6 @@ export default function Registration() {
                                 className={`form-control ${errors.phoneNumber ? 'errPhoneNumber' : ''}`}
                                 placeholder="Enter your phone number"
                                 name="phoneNumber"
-                                id="phoneNumber"
                                 {...register("phoneNumber", {
                                     minLength: 9,
                                     pattern: /^\d+$/
@@ -185,7 +183,7 @@ export default function Registration() {
                             {errors.phoneNumber?.type === 'minLength' && <p id='alert-msg' role="alert">Phone number should be at least 9 characters long</p>}
                             {errors.phoneNumber?.type === 'pattern' && <p id="alert-msg" role="alert">Phone number is not valid - should contains only digits </p>}
                         </div>
-                        <button type="submit" className="btn btn-primary">
+                        <button type="submit" className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}}>
                             Submit
                         </button>
                         <div className="mt-3">

@@ -72,7 +72,7 @@ export default function GamesSearchingBar() {
                             <td id="1">{game.name}&nbsp;</td>
                             <td id="1"> {game.gameStatus}&nbsp;&nbsp;</td>
                             <td id="1"> {game.ownerDto.firstName+ " "+game.ownerDto.lastName}&nbsp;&nbsp;</td>
-                            <td id="1"><button onClick={(e) => updateGameStatus(game,"RESERVATION", e)}>RESERVATION</button></td>
+                            <td id="1"><button className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none", fontSize:"small"}} onClick={(e) => updateGameStatus(game,"RESERVATION", e)}>RESERVATION</button></td>
                         </li>
                     }))}
                 </ul>

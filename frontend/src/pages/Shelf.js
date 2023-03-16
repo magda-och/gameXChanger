@@ -9,10 +9,11 @@ import GamesSearchingBar from "../components/Games/GamesSearchingBar";
 
 function Shelf() {
     return (
-      <div className={classes.games}>
+      <div className={classes.games} style={{alignItems:"center"}}>
+          <GamesSearchingBar />
           <MyGameList/>
          {/* <BorrowedGameList/>*/}
-          <GamesSearchingBar />
+
       </div>
     );
 }

@@ -91,7 +91,7 @@ export default function Login() {
                                     {renderErrorMessage("pass")}
                                 </div>
                             </div>
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}}>
                                 Log in!
                             </button>
                             <div className="mt-4">
