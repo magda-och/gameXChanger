@@ -96,7 +96,7 @@ function UserDetailsPage() {
     }
 
     return (
-        <div style={{marginLeft: "5%", background:"#cfcbf1", borderRadius:"12px", width:"80%"}}>
+        <div style={{marginLeft: "5%", background:"#cfcbf1", borderRadius:"12px", width:"80%", padding:"10px"}}>
             <h1 style={{height: "60px"}}>Hello {user.firstName}!</h1>
             <p><b>Your personal data: </b>
                 <button id="changeButton" className="btn btn-primary" onClick={showForm}>CHANGE YOUR DATA</button>
