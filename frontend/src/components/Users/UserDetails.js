@@ -79,7 +79,7 @@ function UserDetailsPage() {
         }
         UserAPI.update(currentId, newUser)
             .then(() => {
-                alert("First name changed")
+                alert("Data changed")
             })
         showForm();
         // setUser(newUser);
