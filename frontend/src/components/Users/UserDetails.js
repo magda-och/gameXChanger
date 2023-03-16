@@ -121,7 +121,7 @@ function UserDetailsPage() {
                 <p><b>Last name:</b> {user.lastName}</p>
                 <input
                     type="text"
-                    className={`form-control ${errors.firstName ? 'errFirstName' : ''}`}
+                    className={`form-control ${errors.lastName ? 'errLastName' : ''}`}
                     name="lastName"
                     id="lastName"
                     placeholder="Enter your last name"
@@ -130,10 +130,10 @@ function UserDetailsPage() {
                         pattern: /^[a-zA-Z]+$/
                     })}
                 />
-                {errors.firstName?.type === 'minLength' &&
-                    <p id='alert-msg' role="alert">First name should be at least 3 characters long</p>}
-                {errors.firstName?.type === 'pattern' &&
-                    <p id="alert-msg" role="alert">First name is not valid - should contains only letters </p>}
+                {errors.lastName?.type === 'minLength' &&
+                    <p id='alert-msg' role="alert">Last name should be at least 3 characters long</p>}
+                {errors.lastName?.type === 'pattern' &&
+                    <p id="alert-msg" role="alert">Last name is not valid - should contains only letters </p>}
                 <p><b>E-mail:</b> {user.email}</p>
                 <p><b>City:</b> {user.city}</p>
                 <input
