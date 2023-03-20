@@ -1,8 +1,8 @@
 package com.gt.gamexchanger.controller;
 import com.gt.gamexchanger.dto.UserDto;
+import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -21,8 +21,9 @@ public class UserController {
 
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping("/all")
-    public List<UserDto> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> allUsers = userService.getAllUsers();
+        return new ResponseEntity<>(allUsers, HttpStatus.OK) ;
     }
 
 
@@ -74,19 +75,20 @@ public class UserController {
             userService.deleteFriend(userId,friendId);
             return ResponseEntity.noContent().build();
         }
-        catch (EmptyResultDataAccessException e){
+        catch (NoExistingUser e){
             return ResponseEntity.notFound().build();
         }
     }
 
-    @GetMapping("/me/{userEmail}")
+    @GetMapping("/{userEmail}")
     public ResponseEntity<?> getUserByEmail(@PathVariable String userEmail){
         Optional<UserDto> user = userService.findUserByEmail(userEmail);
         return new ResponseEntity<>(user.orElseThrow(), HttpStatus.OK);
     }
 
     @GetMapping("/notfriends/{userId}")
-    public List<UserDto> getNotMyFriends(@PathVariable ("userId") Long userId){
-        return userService.getUsersWhoAreNotMyFriends(userId);
+    public ResponseEntity<List<UserDto>> getNotMyFriends(@PathVariable ("userId") Long userId){
+        List<UserDto> notFriends = userService.getUsersWhoAreNotMyFriends(userId);
+        return new ResponseEntity<>(notFriends, HttpStatus.OK);
     }
 }
