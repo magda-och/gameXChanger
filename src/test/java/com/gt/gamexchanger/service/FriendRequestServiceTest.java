@@ -2,8 +2,11 @@ package com.gt.gamexchanger.service;
 
 import com.gt.gamexchanger.dto.RequestFriendDto;
 import com.gt.gamexchanger.enums.RequestStatus;
+import com.gt.gamexchanger.enums.Role;
+import com.gt.gamexchanger.exception.NoRequestExistException;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.RequestFriend;
+import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.repository.FriendRequestRepository;
 import com.gt.gamexchanger.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -13,8 +16,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -82,7 +87,53 @@ class FriendRequestServiceTest {
     }
 
     @Test
-    void updateStatus() {
+    void updateStatus_NoRequestExist_ShouldThrowNoRequestExistException() {
+        when(friendRequestRepository.getRequestFriendByRequestFriendId(1L)).thenReturn(Optional.empty());
+
+        assertThrows(NoRequestExistException.class, () -> friendRequestService.updateStatus(1L, RequestStatus.ACCEPTED));
+    }
+
+    @Test
+    void updateStatus_RequestIsAccepted_ShouldReturnRequestFriendAndAddFriend() {
+        User testedUser = new User();
+        testedUser.setId(1L);
+        testedUser.setFirstName("Jan");
+        testedUser.setLastName("Kowalski");
+        testedUser.setEmail("jan.kowalski@wp.pl");
+        testedUser.setPassword("janek");
+        testedUser.setRole(Role.USER);
+        testedUser.setFriends(new ArrayList<>());
+
+        User friend = new User();
+        friend.setId(2L);
+        friend.setFirstName("Jan");
+        friend.setLastName("Fasola");
+        friend.setEmail("jasFasola@com.pl");
+        friend.setPassword("jFasola");
+        friend.setRole(Role.USER);
+        friend.setFriends(new ArrayList<>());
+
+        RequestFriend requestFriend = new RequestFriend();
+        requestFriend.setRequestFriendId(2L);
+        requestFriend.setFromUserId(testedUser);
+        requestFriend.setToUserId(friend);
+        requestFriend.setRequestStatus(RequestStatus.WAITING);
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(testedUser));
+        when(friendRequestRepository.getRequestFriendByRequestFriendId(10L)).thenReturn(Optional.of(requestFriend));
+       assertEquals(requestFriend, friendRequestService.updateStatus(10L, RequestStatus.ACCEPTED));
+        assertEquals(List.of(friend), userRepository.findById(1L).get().getFriends());
+
+    }
+
+    @Test
+    void updateStatus_RequestIsRejected_ShouldReturnRequestFriendAndRemoveIt() {
+        RequestFriend requestFriend = new RequestFriend();
+        requestFriend.setRequestFriendId(2L);
+        requestFriend.setRequestStatus(RequestStatus.WAITING);
+        when(friendRequestRepository.getRequestFriendByRequestFriendId(1L)).thenReturn(Optional.of(requestFriend));
+
+        assertEquals(requestFriend, friendRequestService.updateStatus(1L, RequestStatus.REJECTED));
     }
 
     @Test
