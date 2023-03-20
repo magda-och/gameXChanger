@@ -31,11 +31,18 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody UserDto signUpRequest) {
 
+        if(signUpRequest == null){
+            return ResponseEntity
+                    .badRequest()
+                    .body(new AuthenticationResponse("User is null!"));
+        }
+
         if (userService.findUserByEmail(signUpRequest.getEmail()).isPresent()) {
             return ResponseEntity
                     .badRequest()
                     .body(new AuthenticationResponse("Error: Email is already in use!"));
         }
+
         Role role = addRole(signUpRequest);
 
         UserDto userToRegister = new UserDto(
