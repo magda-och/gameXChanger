@@ -1,5 +1,7 @@
 package com.gt.gamexchanger.service;
+
 import com.gt.gamexchanger.dto.UserDto;
+import com.gt.gamexchanger.enums.Role;
 import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.mapper.DtoMapper;
 import com.gt.gamexchanger.model.User;
@@ -161,6 +163,103 @@ public class UserServiceTest {
 
     }
 
+    @Test
+    void findUserByEmail_userExist_shouldFindProperly() {
+
+        when(userRepository.findUserByEmail(testedUser.getEmail())).thenReturn(Optional.of(testedUser)); //testedUser
+        when(dtoMapper.toDto(testedUser)).thenReturn(testedUserDto);
+
+        assertEquals(testedUserDto, userService.findUserByEmail("jan.kowalski@wp.pl").get());
+    }
+
+    @Test
+    void getMyFriends_friendsExist_shouldReturnListOfFriends() {
+
+        User friend = new User();
+        friend.setId(2L);
+        friend.setFirstName("Jan");
+        friend.setLastName("Fasola");
+        friend.setEmail("jasFasola@com.pl");
+        friend.setPassword("jFasola");
+        friend.setRole(Role.USER);
+
+        testedUser.setFriends(List.of(friend));
+
+        UserDto friendDto = new UserDto(
+                2L,
+                "Jan",
+                "Fasola",
+                "jasFasola@com.pl",
+                "JFasola",
+                "katowice",
+                123123123,
+                Role.USER);
+
+        when(dtoMapper.toDto(friend)).thenReturn(friendDto);
+
+        List<UserDto> myFriends = new ArrayList<>();
+        myFriends.add(friendDto);
+
+        Long testedUserId = testedUser.getId();
+
+        when(userRepository.findById(testedUserId)).thenReturn(Optional.of(testedUser));
+        assertEquals(myFriends, userService.getMyFriends(testedUserId));
+    }
+
+    @Test
+    void getMyFriends_friendDoesntExist_shouldThrowNoExistingUser() {
+        when(userRepository.findById(testedUser.getId())).thenReturn(Optional.empty());
+        assertThrows(NoExistingUser.class, () -> userService.getMyFriends(testedUser.getId()));
+    }
+
+    @Test
+    void deleteFriend_friendExist_shouldBeDeletedCorrectly() {
+
+        User friend = new User();
+        friend.setId(2L);
+        friend.setFirstName("Jan");
+        friend.setLastName("Fasola");
+        friend.setEmail("jasFasola@com.pl");
+        friend.setPassword("jFasola");
+        friend.setRole(Role.USER);
+        friend.setFriends(List.of(testedUser));
+
+        testedUser.setFriends(List.of(friend));
+
+        UserDto friendDto = new UserDto(
+                2L,
+                "Jan",
+                "Fasola",
+                "jasFasola@com.pl",
+                "JFasola",
+                "katowice",
+                123123123,
+                Role.USER);
+
+
+        when(userRepository.findById(testedUser.getId())).thenReturn(Optional.of(testedUser));
+        when(userRepository.findById(friend.getId())).thenReturn(Optional.of(friend));
+
+        when(dtoMapper.toDto(testedUser)).thenReturn(testedUserDto);
+        when(dtoMapper.toDto(friend)).thenReturn(friendDto);
+
+        assertTrue(true, String.valueOf(userService.getMyFriends(testedUser.getId()).remove(friend)));
+        assertTrue(true, String.valueOf(userService.getMyFriends(friend.getId()).remove(testedUser)));
+
+    }
+
+    @Test
+    void deleteFriend_friendDoesntExist_shouldThrowNoExistingUser() {
+
+        when(userRepository.findById(testedUser.getId())).thenReturn(Optional.empty());
+
+        assertThrows(NoExistingUser.class, () -> userService.deleteFriend(1L, 2L));
+    }
+
+    @Test
+    void getUsersWhoAreNotMyFriends() {
+
+    }
 }
 
 
