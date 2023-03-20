@@ -76,8 +76,8 @@ class GameControllerTest {
     }
     @Test
     void borrowGame(){
-        underTest.borrowGame(1L, "gameDto@o.pl");
-        verify(gameService, times(1)).borrowGame(1L, "gameDto@o.pl");
+        underTest.borrowGame(1L, 2L);
+        verify(gameService, times(1)).borrowGame(1L, 2L);
     }
 
     class UnderTest extends GameController {
