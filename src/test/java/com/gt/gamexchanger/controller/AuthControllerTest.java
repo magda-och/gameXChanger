@@ -2,6 +2,7 @@ package com.gt.gamexchanger.controller;
 
 import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.model.User;
+import com.gt.gamexchanger.payload.request.LoginRequest;
 import com.gt.gamexchanger.payload.response.AuthenticationResponse;
 import com.gt.gamexchanger.security.services.JwtService;
 import com.gt.gamexchanger.service.UserService;
@@ -14,8 +15,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -34,6 +40,8 @@ class AuthControllerTest {
     private PasswordEncoder passwordEncoder;
     @MockBean
     private JwtService jwtService;
+
+    private UserDto testedUserDto;
     private AuthControllerTest.UnderTest underTest;
 
     @BeforeEach
@@ -50,12 +58,19 @@ class AuthControllerTest {
         testedUser.setPassword("janek");
 
         //creating UserDto
-        UserDto testedUserDto = new UserDto();
+        testedUserDto = new UserDto();
         testedUserDto.setFirstName("Jan");
         testedUserDto.setLastName("Kowalski");
         testedUserDto.setEmail("jan.kowalski@wp.pl");
         testedUserDto.setPassword("janek");
-        testedUserDto.setCity("London");
+        testedUserDto.setCity("Katowice");
+        testedUserDto.setPhoneNumber(123123123);
+
+        /*mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .addFilters(springSessionRepositoryFilter)
+                .apply(springSecurity())
+                .build();*/
     }
 
     /*    @Test
@@ -66,43 +81,76 @@ class AuthControllerTest {
     }*/
 
     @Test
-    void registerUser_userAdded_NotNull() {
-        //given
-        UserDto signUpUser = new UserDto(
-                "Jan",
-                "Kowalski",
-                "jan.kowalski@wp.pl",
-                "janek",
-                "Katowice",
-                123123123,
-                null);
-        underTest.registerUser(signUpUser);
-        assertNotNull(underTest.registerUser(signUpUser));
+    void registerUser_afterUserRegisterProperly_NotNull() {
+
+        underTest.registerUser(testedUserDto);
+        assertNotNull(underTest.registerUser(testedUserDto));
     }
 
     @Test
-    void registerUser_userAdded_WithNull() {
+    void registerUser_afterUserRegisterProperly_ShouldResponseOK() {
+        underTest.registerUser(testedUserDto);
+        assertEquals(ResponseEntity
+                .ok(AuthenticationResponse
+                        .builder()
+                        .token(jwtService.generateToken(testedUserDto))
+                        .build()), underTest.registerUser(testedUserDto));
+    }
+
+    @Test
+    void registerUser_afterUserRegisterWithNullSignUp_ShouldResponseBadRequest() {
         assertEquals(ResponseEntity
                 .badRequest()
                 .body( new AuthenticationResponse("User is null!")), underTest.registerUser(null));
     }
 
-/*    @Test
-    public void registerUser_userAdded_EmailExist() {
-        UserDto signUpUser = new UserDto(
-                "Jan",
-                "Kowalski",
-                "jan.kowalski@wp.pl",
-                "janek",
-                "Katowice",
-                123123123,
-                null);
+    @Test
+    public void registerUser_afterUserRegisterProperlyButEmailExist_ShouldResponseBadRequest() {
 
-        verify(underTest.registerUser(signUpUser));
-    }*/
+        when(userService.findUserByEmail(testedUserDto.getEmail())).thenReturn(Optional.of(testedUserDto));
+
+        assertEquals(ResponseEntity
+                .badRequest()
+                .body( new AuthenticationResponse("Error: Email is already in use!")), underTest.registerUser(testedUserDto));
+    }
 
     @Test
-    void authenticateUser() {
+    void registerUser_afterUserRegisterProperlyAsAdmin_ShouldResponseOK() {
+        UserDto admin = new UserDto("Admin", "Admin", "admin@admin.com", "adminPassword", null, 0, null);
+
+        underTest.registerUser(admin);
+
+        assertEquals(ResponseEntity
+                .ok(AuthenticationResponse
+                        .builder()
+                        .token(jwtService.generateToken(admin))
+                        .build()), underTest.registerUser(admin));
+    }
+
+    @Test
+    void authenticateUser_afterLogin_shouldReturnProperly() {
+
+        LoginRequest loginRequest = new LoginRequest("jan.kowalski@wp.pl", "janek");
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                loginRequest.getEmail(),
+                loginRequest.getPassword());
+
+
+        SecurityContext securityContext = mock(SecurityContext.class);
+        when(securityContext.getAuthentication()).thenReturn(token);
+        SecurityContextHolder.setContext(securityContext);
+
+        when(userService.findUserByEmail(loginRequest.getEmail())).thenReturn(Optional.of(testedUserDto));
+
+
+        assertEquals(ResponseEntity
+                .ok(AuthenticationResponse
+                        .builder()
+                        .token(jwtService.generateToken(testedUserDto))
+                        .build()),
+                underTest.authenticateUser(loginRequest));
+
     }
 
     class UnderTest extends AuthController {
