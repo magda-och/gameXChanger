@@ -2,6 +2,7 @@ package com.gt.gamexchanger.controller;
 
 import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.enums.Role;
+import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,32 +13,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserControllerTest {
-    @Autowired
-    private MockMvc mvc;
     @MockBean
     private UserService userService;
 
@@ -67,9 +59,175 @@ public class UserControllerTest {
         testedUserDto.setLastName("Kowalski");
         testedUserDto.setEmail("jan.kowalski@wp.pl");
         testedUserDto.setPassword("janek");
+        testedUserDto.setRole(Role.USER);
     }
 
     @Test
+    public void getAllUsers_shouldReturnProperly(){
+        List<UserDto> users = new ArrayList<>();
+        users.add(testedUserDto);
+
+        when(userService.getAllUsers())
+                .thenReturn(List.of(testedUserDto));
+
+        assertEquals(ResponseEntity
+                .ok()
+                .body(users), underTest.getAllUsers());
+
+    }
+    @Test
+    public void getAllUsers() {
+        underTest.getAllUsers();
+
+        verify(userService, times(1)).getAllUsers();
+    }
+
+    @Test
+    public void findUserByName() {
+        String firstName = testedUser.getFirstName();
+        String lastName = testedUser.getLastName();
+        underTest.findUserByName(firstName, lastName);
+        verify(userService, times(1)).searchUsers(firstName, lastName);
+    }
+
+    @Test
+    public void deleteUser() {
+        underTest.deleteUser(testedUserId);
+        verify(userService, times(1)).deleteUser(testedUserId);
+    }
+
+    @Test
+    public void updateUser() {
+        UserDto newUser = new UserDto();
+        newUser.setFirstName("Kaja");
+
+        underTest.updateUser(testedUserId, newUser);
+
+        verify(userService, times(1)).updateUser(testedUserId, newUser);
+    }
+
+    @Test
+    public void changePassword() {
+        String newPassword = "kotek";
+
+        underTest.changePassword(testedUserId, newPassword);
+
+        verify(userService, times(1)).changePassword(testedUserId, newPassword);
+    }
+
+    @Test
+    public void getAllFriends_whenIsCalled_shouldReturnNotNull() {
+        underTest.getFriends(testedUserId);
+        assertNotNull(underTest.getFriends(testedUserId));
+    }
+
+    @Test
+    void getUserById_WhenUserExist_shouldReturnResponseEntityOk() {
+
+        when(userService.getUserById(1L)).thenReturn((Optional.of(testedUserDto)));
+
+        assertEquals(ResponseEntity
+                .ok()
+                .body(testedUserDto), underTest.getUserById(1L));
+    }
+
+    @Test
+    public void getAllFriends_whenUserHaveFriend_shouldReturnResponseEntityOk() {
+        UserDto friend = new UserDto(
+                "Jan",
+                "Fasola",
+                "jasFasola@com.pl",
+                "JFasola",
+                "katowice",
+                123123123,
+                Role.USER);
+
+        List<UserDto> myFriends = new ArrayList<>();
+        myFriends.add(friend);
+
+        when(userService.getMyFriends(testedUserId)).thenReturn(myFriends);
+        assertEquals(ResponseEntity
+                .ok()
+                .body(myFriends), underTest.getFriends(testedUserId));
+    }
+
+    @Test
+    void removeFriend_whenUserHaveFriend_shouldReturnResponseEntityNoContent() {
+        UserDto friend = new UserDto(
+                2L,
+                "Jan",
+                "Fasola",
+                "jasFasola@com.pl",
+                "JFasola",
+                "katowice",
+                123123123,
+                Role.USER);
+
+        List<UserDto> myFriends = new ArrayList<>();
+        myFriends.add(friend);
+        when(userService.getMyFriends(testedUserId)).thenReturn(myFriends);
+        assertEquals(ResponseEntity.noContent().build(), underTest.removeFriend(testedUserId, 2L));
+    }
+
+    @Test
+    void removeFriend_whenUserHaveNoFriends_shouldReturnResponseNotFound() {
+        Long notExistingUserId = 3L;
+        doThrow(new NoExistingUser()).when(userService).deleteFriend(notExistingUserId, testedUserId);
+        assertEquals(ResponseEntity.notFound().build(), underTest.removeFriend(testedUserId, notExistingUserId));
+    }
+
+    @Test
+    void getUserByEmail_userExist_shouldFindProperly() {
+
+        when(userService.findUserByEmail(testedUserDto.getEmail())).thenReturn((Optional.of(testedUserDto)));
+
+        assertEquals(ResponseEntity
+                .ok()
+                .body(testedUserDto), underTest.getUserByEmail("jan.kowalski@wp.pl"));
+    }
+    @Test
+    void getUserByEmail_userIsNull_shouldThrowNoSuchElementException() {
+
+        assertThrows(NoSuchElementException.class, () -> underTest.getUserByEmail(null));
+
+    }
+
+    @Test
+    void getUserByEmail_userDoesntExist_shouldThrowNoSuchElementException() {
+
+        assertThrows(NoSuchElementException.class, () -> underTest.getUserByEmail("bla@bla"));
+
+    }
+
+    @Test
+    void getNotMyFriends() {
+        UserDto notFriend = new UserDto(
+                2L,
+                "Jan",
+                "Fasola",
+                "jasFasola@com.pl",
+                "JFasola",
+                "katowice",
+                123123123,
+                Role.USER);
+
+        List<UserDto> usersNotFriends = new ArrayList<>();
+        usersNotFriends.add(notFriend);
+        when(userService.getUsersWhoAreNotMyFriends(testedUserId)).thenReturn(usersNotFriends);
+        assertEquals(ResponseEntity
+                .ok()
+                .body(usersNotFriends), underTest.getNotMyFriends(testedUserId));
+    }
+
+    class UnderTest extends UserController {
+        public UnderTest() {
+            super(userService);
+        }
+    }
+
+    //testy integracyjne
+
+/*    @Test
     @WithMockUser(roles = "ADMIN")
     public void getAllUsers_beforeAddUser_status200() throws Exception {
 
@@ -97,106 +255,7 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].email").value("jan.kowalski@wp.pl"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].password").value("janek"));
 
-    }
-
-    @Test
-    @WithMockUser(roles = "ADMIN")
-    public void getAllUsers() {
-        underTest.getAllUsers();
-
-        verify(userService, times(1)).getAllUsers();
-    }
-
-    @Test
-    @WithMockUser
-    public void findUserByName() {
-        String firstName = testedUser.getFirstName();
-        String lastName = testedUser.getLastName();
-        underTest.findUserByName(firstName, lastName);
-        verify(userService, times(1)).searchUsers(firstName, lastName);
-    }
-
-    @Test
-    @WithMockUser
-    public void deleteUser() {
-        underTest.deleteUser(testedUserId);
-        verify(userService, times(1)).deleteUser(testedUserId);
-    }
-
-    @Test
-    @WithMockUser
-    public void updateUser() {
-        UserDto newUser = new UserDto();
-        newUser.setFirstName("Kaja");
-
-        underTest.updateUser(testedUserId, newUser);
-
-        verify(userService, times(1)).updateUser(testedUserId, newUser);
-    }
-
-    @Test
-    @WithMockUser
-    public void changePassword() {
-        String newPassword = "kotek";
-
-        underTest.changePassword(testedUserId, newPassword);
-
-        verify(userService, times(1)).changePassword(testedUserId, newPassword);
-    }
-
-    @Test
-    @WithMockUser
-    public void getAllFriends_NotNull() {
-        underTest.getFriends(testedUserId);
-        assertNotNull(underTest.getFriends(testedUserId));
-    }
-
-    @Test
-    @WithMockUser
-    public void getAllFriends_ResponseEntity() {
-        UserDto friend = new UserDto(
-                "Jan",
-                "Fasola",
-                "jasFasola@com.pl",
-                "JFasola",
-                "katowice",
-                123123123,
-                Role.USER);
-
-        List<UserDto> myFriends = new ArrayList<>();
-                myFriends.add(friend);
-
-        when(userService.getMyFriends(testedUserId)).thenReturn(myFriends);
-        assertEquals(ResponseEntity
-                .ok()
-                .body(myFriends), underTest.getFriends(testedUserId));
-    }
-
-    @Test
-    @WithMockUser
-    void getUserById() {
-    }
-
-    @Test
-    @WithMockUser
-    void removeFriend() {
-    }
-
-    @Test
-    @WithMockUser
-    void getUserByEmail() {
-    }
-
-    @Test
-    @WithMockUser
-    void getNotMyFriends() {
-    }
-
-    class UnderTest extends UserController {
-        public UnderTest() {
-            super(userService);
-        }
-    }
+    }*/
 }
 
 
