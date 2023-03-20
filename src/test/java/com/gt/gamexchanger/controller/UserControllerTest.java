@@ -1,8 +1,8 @@
 package com.gt.gamexchanger.controller;
 
 import com.gt.gamexchanger.dto.UserDto;
+import com.gt.gamexchanger.enums.Role;
 import com.gt.gamexchanger.model.User;
-import com.gt.gamexchanger.security.services.JwtService;
 import com.gt.gamexchanger.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,16 +13,20 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,19 +35,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-
 public class UserControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
     private UserService userService;
-    @MockBean
-/*    private AuthenticationManager authenticationManager;
-    @MockBean
-    private PasswordEncoder passwordEncoder;
-    @MockBean
-    private JwtService jwtService;*/
-    private UnderTest underTest;
+
+    private UserControllerTest.UnderTest underTest;
     private User testedUser;
     private UserDto testedUserDto;
     private Long testedUserId;
@@ -72,7 +70,9 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void getAllUsers_beforeAddUser_status200() throws Exception {
+
         mvc.perform(MockMvcRequestBuilders
                         .get("/user")
                         .accept(MediaType.APPLICATION_JSON))
@@ -82,12 +82,14 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void getAllUsers_afterAddUser_shouldReturnProperly() throws Exception {
         when(userService.getAllUsers())
                 .thenReturn(List.of(testedUserDto));
 
         mvc
-                .perform(MockMvcRequestBuilders.get("/user"))
+                .perform(MockMvcRequestBuilders
+                        .get("/user"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].firstName").value("Jan"))
@@ -97,14 +99,8 @@ public class UserControllerTest {
 
     }
 
-/*    @Test
-    public void addUser_userAdded_shouldBeSaved() {
-        underTest.registerUser(testedUserDto);
-
-        verify(userService, times(1)).addUser(testedUserDto);
-    }*/
-
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void getAllUsers() {
         underTest.getAllUsers();
 
@@ -112,6 +108,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void findUserByName() {
         String firstName = testedUser.getFirstName();
         String lastName = testedUser.getLastName();
@@ -120,12 +117,14 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void deleteUser() {
         underTest.deleteUser(testedUserId);
         verify(userService, times(1)).deleteUser(testedUserId);
     }
 
     @Test
+    @WithMockUser
     public void updateUser() {
         UserDto newUser = new UserDto();
         newUser.setFirstName("Kaja");
@@ -136,12 +135,61 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void changePassword() {
         String newPassword = "kotek";
 
         underTest.changePassword(testedUserId, newPassword);
 
         verify(userService, times(1)).changePassword(testedUserId, newPassword);
+    }
+
+    @Test
+    @WithMockUser
+    public void getAllFriends_NotNull() {
+        underTest.getFriends(testedUserId);
+        assertNotNull(underTest.getFriends(testedUserId));
+    }
+
+    @Test
+    @WithMockUser
+    public void getAllFriends_ResponseEntity() {
+        UserDto friend = new UserDto(
+                "Jan",
+                "Fasola",
+                "jasFasola@com.pl",
+                "JFasola",
+                "katowice",
+                123123123,
+                Role.USER);
+
+        List<UserDto> myFriends = new ArrayList<>();
+                myFriends.add(friend);
+
+        when(userService.getMyFriends(testedUserId)).thenReturn(myFriends);
+        assertEquals(ResponseEntity
+                .ok()
+                .body(myFriends), underTest.getFriends(testedUserId));
+    }
+
+    @Test
+    @WithMockUser
+    void getUserById() {
+    }
+
+    @Test
+    @WithMockUser
+    void removeFriend() {
+    }
+
+    @Test
+    @WithMockUser
+    void getUserByEmail() {
+    }
+
+    @Test
+    @WithMockUser
+    void getNotMyFriends() {
     }
 
     class UnderTest extends UserController {

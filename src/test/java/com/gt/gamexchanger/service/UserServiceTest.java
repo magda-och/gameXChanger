@@ -11,11 +11,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
@@ -26,20 +24,24 @@ import static org.mockito.Mockito.*;
 //@MockitoSettings(strictness = Strictness.LENIENT)
 
 public class UserServiceTest {
-
+    @Autowired
     private UserService userService;
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private FriendRequestService friendRequestService;
     @Mock
     private DtoMapper<UserDto, User> dtoMapper;
     private User testedUser;
     private List<User> users;
+
     private UserDto testedUserDto;
     private List<UserDto> usersDto;
 
     @BeforeEach
     void setUp() {
-        userService = new UserService(userRepository, dtoMapper);
+        userService = new UserService(userRepository, friendRequestService, dtoMapper);
 
         //creating testing user
         testedUser = new User();
@@ -50,7 +52,7 @@ public class UserServiceTest {
         testedUser.setPassword("janek");
 
         //creating list with users
-        users = Arrays.asList(testedUser);
+        users = Collections.singletonList(testedUser);
 
         //creating UserDto
         testedUserDto = new UserDto();
@@ -61,7 +63,7 @@ public class UserServiceTest {
         testedUserDto.setPassword("janek");
 
         //creating list with Users Dto
-        usersDto = Arrays.asList(testedUserDto);
+        usersDto = Collections.singletonList(testedUserDto);
     }
 
     @Test
@@ -93,8 +95,11 @@ public class UserServiceTest {
         String firstNameToSearch = testedUser.getFirstName();
         String lastNameToSearch = testedUser.getLastName();
 
+        HashSet<User> userResults = new HashSet<>();
+        userResults.add(testedUser);
+
         when(userRepository.searchUsersByFirstNameAndLastName(firstNameToSearch,
-                lastNameToSearch)).thenReturn((HashSet<User>) users);
+                lastNameToSearch)).thenReturn(userResults);
 
         when(dtoMapper.toDto(testedUser)).thenReturn(testedUserDto);
 
@@ -110,7 +115,7 @@ public class UserServiceTest {
 
         UserDto result = userService.addUser(testedUserDto);
 
-        assertTrue(testedUserDto.getPassword().equals(result.getPassword()));
+        assertEquals(testedUserDto.getPassword(), result.getPassword());
     }
 
     @Test
@@ -125,7 +130,7 @@ public class UserServiceTest {
 
     @Test
     public void should_throw_exception_when_user_doesnt_exist() {
-        given(userRepository.findById(anyLong())).willReturn(Optional.ofNullable(null));
+        given(userRepository.findById(anyLong())).willReturn(Optional.empty());
 
         assertThrows(
                 NoExistingUser.class,
@@ -139,7 +144,7 @@ public class UserServiceTest {
         given(userRepository.findById(testedUser.getId())).willReturn(Optional.of(testedUser));
         userService.changePassword(testedUser.getId(), "kotek");
 
-        assertTrue(testedUser.getPassword().equals("kotek"));
+        assertEquals("kotek", testedUser.getPassword());
 
     }
 
@@ -151,7 +156,7 @@ public class UserServiceTest {
         given(userRepository.findById(testedUser.getId())).willReturn(Optional.of(testedUser));
         userService.updateUser(testedUser.getId(), newUser);
 
-        assertTrue(testedUser.getFirstName().equals("Magda"));
+        assertEquals("Magda", testedUser.getFirstName());
         verify(userRepository).save(testedUser);
 
     }
