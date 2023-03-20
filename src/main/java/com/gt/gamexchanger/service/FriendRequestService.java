@@ -9,7 +9,6 @@ import com.gt.gamexchanger.model.User;
 import com.gt.gamexchanger.repository.FriendRequestRepository;
 import com.gt.gamexchanger.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -70,7 +69,8 @@ public class FriendRequestService {
                 .toList();
     }
     public RequestFriend updateStatus(Long requestId, RequestStatus requestStatus) {
-        Optional<RequestFriend> requestFriendOptional = friendRequestRepository.getRequestFriendByRequestFriendId(requestId);
+        Optional<RequestFriend> requestFriendOptional = friendRequestRepository
+                .getRequestFriendByRequestFriendId(requestId);
         if (requestFriendOptional.isPresent()) {
             requestFriendOptional.get().setRequestStatus(requestStatus);
             friendRequestRepository.save(requestFriendOptional.get());
@@ -99,8 +99,10 @@ public class FriendRequestService {
 
         User firstUser = requestFriend.getFromUserId();
         User secondUser = requestFriend.getToUserId();
-        firstUser.getFriends().add(secondUser);
-        secondUser.getFriends().add(firstUser);
+        List<User> firstUserFriends = firstUser.getFriends();
+        List<User> secondUserFriends = secondUser.getFriends();
+        firstUserFriends.add(secondUser);
+        secondUserFriends.add(firstUser);
         userRepository.save(firstUser);
         userRepository.save(secondUser);
         removeFriendRequest(requestFriend);
@@ -111,10 +113,10 @@ public class FriendRequestService {
     private void removeFriendRequest(RequestFriend requestFriend) {
         friendRequestRepository.deleteById(requestFriend.getRequestFriendId());
         RequestFriendDto acceptedRequest= dtoMapper.toDto(requestFriend);
-        List<RequestFriendDto> requestFriendFindedList=getAllRequest()
+        List<RequestFriendDto> requestFriendFindedList= getAllRequest()
                 .stream()
                 .filter(requestFriendDto1 -> requestFriendDto1.getFromUserId().getId().equals(acceptedRequest.getToUserId().getId())
-                        && requestFriendDto1.getToUserId().getId().equals(acceptedRequest.getFromUserId().getId())).collect(Collectors.toList());
+                        && requestFriendDto1.getToUserId().getId().equals(acceptedRequest.getFromUserId().getId())).toList();
         for (RequestFriendDto request: requestFriendFindedList) {
             friendRequestRepository.deleteById(request.getRequestFriendId());
         }
