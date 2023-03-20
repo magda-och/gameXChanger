@@ -33,9 +33,9 @@ public class FriendRequestService {
                 .filter(requestFriendDto1 -> requestFriendDto1.getFromUserId().getId().equals(requestFriendDto.getFromUserId().getId())
                         && requestFriendDto1.getToUserId().getId().equals(requestFriendDto.getToUserId().getId())).findFirst();
         List<User> friends=userRepository.findById(requestFriendDto.getFromUserId().getId()).get().getFriends();
-        Optional<User> userFinded =friends.stream()
+        Optional<User> userFind =friends.stream()
                 .filter(user -> user.getId().equals(requestFriendDto.getToUserId().getId())).findFirst();
-        if(requestFriendFinded.isEmpty() && userFinded.isEmpty()){
+        if(requestFriendFinded.isEmpty() && userFind.isEmpty()){
             var requestFriend = dtoMapper.toDomainObject(requestFriendDto);
             friendRequestRepository.save(requestFriend);
             Optional<User> fromUser= userRepository.findById(requestFriendDto.getFromUserId().getId());
@@ -78,7 +78,7 @@ public class FriendRequestService {
                 acceptFriend(requestFriendOptional.get());
             }
             if(requestStatus.equals(RequestStatus.REJECTED)){
-                rejectFriend(requestFriendOptional.get());
+                removeFriendRequest(requestFriendOptional.get());
             }
             return requestFriendOptional.get();
         }else {
@@ -103,23 +103,12 @@ public class FriendRequestService {
         secondUser.getFriends().add(firstUser);
         userRepository.save(firstUser);
         userRepository.save(secondUser);
-        friendRequestRepository.deleteById(requestFriend.getRequestFriendId());
-        //firstUser.getSendRequests().remove(requestFriend);
-        //secondUser.getReceivedRequests().remove(requestFriend);
-        //usuwam to zaprszenie z listy zaproszen przyjaciela od którego otrzymalam//
-        RequestFriendDto acceptedRequest= dtoMapper.toDto(requestFriend);
-        List<RequestFriendDto> requestFriendFindedList=getAllRequest()
-                .stream()
-                .filter(requestFriendDto1 -> requestFriendDto1.getFromUserId().getId().equals(acceptedRequest.getToUserId().getId())
-                        && requestFriendDto1.getToUserId().getId().equals(acceptedRequest.getFromUserId().getId())).collect(Collectors.toList());
-        for (RequestFriendDto request: requestFriendFindedList) {
-            friendRequestRepository.deleteById(request.getRequestFriendId());
-        }
+        removeFriendRequest(requestFriend);
 
 
     }
 
-    private void rejectFriend(RequestFriend requestFriend) {
+    private void removeFriendRequest(RequestFriend requestFriend) {
         friendRequestRepository.deleteById(requestFriend.getRequestFriendId());
         RequestFriendDto acceptedRequest= dtoMapper.toDto(requestFriend);
         List<RequestFriendDto> requestFriendFindedList=getAllRequest()
