@@ -52,6 +52,7 @@ public class UserServiceTest {
         testedUser.setLastName("Kowalski");
         testedUser.setEmail("jan.kowalski@wp.pl");
         testedUser.setPassword("janek");
+        testedUser.setPhoneNumber(555555555);
 
         //creating list with users
         users = Collections.singletonList(testedUser);
@@ -63,6 +64,7 @@ public class UserServiceTest {
         testedUserDto.setLastName("Kowalski");
         testedUserDto.setEmail("jan.kowalski@wp.pl");
         testedUserDto.setPassword("janek");
+        testedUserDto.setPhoneNumber(555555555);
 
         //creating list with Users Dto
         usersDto = Collections.singletonList(testedUserDto);
@@ -161,6 +163,31 @@ public class UserServiceTest {
         assertEquals("Magda", testedUser.getFirstName());
         verify(userRepository).save(testedUser);
 
+    }
+
+    @Test
+    public void updateUser_givenNullToFirstName_shouldNotChangeGivenField() {
+        UserDto newUser = new UserDto();
+        newUser.setFirstName(null);
+
+        given(userRepository.findById(testedUser.getId())).willReturn(Optional.of(testedUser));
+        userService.updateUser(testedUser.getId(), newUser);
+
+        assertEquals("Jan", testedUser.getFirstName());
+        assertFalse(testedUser.getFirstName() == null);
+        verify(userRepository).save(testedUser);
+    }
+
+    @Test
+    public void updateUser_givenZeroToPhoneNumber_shouldNotChangeGivenField(){
+        UserDto newUser = new UserDto();
+        newUser.setPhoneNumber(0);
+
+        given(userRepository.findById(testedUser.getId())).willReturn(Optional.of(testedUser));
+        userService.updateUser(testedUser.getId(), newUser);
+
+        assertEquals(555555555, testedUser.getPhoneNumber());
+        verify(userRepository).save(testedUser);
     }
 
     @Test
