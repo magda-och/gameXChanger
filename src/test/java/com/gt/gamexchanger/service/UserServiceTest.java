@@ -52,9 +52,11 @@ public class UserServiceTest {
         testedUser.setLastName("Kowalski");
         testedUser.setEmail("jan.kowalski@wp.pl");
         testedUser.setPassword("janek");
+        testedUser.setPhoneNumber(555555555);
 
         //creating list with users
-        users = Collections.singletonList(testedUser);
+        users = new ArrayList<>();
+        users.add(testedUser);
 
         //creating UserDto
         testedUserDto = new UserDto();
@@ -63,9 +65,11 @@ public class UserServiceTest {
         testedUserDto.setLastName("Kowalski");
         testedUserDto.setEmail("jan.kowalski@wp.pl");
         testedUserDto.setPassword("janek");
+        testedUserDto.setPhoneNumber(555555555);
 
         //creating list with Users Dto
-        usersDto = Collections.singletonList(testedUserDto);
+        usersDto = new ArrayList<>();
+        usersDto.add(testedUserDto);
     }
 
     @Test
@@ -164,6 +168,31 @@ public class UserServiceTest {
     }
 
     @Test
+    public void updateUser_givenNullToFirstName_shouldNotChangeGivenField() {
+        UserDto newUser = new UserDto();
+        newUser.setFirstName(null);
+
+        given(userRepository.findById(testedUser.getId())).willReturn(Optional.of(testedUser));
+        userService.updateUser(testedUser.getId(), newUser);
+
+        assertEquals("Jan", testedUser.getFirstName());
+        assertFalse(testedUser.getFirstName() == null);
+        verify(userRepository).save(testedUser);
+    }
+
+    @Test
+    public void updateUser_givenZeroToPhoneNumber_shouldNotChangeGivenField() {
+        UserDto newUser = new UserDto();
+        newUser.setPhoneNumber(0);
+
+        given(userRepository.findById(testedUser.getId())).willReturn(Optional.of(testedUser));
+        userService.updateUser(testedUser.getId(), newUser);
+
+        assertEquals(555555555, testedUser.getPhoneNumber());
+        verify(userRepository).save(testedUser);
+    }
+
+    @Test
     void findUserByEmail_userExist_shouldFindProperly() {
 
         when(userRepository.findUserByEmail(testedUser.getEmail())).thenReturn(Optional.of(testedUser)); //testedUser
@@ -259,6 +288,58 @@ public class UserServiceTest {
     @Test
     void getUsersWhoAreNotMyFriends() {
 
+        User friend = new User();
+        friend.setId(2L);
+        friend.setFirstName("Jan");
+        friend.setLastName("Fasola");
+        friend.setEmail("jasFasola@com.pl");
+        friend.setPassword("jFasola");
+        friend.setRole(Role.USER);
+
+        testedUser.setFriends(List.of(friend));
+
+        UserDto friendDto = new UserDto(
+                2L,
+                "Jan",
+                "Fasola",
+                "jasFasola@com.pl",
+                "JFasola",
+                "Katowice",
+                123123123,
+                Role.USER);
+
+        User noFriend = new User();
+        noFriend.setId(3L);
+        noFriend.setFirstName("Harry");
+        noFriend.setLastName("Potter");
+        noFriend.setEmail("harry.potter@wp.pl");
+        noFriend.setPassword("harryp");
+        noFriend.setCity("Warszawa");
+        noFriend.setPhoneNumber(444444444);
+        noFriend.setRole(Role.USER);
+
+        UserDto noFriendDto = new UserDto(
+                3L,
+                "Harry",
+                "Potter",
+                "harry.potter@wp.pl",
+                "harryp",
+                "Warszawa",
+                444444444,
+                Role.USER);
+
+        users.add(friend);
+        users.add(noFriend);
+
+        usersDto.add(friendDto);
+        usersDto.add(noFriendDto);
+
+        when(userRepository.findById(testedUser.getId())).thenReturn(Optional.of(testedUser));
+        when(dtoMapper.toDto(testedUser)).thenReturn(testedUserDto);
+        when(dtoMapper.toDto(friend)).thenReturn(friendDto);
+        when(dtoMapper.toDto(noFriend)).thenReturn(noFriendDto);
+        when(userRepository.findAll()).thenReturn(users);
+        assertEquals(List.of(noFriendDto), userService.getUsersWhoAreNotMyFriends(testedUser.getId()));
     }
 }
 
