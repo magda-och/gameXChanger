@@ -13,7 +13,6 @@ function UserDetailsPage() {
         useForm({mode: "onBlur"});
 
 
-
     useEffect(() => {
         UserAPI.getByEmail(AuthenticationService.getLoggedInUserName()).then(
             function (response) {
@@ -25,7 +24,6 @@ function UserDetailsPage() {
     }, []);
 
     currentId = user.id
-    /* sessionStorage.setItem("id", user.id);*/
 
     const showForm = () => {
         let formForFirstName = document.getElementById("firstName")
@@ -96,7 +94,7 @@ function UserDetailsPage() {
     }
 
     return (
-        <div style={{marginLeft: "5%", background:"#cfcbf1", borderRadius:"12px", width:"80%", padding:"10px"}}>
+        <div style={{marginLeft: "5%", background: "#cfcbf1", borderRadius: "12px", width: "80%", padding: "10px"}}>
             <h1 style={{height: "60px"}}>Hello {user.firstName}!</h1>
             <p><b>Your personal data: </b>
                 <button id="changeButton" className="btn btn-primary" onClick={showForm}>CHANGE YOUR DATA</button>
@@ -163,12 +161,12 @@ function UserDetailsPage() {
                         pattern: /^\d+$/
                     })}
                 />
-                {errors.phoneNumber?.type === 'minLength' && <p id='alert-msg' role="alert">Phone number should be at least 9 characters long</p>}
-                {errors.phoneNumber?.type === 'pattern' && <p id="alert-msg" role="alert">Phone number is not valid - should contains only digits </p>}
+                {errors.phoneNumber?.type === 'minLength' &&
+                    <p id='alert-msg' role="alert">Phone number should be at least 9 characters long</p>}
+                {errors.phoneNumber?.type === 'pattern' &&
+                    <p id="alert-msg" role="alert">Phone number is not valid - should contains only digits </p>}
                 <button className="btn btn-primary" type="submit" id="savingButton">SAVE</button>
             </form>
-
-
         </div>
     );
 }

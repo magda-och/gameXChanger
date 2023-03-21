@@ -1,9 +1,8 @@
-import React, { useState} from "react";
+import React, {useState} from "react";
 import {UserAPI} from "../../api/UserAPI";
 import {InvitationAPI} from "../../api/InvitationAPI";
 import "./Friends.module.css"
 import classes from "./Friends.module.css";
-import {currentId} from "../Users/UserDetails";
 import AuthenticationService from "../../services/AuthenticationService";
 
 export default function FriendsSearchingBar() {
@@ -36,7 +35,6 @@ export default function FriendsSearchingBar() {
         InvitationAPI.create(invitation)
             .then(() => {
                 alert("Invitation successfully send!")
-                //window.location.replace("invitations")
             })
     }
 
@@ -55,33 +53,31 @@ export default function FriendsSearchingBar() {
 
     return (
         <div className={classes.friends}>
-            <div className="col-md-12 container" >
-                    <h3> Find new friends </h3>
-                    <form id="form-id">
-                        <input
-                            size={50}
-                            type="search"
-                            value={state.query}
-                            onChange={handleChange}
-                            placeholder="Enter your friend's name"
-                        />
-                    </form>
-                    <ul>
-                        {(state.query === '' ? "No users match the query" : !state.list.length ? "Your query did not return any results" : state.list.map(user => {
-                            return <li key={user.firstName}>
-                                <td id="1">{user.firstName}&nbsp;</td>
-                                <td id="1"> {user.lastName}&nbsp;&nbsp;</td>
-                                <td id="1">
-                                    <button id="invitation-btn" className="btn btn-outline-secondary"
-                                            onClick={() => addInvitation(userId, user.id)}>Send invitation
-                                    </button>
-                                </td>
-                            </li>
-                        }))}
-                    </ul>
-                </div>
+            <div className="col-md-12 container">
+                <h3> Find new friends </h3>
+                <form id="form-id">
+                    <input
+                        size={50}
+                        type="search"
+                        value={state.query}
+                        onChange={handleChange}
+                        placeholder="Enter your friend's name"
+                    />
+                </form>
+                <ul>
+                    {(state.query === '' ? "No users match the query" : !state.list.length ? "Your query did not return any results" : state.list.map(user => {
+                        return <li key={user.firstName}>
+                            <td id="1">{user.firstName}&nbsp;</td>
+                            <td id="1"> {user.lastName}&nbsp;&nbsp;</td>
+                            <td id="1">
+                                <button id="invitation-btn" className="btn btn-outline-secondary"
+                                        onClick={() => addInvitation(userId, user.id)}>Send invitation
+                                </button>
+                            </td>
+                        </li>
+                    }))}
+                </ul>
             </div>
+        </div>
     )
-
-
 }
