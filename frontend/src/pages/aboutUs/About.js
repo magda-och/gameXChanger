@@ -1,9 +1,5 @@
 import React from 'react';
-import kasiaImage from './jaaaaa (1).jpg';
 import "./About.css";
-import dominikaImage from './img_1_1677745215179.jpg'
-import agaImage from './aga.jpg'
-import magdaImage from './20220929_110943.jpg'
 import usImage from './image6.jpeg'
 
 function About() {
