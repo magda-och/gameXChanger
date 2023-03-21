@@ -66,19 +66,7 @@ class AuthControllerTest {
         testedUserDto.setCity("Katowice");
         testedUserDto.setPhoneNumber(123123123);
 
-        /*mvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .addFilters(springSessionRepositoryFilter)
-                .apply(springSecurity())
-                .build();*/
     }
-
-    /*    @Test
-    public void addUser_userAdded_shouldBeSaved() {
-        underTest.registerUser(testedUserDto);
-
-        verify(userService, times(1)).addUser(testedUserDto);
-    }*/
 
     @Test
     void registerUser_afterUserRegisterProperly_NotNull() {
@@ -101,7 +89,7 @@ class AuthControllerTest {
     void registerUser_afterUserRegisterWithNullSignUp_ShouldResponseBadRequest() {
         assertEquals(ResponseEntity
                 .badRequest()
-                .body( new AuthenticationResponse("User is null!")), underTest.registerUser(null));
+                .body(new AuthenticationResponse("User is null!")), underTest.registerUser(null));
     }
 
     @Test
@@ -111,12 +99,19 @@ class AuthControllerTest {
 
         assertEquals(ResponseEntity
                 .badRequest()
-                .body( new AuthenticationResponse("Error: Email is already in use!")), underTest.registerUser(testedUserDto));
+                .body(new AuthenticationResponse("Error: Email is already in use!")), underTest.registerUser(testedUserDto));
     }
 
     @Test
     void registerUser_afterUserRegisterProperlyAsAdmin_ShouldResponseOK() {
-        UserDto admin = new UserDto("Admin", "Admin", "admin@admin.com", "adminPassword", null, 0, null);
+        UserDto admin = new UserDto(
+                "Admin",
+                "Admin",
+                "admin@admin.com",
+                "adminPassword",
+                null,
+                0,
+                null);
 
         underTest.registerUser(admin);
 
@@ -145,10 +140,10 @@ class AuthControllerTest {
 
 
         assertEquals(ResponseEntity
-                .ok(AuthenticationResponse
-                        .builder()
-                        .token(jwtService.generateToken(testedUserDto))
-                        .build()),
+                        .ok(AuthenticationResponse
+                                .builder()
+                                .token(jwtService.generateToken(testedUserDto))
+                                .build()),
                 underTest.authenticateUser(loginRequest));
 
     }

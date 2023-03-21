@@ -1,4 +1,5 @@
 package com.gt.gamexchanger.controller;
+
 import com.gt.gamexchanger.dto.UserDto;
 import com.gt.gamexchanger.exception.NoExistingUser;
 import com.gt.gamexchanger.service.UserService;
@@ -23,17 +24,15 @@ public class UserController {
     @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> allUsers = userService.getAllUsers();
-        return new ResponseEntity<>(allUsers, HttpStatus.OK) ;
+        return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 
 
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping("/name")
     public @ResponseBody List<UserDto> findUserByName(@RequestParam(value = "firstName", required = false) String firstName,
-                                                         @RequestParam(value = "lastName", required = false) String lastName) {
+                                                      @RequestParam(value = "lastName", required = false) String lastName) {
         return userService.searchUsers(firstName, lastName);
-        // podzielic na kilka endpointow - /name, /lastname // searchingengine
-        // ew konkatenacja imienia i nazwiska
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -43,6 +42,7 @@ public class UserController {
         userService.deleteUser(userId);
         return ResponseEntity.ok("User successfully removed!");
     }
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/{userId}")
     public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
@@ -58,12 +58,13 @@ public class UserController {
     }
 
     @GetMapping("/friends/{userId}") //id/friends
-    public ResponseEntity<List<UserDto>> getFriends(@PathVariable("userId") Long userId){
+    public ResponseEntity<List<UserDto>> getFriends(@PathVariable("userId") Long userId) {
         List<UserDto> myFriends = userService.getMyFriends(userId);
         return new ResponseEntity<>(myFriends, HttpStatus.OK);
     }
+
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable("userId") Long userId){
+    public ResponseEntity<UserDto> getUserById(@PathVariable("userId") Long userId) {
         Optional<UserDto> user = userService.getUserById(userId);
         return new ResponseEntity<>(user.orElseThrow(), HttpStatus.OK);
     }
@@ -71,23 +72,22 @@ public class UserController {
     @DeleteMapping("friends/{userId}/{friendId}")
     public ResponseEntity<?> removeFriend(@PathVariable Long friendId,
                                           @PathVariable Long userId) {
-        try{
-            userService.deleteFriend(userId,friendId);
+        try {
+            userService.deleteFriend(userId, friendId);
             return ResponseEntity.noContent().build();
-        }
-        catch (NoExistingUser e){
+        } catch (NoExistingUser e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/{userEmail}")
-    public ResponseEntity<?> getUserByEmail(@PathVariable String userEmail){
+    public ResponseEntity<?> getUserByEmail(@PathVariable String userEmail) {
         Optional<UserDto> user = userService.findUserByEmail(userEmail);
         return new ResponseEntity<>(user.orElseThrow(), HttpStatus.OK);
     }
 
     @GetMapping("/notfriends/{userId}")
-    public ResponseEntity<List<UserDto>> getNotMyFriends(@PathVariable ("userId") Long userId){
+    public ResponseEntity<List<UserDto>> getNotMyFriends(@PathVariable("userId") Long userId) {
         List<UserDto> notFriends = userService.getUsersWhoAreNotMyFriends(userId);
         return new ResponseEntity<>(notFriends, HttpStatus.OK);
     }
