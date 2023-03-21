@@ -33,6 +33,8 @@ public class UserController {
     public @ResponseBody List<UserDto> findUserByName(@RequestParam(value = "firstName", required = false) String firstName,
                                                       @RequestParam(value = "lastName", required = false) String lastName) {
         return userService.searchUsers(firstName, lastName);
+        // TODO podzielic na kilka endpointow - /name, /lastname // searchingengine
+        // ew konkatenacja imienia i nazwiska
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

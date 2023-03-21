@@ -21,10 +21,6 @@ public class UserService {
     private final FriendRequestService friendRequestService;
     private final DtoMapper<UserDto, User> dtoMapper;
 
-/*    public UserService(UserRepository userRepository, DtoMapper<UserDto, User> dtoMapper) {
-        this.userRepository = userRepository;
-        this.dtoMapper = dtoMapper;
-    }*/
 
     public UserDto addUser(UserDto userDto) {
 
@@ -144,7 +140,6 @@ public class UserService {
                 .stream()
                 .filter(requestFriendDto -> requestFriendDto.getFromUserId().getId().equals(userId))
                 .map(RequestFriendDto::getToUserId).map(dtoMapper::toDto).toList();
-//System.out.println(invitationFriend.size());
         for (UserDto userDto : allUsers) {
             if (!(myFriends.contains(userDto)) && !(invitationFriend.contains(userDto)) && (!Objects.equals(userDto.getId(), userId))) {
                 notMyFriends.add(userDto);

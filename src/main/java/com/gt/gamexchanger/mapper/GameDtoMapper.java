@@ -29,8 +29,6 @@ public class GameDtoMapper implements DtoMapper<GameDto, Game> {
 
     @Override
     public Game toDomainObject(GameDto gameDto) {
-//       User owner = mapperForUser.toDomainObject(gameDto.getOwnerDto());
-//        User actual = mapperForUser.toDomainObject(gameDto.getOwnerDto());
 
         Game game = new Game();
         if (gameDto.getId() != null) {
@@ -38,9 +36,6 @@ public class GameDtoMapper implements DtoMapper<GameDto, Game> {
         }
         game.setName(gameDto.getName());
      game.setGameStatus(gameDto.getGameStatus());
-    //   game.setGamePhoto(gameDto.getGamePhoto());
-//        game.setOwner(owner);
-//        game.setActualUser(actual);
         game.setVisibility(gameDto.getVisibility());
         return game;
     }

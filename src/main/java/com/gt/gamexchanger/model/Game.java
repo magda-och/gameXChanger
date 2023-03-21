@@ -19,12 +19,10 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-   @Enumerated(EnumType.STRING)
-   @Column(name = "gameStatus")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gameStatus")
     private GameStatus gameStatus;
-    //   @Lob
-    //  private Byte[] image;
-     @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Visibility visibility;
 
     @JsonBackReference("myGames")
