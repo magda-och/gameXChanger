@@ -80,7 +80,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{userEmail}")
+    @GetMapping("/me/{userEmail}")
     public ResponseEntity<?> getUserByEmail(@PathVariable String userEmail) {
         Optional<UserDto> user = userService.findUserByEmail(userEmail);
         return new ResponseEntity<>(user.orElseThrow(), HttpStatus.OK);
