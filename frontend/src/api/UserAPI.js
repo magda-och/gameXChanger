@@ -49,7 +49,7 @@ export const UserAPI = {
     getByEmail: function(userEmail) {
         return api.request({
             method: "GET",
-            url: `/user/${userEmail}`,
+            url: `/user/me/${userEmail}`,
             headers:{'Authorization': AuthenticationService.getHeader()}
         });
     }
