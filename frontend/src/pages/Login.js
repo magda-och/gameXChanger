@@ -31,7 +31,7 @@ export default function Login() {
                     AuthenticationService.registerJwtSuccessfulLogin(email, response.data.token)
                     window.location.replace('/profile')
                 }).catch(() => {
-                    alert("Wrong password!")
+                alert("Wrong password!")
             })
         } catch (error) {
             alert(error);
@@ -91,7 +91,8 @@ export default function Login() {
                                     {renderErrorMessage("pass")}
                                 </div>
                             </div>
-                            <button type="submit" className="btn btn-primary" style={{background:"#443C68", margin: "6%", border:"none"}}>
+                            <button type="submit" className="btn btn-primary"
+                                    style={{background: "#443C68", margin: "6%", border: "none"}}>
                                 Log in!
                             </button>
                             <div className="mt-4">

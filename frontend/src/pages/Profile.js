@@ -4,7 +4,6 @@ import UserDetailsPage from "../components/Users/UserDetails";
 
 function Profile() {
 
-
     return (
         <div className={classes.profile}>
             <UserDetailsPage/>
