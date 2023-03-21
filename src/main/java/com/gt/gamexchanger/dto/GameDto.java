@@ -11,14 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GameDto {
 
-   private Long id;
-    private String name;
-    private GameStatus gameStatus;
- // private byte[] image;
+  private Long id;
+  private String name;
+  private GameStatus gameStatus;
   private UserDto ownerDto;
   private UserDto actualUserDto;
-   private Visibility visibility;
-
-
+  private Visibility visibility;
 
 }

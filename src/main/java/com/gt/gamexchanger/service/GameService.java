@@ -79,8 +79,6 @@ public class GameService {
             Optional<User> newActualUser=userRepository.findById(actualUserId);
             gameToUpdate.get().setActualUser(newActualUser.get());
             gameRepository.save(gameToUpdate.get());
-           /* var gameToSafe = gameToUpdate.get();
-            updateGameFields(gameToSafe, gameDto);*/
         } else {
             throw new NoGameExists();
         }

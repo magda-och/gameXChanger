@@ -18,7 +18,6 @@ class Invitations extends React.Component{
     componentDidMount() {
         InvitationAPI.getSend(userId).then(
             (response) => {
-                //this.state.invitations = response.data
                 this.setState({ sendInvitations: [{
                         requestFriendId: 1,
                         requestStatus: 1,
@@ -27,7 +26,6 @@ class Invitations extends React.Component{
                         message:1
                     }] });
                 this.setState({ sendInvitations:response.data });
-                //console.log(this.state)
         });
 
         InvitationAPI.getReceived(userId).then(
@@ -47,17 +45,14 @@ class Invitations extends React.Component{
         InvitationAPI.delete(id)
             .then(res => {
                 alert("You deleted invitation")
-                console.log(res);
                 const sendInvitations = this.state.sendInvitations.filter(item => item.requestFriendId !== id);
                 this.setState({ sendInvitations });
             })
     }
 
     updateInvitationStatus(id, status, e){
-        console.log("cos");
         InvitationAPI.update(id, status)
             .then(res =>{
-                console.log(res);
                 if(status==="ACCEPTED"){
                     alert("You added friend!")
                 } else {
